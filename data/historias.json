@@ -1,66 +1,463 @@
 {
   "canciones": [
     {
-      "id": "canciones-0",
-      "header": "1. Bohemian Rhapsody",
-      "title": "Bohemian Rhapsody",
-      "type": "canciones",
-      "fields": {
-        "Canción": "Bohemian Rhapsody",
-        "Intérprete": "Queen",
-        "Compositor": "Freddie Mercury",
-        "Imagen": "images/bohemian.jpg",
-        "Video": "https://youtu.be/fJ9rUzIMcZQ",
-        "Tomado de": "Documental sobre Queen (BBC, 2015)",
-        "Historia": "Bohemian Rhapsody fue lanzada en 1975 como parte del álbum 'A Night at the Opera'. Su estructura rompe con la forma tradicional de canción pop, mezclando balada, ópera y rock. Durante años, la banda se negó a explicar el significado exacto de la letra, lo que ha alimentado todo tipo de interpretaciones."
-      }
-    },
-    {
-      "id": "canciones-1763496125305",
-      "header": "",
+      "id": "cancion-001",
+      "header": "1. Nuestro Juramento",
       "title": "Nuestro Juramento",
       "type": "canciones",
       "fields": {
         "Canción": "Nuestro Juramento",
         "Intérprete": "Julio Jaramillo",
-        "Compositor": "Jesús de Benítez (Puerto Rico)",
-        "Imagen": "N/D",
-        "Video": "https://youtube.com/shorts/Wcy2UPhPfhY?si=CyrKrC5tgRWsgfNH",
+        "Compositor": "Benito de Jesús",
+        "Género": "Bolero",
+        "Imagen": "images/nuestro_juramento.jpg",
+        "Video": "N/D",
         "Tomado de": "N/D",
-        "Historia": "Quien te diga: \"No puedo verte triste porque me mata, tu carita de pena, mi dulce amor\", ahí es...\n\n“Nuestro Juramento” es una canción boricua que se volvió ecuatoriana, fue compuesta por Benito de Jesús, un músico y compositor puertorriqueño. Esta hermosa balada bolero vio la luz en la década de 1940 y se convirtió en un himno romántico que resonaría en el corazón de generaciones que aman de verdad. En 1950 fue grabada por el dúo Irizarry de Córdoba.\n\nBenito de Jesús, fue un talentoso músico guitarrista que vivió una vida apasionada dedicada a la música. Nació en 1912 y murió en 2010 a los 97 años. Fue integrante del Trio Vegabajeño durante 24 años. Se le atribuye haber compuesto más de 300 canciones a lo largo de su carrera.  Según relató el propio Benito de Jesús, la letra no fue originalmente suya. \n\nLa historia de esta bella canción nació cuando Benito encontró los versos en un recorte de periódico con un poema titulado “A un alma”, de autor desconocido. Cautivado por la profundidad de esas palabras, la promesa de un amor tan fuerte que ni la muerte podría romperlo, vio en esos versos la base de lo que sería un bolero que trascendería en el tiempo. Con su estilo único, compuso un bolero rítmico que transformaba el poema en una melodía inolvidable. \n\nJaramillo la transformó musicalmente haciéndola todavía más grande, en su voz fue un éxito en todo el mundo. Benito de Jesús le llegó a agradecer a Jaramillo por haber grabado sus canción ya que gracias a sus regalías se mantuvo hasta sus últimos días. \n\nEn este año Billboard la catapultó a un nuevo estatus. No es solo una canción del pasado, también es una obra de arte contemporánea y relevante. La revista analizó el impacto, la longevidad y la calidad lírica de las canciones de amor más importantes del siglo. Según el reporte, “Nuestro Juramento” fue ubicada en la segunda posición, superando a innumerables éxitos modernos...\n\nNo es una canción, es una declaración de amor tan intensa que roza lo trágico. La duda duele, por eso le pide que no dude de su amor, porque entre ellos existe un juramento casi sagrado, amarse hasta la muerte… y aún después de muertos amarse más. Es un amor absoluto, posesivo en el sentido emocional, que no concibe la vida ni la muerte sin ese vínculo. Una canción que nació en una época donde amabas hasta tu último suspiro y hoy se ama lo que tarda un suspiro..."
+        "Historia": "Bolero emblemático en la voz de Julio Jaramillo. Para muchas personas en Ecuador y América Latina es la banda sonora de despedidas, funerales y amores imposibles; se canta en familia casi como un himno sentimental."
+      }
+    },
+    {
+      "id": "cancion-002",
+      "header": "2. Fatalidad",
+      "title": "Fatalidad",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Fatalidad",
+        "Intérprete": "Julio Jaramillo",
+        "Compositor": "N/D",
+        "Género": "Bolero",
+        "Imagen": "images/fatalidad.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Una de las canciones más dramáticas de Julio Jaramillo. La frase 'tuve un mal sueño' se volvió expresión popular para hablar de desengaños amorosos que parecen perseguidos por la mala suerte."
+      }
+    },
+    {
+      "id": "cancion-003",
+      "header": "3. Murió la flor",
+      "title": "Murió la flor",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Murió la flor",
+        "Intérprete": "Los Ángeles Negros",
+        "Compositor": "N/D",
+        "Género": "Balada",
+        "Imagen": "images/murio_la_flor.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Balada chilena que mezcla guitarras eléctricas y arreglos orquestales. Se convirtió en un himno de desamor en toda América Latina y fue versionada por grupos de rock y de cumbia."
+      }
+    },
+    {
+      "id": "cancion-004",
+      "header": "4. Y volveré",
+      "title": "Y volveré",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Y volveré",
+        "Intérprete": "Los Ángeles Negros",
+        "Compositor": "N/D",
+        "Género": "Balada",
+        "Imagen": "images/y_volvere.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Una de las baladas románticas más conocidas del grupo. Su estilo melodramático y el fraseo exagerado representaron toda una época de 'cortavenas' en español."
+      }
+    },
+    {
+      "id": "cancion-005",
+      "header": "5. Llorarás",
+      "title": "Llorarás",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Llorarás",
+        "Intérprete": "Óscar D'León",
+        "Compositor": "Óscar D'León",
+        "Género": "Salsa",
+        "Imagen": "images/lloraras.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Salsa venezolana que pasó de las salsotecas a los estadios. Su bajo tocado y cantado por Óscar D'León se volvió una marca personal y referencia obligada para salseros."
+      }
+    },
+    {
+      "id": "cancion-006",
+      "header": "6. Pedro Navaja",
+      "title": "Pedro Navaja",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Pedro Navaja",
+        "Intérprete": "Rubén Blades y Willie Colón",
+        "Compositor": "Rubén Blades",
+        "Género": "Salsa",
+        "Imagen": "images/pedro_navaja.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Crónica urbana en forma de salsa, inspirada libremente en la ópera 'La ópera de los tres centavos'. Recorre una calle cualquiera del barrio latino para mostrar violencia, azar y humor negro."
+      }
+    },
+    {
+      "id": "cancion-007",
+      "header": "7. El Gran Varón",
+      "title": "El Gran Varón",
+      "type": "canciones",
+      "fields": {
+        "Canción": "El Gran Varón",
+        "Intérprete": "Willie Colón",
+        "Compositor": "Omar Alfanno",
+        "Género": "Salsa",
+        "Imagen": "images/el_gran_varon.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Tema adelantado a su época que trata de identidad de género, rechazo familiar y pandemia del VIH. Fue muy polémico, pero también abrió conversaciones en muchas familias latinoamericanas."
+      }
+    },
+    {
+      "id": "cancion-008",
+      "header": "8. Brujería",
+      "title": "Brujería",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Brujería",
+        "Intérprete": "El Gran Combo de Puerto Rico",
+        "Compositor": "N/D",
+        "Género": "Salsa",
+        "Imagen": "images/brujeria.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Clásico del Gran Combo donde el protagonista cree que su mala suerte en el amor se debe a 'brujería'. En muchos países es infaltable en fiestas familiares y carnavales."
+      }
+    },
+    {
+      "id": "cancion-009",
+      "header": "9. Vagabundo",
+      "title": "Vagabundo",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Vagabundo",
+        "Intérprete": "Los Terrícolas",
+        "Compositor": "N/D",
+        "Género": "Balada",
+        "Imagen": "images/vagabundo.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Balada venezolana que cuenta la historia de un hombre que no encuentra su lugar después de una ruptura. Muchos adolescentes de los setenta y ochenta la cantaron con el corazón roto."
+      }
+    },
+    {
+      "id": "cancion-010",
+      "header": "10. Te juro que te amo",
+      "title": "Te juro que te amo",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Te juro que te amo",
+        "Intérprete": "Los Terrícolas",
+        "Compositor": "N/D",
+        "Género": "Balada",
+        "Imagen": "images/te_juro_que_te_amo.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Otra de las baladas más conocidas de Los Terrícolas. Su letra repite la promesa de amor eterno incluso después de una separación, típica de las baladas dramáticas latinoamericanas."
+      }
+    },
+    {
+      "id": "cancion-011",
+      "header": "11. Dos gardenias",
+      "title": "Dos gardenias",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Dos gardenias",
+        "Intérprete": "La interpretación de Buena Vista Social Club",
+        "Compositor": "Isolina Carrillo",
+        "Género": "Bolero",
+        "Imagen": "images/dos_gardenias.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Bolero cubano clásico que tuvo una segunda vida con el proyecto Buena Vista Social Club. La imagen de las dos flores como símbolo de amor y despedida se volvió universal."
+      }
+    },
+    {
+      "id": "cancion-012",
+      "header": "12. Chan Chan",
+      "title": "Chan Chan",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Chan Chan",
+        "Intérprete": "Buena Vista Social Club",
+        "Compositor": "Compay Segundo",
+        "Género": "Son cubano",
+        "Imagen": "images/chan_chan.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "El son que abre el disco de Buena Vista Social Club. Su estribillo y su cadencia lenta conectan con la memoria de la vieja trova y con la nostalgia de La Habana de otra época."
+      }
+    },
+    {
+      "id": "cancion-013",
+      "header": "13. El reloj",
+      "title": "El reloj",
+      "type": "canciones",
+      "fields": {
+        "Canción": "El reloj",
+        "Intérprete": "Luis Miguel (versión famosa moderna)",
+        "Compositor": "Roberto Cantoral",
+        "Género": "Bolero",
+        "Imagen": "images/el_reloj.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Bolero mexicano que pide al reloj detener el tiempo para prolongar un encuentro amoroso. Ha sido grabado por tríos, orquestas y cantantes de varias generaciones."
+      }
+    },
+    {
+      "id": "cancion-014",
+      "header": "14. Bésame mucho",
+      "title": "Bésame mucho",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Bésame mucho",
+        "Intérprete": "Muchas versiones; una muy conocida es la de Trio Los Panchos",
+        "Compositor": "Consuelo Velázquez",
+        "Género": "Bolero",
+        "Imagen": "images/besame_mucho.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Compuesto por Consuelo Velázquez cuando aún era muy joven, se convirtió en uno de los boleros en español más interpretados del mundo, traducido a varios idiomas."
+      }
+    },
+    {
+      "id": "cancion-015",
+      "header": "15. La copa rota",
+      "title": "La copa rota",
+      "type": "canciones",
+      "fields": {
+        "Canción": "La copa rota",
+        "Intérprete": "Alberto Beltrán y luego muchos más",
+        "Compositor": "N/D",
+        "Género": "Bolero",
+        "Imagen": "images/la_copa_rota.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Un bolero dramático donde el protagonista pide que le sirvan en una copa rota para cortarse los labios y así 'sentir' el dolor físico del abandono amoroso."
+      }
+    },
+    {
+      "id": "cancion-016",
+      "header": "16. Perfume de gardenias",
+      "title": "Perfume de gardenias",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Perfume de gardenias",
+        "Intérprete": "La Sonora Matancera (entre otras versiones)",
+        "Compositor": "Rafael Hernández",
+        "Género": "Bolero",
+        "Imagen": "images/perfume_de_gardenias.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Bolero que mezcla romanticismo y elegancia. La versión con La Sonora Matancera y Celia Cruz ayudó a popularizarla en toda América Latina."
+      }
+    },
+    {
+      "id": "cancion-017",
+      "header": "17. Oye cómo va",
+      "title": "Oye cómo va",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Oye cómo va",
+        "Intérprete": "Santana",
+        "Compositor": "Tito Puente",
+        "Género": "Latin rock / mambo",
+        "Imagen": "images/oye_como_va.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Tema creado por Tito Puente y popularizado globalmente por Carlos Santana, mezclando rock con ritmos latinos. Es un puente entre el mambo tradicional y la psicodelia de los años setenta."
+      }
+    },
+    {
+      "id": "cancion-018",
+      "header": "18. Burbujas de amor",
+      "title": "Burbujas de amor",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Burbujas de amor",
+        "Intérprete": "Juan Luis Guerra",
+        "Compositor": "Juan Luis Guerra",
+        "Género": "Bachata",
+        "Imagen": "images/burbujas_de_amor.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Bachata poética que usa la metáfora del pez que quiere 'hacer burbujas de amor' en el vientre de la persona amada. Ayudó a que la bachata se aceptara en clases medias urbanas."
+      }
+    },
+    {
+      "id": "cancion-019",
+      "header": "19. La rebelión",
+      "title": "La rebelión",
+      "type": "canciones",
+      "fields": {
+        "Canción": "La rebelión",
+        "Intérprete": "Joe Arroyo",
+        "Compositor": "Joe Arroyo",
+        "Género": "Salsa / música afrocaribeña",
+        "Imagen": "images/la_rebelion.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Relata la historia de un esclavo africano que se rebela contra el amo español por maltratar a su mujer. Es considerada un himno de resistencia afrodescendiente en el Caribe."
+      }
+    },
+    {
+      "id": "cancion-020",
+      "header": "20. Gracias a la vida",
+      "title": "Gracias a la vida",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Gracias a la vida",
+        "Intérprete": "Violeta Parra (y muchas versiones posteriores)",
+        "Compositor": "Violeta Parra",
+        "Género": "Canción de autor / folclore",
+        "Imagen": "images/gracias_a_la_vida.jpg",
+        "Video": "N/D",
+        "Tomado de": "N/D",
+        "Historia": "Canción de agradecimiento y despedida escrita por Violeta Parra. Aunque tiene un tono luminoso, fue compuesta poco antes de su muerte, lo que le añade una carga emocional muy fuerte."
       }
     }
   ],
   "autores": [
     {
-      "id": "autores-0",
-      "header": "A. Freddie Mercury",
-      "title": "Freddie Mercury",
+      "id": "autor-001",
+      "header": "A. Julio Jaramillo",
+      "title": "Julio Jaramillo",
       "type": "autores",
       "fields": {
-        "Nombre artístico": "Freddie Mercury",
-        "Nombre real": "Farrokh Bulsara",
-        "Intérprete o Compositor": "Intérprete y compositor",
-        "Foto": "images/freddie.jpg",
-        "Biografía": "Freddie Mercury (1946–1991) fue el vocalista principal de Queen y es considerado una de las voces más potentes y carismáticas de la historia del rock. Nació en Zanzíbar, creció en la India y se trasladó al Reino Unido en su juventud.",
-        "Éxitos": "Bohemian Rhapsody, Somebody to Love, We Are the Champions, Don't Stop Me Now.",
-        "Curiosidades": "Fue un apasionado del arte y los gatos. Su rango vocal y presencia escénica marcaron a generaciones enteras.",
-        "Tomado de": "Biografías oficiales y material de archivo de Queen."
+        "Nombre artístico": "Julio Jaramillo",
+        "Nombre real": "Julio Alfredo Jaramillo Laurido",
+        "Intérprete o Compositor": "Intérprete",
+        "Foto": "images/autores/julio_jaramillo.jpg",
+        "Biografía": "Cantante ecuatoriano conocido como 'El ruiseñor de América'. Grabó cientos de boleros, pasillos y valses, y se convirtió en una voz fundamental de la nostalgia latinoamericana.",
+        "Éxitos": "Nuestro Juramento · Fatalidad · De cigarro en cigarro",
+        "Curiosidades": "En muchos países su voz suena cada año en conmemoraciones de muertos y despedidas familiares.",
+        "Tomado de": "N/D"
       }
-    }
-  ],
-  "curiosidades": [
+    },
     {
-      "id": "curiosidades-0",
-      "header": "- Origen del nombre Queen",
-      "title": "Origen del nombre Queen",
-      "type": "curiosidades",
+      "id": "autor-002",
+      "header": "A. Los Ángeles Negros",
+      "title": "Los Ángeles Negros",
+      "type": "autores",
       "fields": {
-        "Tema": "Origen del nombre Queen",
-        "Detalle": "Freddie Mercury propuso el nombre 'Queen' porque le parecía un nombre corto, fuerte, universal y con un toque teatral. Aunque tenía connotaciones controvertidas, la banda decidió adoptarlo precisamente por su fuerza y ambigüedad.",
-        "Imagen": "images/queen-logo.jpg",
-        "Tomado de": "Entrevistas a la banda y material de archivo."
+        "Nombre artístico": "Los Ángeles Negros",
+        "Nombre real": "Los Ángeles Negros",
+        "Intérprete o Compositor": "Grupo intérprete",
+        "Foto": "images/autores/los_angeles_negros.jpg",
+        "Biografía": "Grupo chileno de balada romántica y psicodelia que mezcló guitarras eléctricas con arreglos de orquesta. Sus canciones se convirtieron en clásicos del desamor.",
+        "Éxitos": "Murió la flor · Y volveré · Debut y despedida",
+        "Curiosidades": "Su sonido fue muy influyente en bandas de rock, cumbia y música chicha en varios países.",
+        "Tomado de": "N/D"
       }
-    }
-  ]
-}
+    },
+    {
+      "id": "autor-003",
+      "header": "A. Los Terrícolas",
+      "title": "Los Terrícolas",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Los Terrícolas",
+        "Nombre real": "Los Terrícolas",
+        "Intérprete o Compositor": "Grupo intérprete",
+        "Foto": "images/autores/los_terricolas.jpg",
+        "Biografía": "Grupo venezolano de baladas románticas que se volvió muy popular en los años setenta, especialmente en América Central y la región andina.",
+        "Éxitos": "Vagabundo · Te juro que te amo · Luto en el alma",
+        "Curiosidades": "Muchas de sus canciones se usan en serenatas y radios de madrugada dedicadas a amores perdidos.",
+        "Tomado de": "N/D"
+      }
+    },
+    {
+      "id": "autor-004",
+      "header": "A. El Gran Combo de Puerto Rico",
+      "title": "El Gran Combo de Puerto Rico",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "El Gran Combo de Puerto Rico",
+        "Nombre real": "El Gran Combo de Puerto Rico",
+        "Intérprete o Compositor": "Orquesta de salsa",
+        "Foto": "images/autores/gran_combo.jpg",
+        "Biografía": "Orquesta de salsa fundada en Puerto Rico, conocida como 'La Universidad de la Salsa' por la cantidad de músicos que han pasado por sus filas.",
+        "Éxitos": "Brujería · Un verano en Nueva York · Me liberé",
+        "Curiosidades": "Ha acompañado generaciones completas de bailadores en fiestas patronales y carnavales.",
+        "Tomado de": "N/D"
+      }
+    },
+    {
+      "id": "autor-005",
+      "header": "A. Rubén Blades",
+      "title": "Rubén Blades",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Rubén Blades",
+        "Nombre real": "Rubén Blades Bellido de Luna",
+        "Intérprete o Compositor": "Cantante y compositor",
+        "Foto": "images/autores/ruben_blades.jpg",
+        "Biografía": "Cantautor panameño, actor y político. Renovó la salsa al introducir letras narrativas y críticas sociales.",
+        "Éxitos": "Pedro Navaja · Plastico · Buscando América",
+        "Curiosidades": "Además de músico, estudió derecho y ha tenido cargos políticos en Panamá.",
+        "Tomado de": "N/D"
+      }
+    },
+    {
+      "id": "autor-006",
+      "header": "A. Willie Colón",
+      "title": "Willie Colón",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Willie Colón",
+        "Nombre real": "William Anthony Colón Román",
+        "Intérprete o Compositor": "Trombón, arreglista y productor",
+        "Foto": "images/autores/willie_colon.jpg",
+        "Biografía": "Músico nacido en Nueva York de origen puertorriqueño. Figura clave de la salsa dura y del sonido Fania.",
+        "Éxitos": "El Gran Varón · Idilio · Gitana",
+        "Curiosidades": "Su imagen de 'malo' con gabardina y sombrero se volvió icónica en las portadas de salsa.",
+        "Tomado de": "N/D"
+      }
+    },
+    {
+      "id": "autor-007",
+      "header": "A. Óscar D'León",
+      "title": "Óscar D'León",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Óscar D'León",
+        "Nombre real": "Óscar Emilio León Simosa",
+        "Intérprete o Compositor": "Cantante y bajista",
+        "Foto": "images/autores/oscar_d_leon.jpg",
+        "Biografía": "Cantante venezolano de salsa, conocido por tocar el bajo mientras canta. Se ganó el apodo de 'El sonero del mundo'.",
+        "Éxitos": "Llorarás · Detalles · Calculadora",
+        "Curiosidades": "Su bigote y energía en el escenario son parte de su sello personal.",
+        "Tomado de": "N/D"
+      }
+    },
+    {
+      "id": "autor-008",
+      "header": "A. Buena Vista Social Club",
+      "title": "Buena Vista Social Club",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Buena Vista Social Club",
+        "Nombre real": "Colectivo de músicos cubanos",
+        "Intérprete o Compositor": "Intérpretes",
+        "Foto": "images/autores/buena_vista.jpg",
+        "Biografía": "Proyecto que reunió a veteranos músicos cubanos de son y bolero, dándoles reconocimiento internacional en la última etapa de sus vidas.",
+        "Éxitos": "Chan Chan · Dos gardenias (versión) · El cuarto de Tula",
+        "Curiosidades": "El documental y el disco abrieron una verdadera fiebre mundial por la música tradicional cubana.",
+        "Tomado de": "N/D"
+      }
+    },
+    {
+      "id": "autor-009",
+      "header": "A. Joe Arroyo",
+      "title": "Joe Arroyo",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Joe Arroyo",
+        "Nombre real": "Álvaro José Arroyo",
+        "Intérprete o Compositor": "Cantante y compositor",
+        "Foto": "images/autores/joe_arroyo.jpg",
+        "Biografía": "Cantante colombiano que
