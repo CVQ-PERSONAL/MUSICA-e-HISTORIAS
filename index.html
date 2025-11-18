@@ -146,14 +146,38 @@
     .admin h2{margin:0 0 .4rem;}
     .admin-note{margin:0 0 .3rem;font-size:.85rem;color:var(--muted);}
     .admin-counter{margin:0 0 .9rem;font-size:.8rem;color:var(--muted);}
+    .admin-counter .counter-number{
+      color:var(--danger);
+      font-weight:600;
+    }
     .admin-controls{
       display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;margin-bottom:.9rem;
     }
     .admin-controls label{font-size:.86rem;}
-    .admin-controls select{
-      margin-left:.3rem;padding:.2rem .35rem;border-radius:var(--radius-sm);
-      border:1px solid var(--border);background:#161623;color:var(--text);
+
+    select{
+      -webkit-appearance:none;
+      appearance:none;
+      background:#161623;
+      color:var(--text);
+      border:1px solid var(--border);
+      border-radius:var(--radius-sm);
+      padding:.2rem 1.4rem .2rem .45rem;
+      font-size:.86rem;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #ccccdd 50%),
+        linear-gradient(135deg, #ccccdd 50%, transparent 50%);
+      background-position:
+        calc(100% - 10px) 50%,
+        calc(100% - 5px) 50%;
+      background-size:6px 6px;
+      background-repeat:no-repeat;
     }
+
+    .admin-controls select{
+      margin-left:.3rem;
+    }
+
     button.secondary{
       border-radius:999px;border:1px solid var(--border);background:#181824;
       color:var(--text);padding:.4rem .9rem;cursor:pointer;font-size:.85rem;
@@ -176,7 +200,7 @@
     }
     .admin-field{display:flex;flex-direction:column;gap:.25rem;font-size:.86rem;}
     .admin-field label{font-weight:600;}
-    .admin-field input[type="text"],.admin-field textarea{
+    .admin-field input[type="text"],.admin-field textarea,.admin-field input[type="search"]{
       border-radius:var(--radius-sm);border:1px solid var(--border);
       background:#11111e;color:var(--text);padding:.35rem .45rem;
       font-size:.86rem;resize:vertical;min-height:2.1rem;
@@ -215,6 +239,38 @@
     .footer{
       padding:.9rem 5vw 1.1rem;text-align:center;font-size:.78rem;
       color:var(--muted);border-top:1px solid rgba(255,255,255,.05);
+    }
+
+    .song-filter-controls{
+      padding:0.4rem 1rem;
+      font-size:0.8rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.5rem 0.75rem;
+      align-items:center;
+      border-bottom:1px solid rgba(255,255,255,.03);
+    }
+    .song-filter-controls .block{
+      display:flex;
+      flex-direction:column;
+      gap:0.25rem;
+      margin-right:0.5rem;
+    }
+    .song-filter-search{
+      flex:1 1 100%;
+      margin-top:0.4rem;
+    }
+    .song-filter-search input{
+      width:100%;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#11111e;
+      color:var(--text);
+      padding:0.3rem 0.8rem;
+      font-size:0.82rem;
+    }
+    .song-filter-search input::placeholder{
+      color:rgba(180,180,210,.8);
     }
 
     @media(max-width:880px){
@@ -272,7 +328,7 @@
         Edición local en este navegador. Los cambios se guardan en <code>localStorage</code>.
       </p>
       <p class="admin-counter" id="saveCounter">
-        0 cambios guardados en esta sesión.
+        <span class="counter-number">0</span> cambios guardados en esta sesión.
       </p>
 
       <div class="admin-controls">
@@ -288,6 +344,11 @@
         <label>
           Ítem:
           <select id="adminItem" onchange="loadAdminForm()"></select>
+        </label>
+
+        <label class="admin-item-search-label">
+          🔍
+          <input id="adminItemSearch" type="search" placeholder="Buscar ítem…" oninput="filterAdminItems()" />
         </label>
 
         <button type="button" class="primary" onclick="addNewItem()">Agregar nuevo ítem</button>
@@ -366,7 +427,8 @@ let adminCurrentIndex = 0;
 // Filtros/orden para Canciones
 let songFilterField = null;   // "Género" | "Intérprete" | null
 let songFilterValue = null;   // valor concreto
-let songSortField = null;     // "titulo" | "Intérprete" | "Género" | null
+let songSortField = null;     // "asc" | "desc" | null
+let songSearchTerm = "";      // búsqueda local en la lista de canciones
 
 const normalize = (s) => (s || "").toLowerCase();
 const clone = (o) => JSON.parse(JSON.stringify(o));
@@ -463,6 +525,7 @@ function switchView(section) {
     songFilterField = null;
     songFilterValue = null;
     songSortField = null;
+    songSearchTerm = "";
   }
 
   renderList(section);
@@ -483,6 +546,21 @@ function switchView(section) {
 function applySongFilterAndSort(items) {
   let result = items.slice();
 
+  // búsqueda local
+  if (songSearchTerm) {
+    result = result.filter((item) => {
+      const t = normalize(item.title);
+      const a = normalize(item.fields["Intérprete"]);
+      const g = normalize(item.fields["Género"]);
+      return (
+        t.includes(songSearchTerm) ||
+        a.includes(songSearchTerm) ||
+        g.includes(songSearchTerm)
+      );
+    });
+  }
+
+  // Filtrar por género / intérprete
   if (songFilterField && songFilterValue) {
     result = result.filter((item) => {
       const v = (item.fields[songFilterField] || "").trim();
@@ -490,19 +568,13 @@ function applySongFilterAndSort(items) {
     });
   }
 
-  if (songSortField) {
+  // Ordenar por título A→Z o Z→A
+  if (songSortField === "asc" || songSortField === "desc") {
     result.sort((a, b) => {
-      let va = "";
-      let vb = "";
-      if (songSortField === "titulo") {
-        va = (a.title || "").toLowerCase();
-        vb = (b.title || "").toLowerCase();
-      } else {
-        va = (a.fields[songSortField] || "").toLowerCase();
-        vb = (b.fields[songSortField] || "").toLowerCase();
-      }
-      if (va < vb) return -1;
-      if (va > vb) return 1;
+      const va = (a.title || "").toLowerCase();
+      const vb = (b.title || "").toLowerCase();
+      if (va < vb) return songSortField === "asc" ? -1 : 1;
+      if (va > vb) return songSortField === "asc" ? 1 : -1;
       return 0;
     });
   }
@@ -522,17 +594,14 @@ function buildSongControls(container) {
   });
 
   const controls = document.createElement("div");
-  controls.style.padding = "0.4rem 1rem";
-  controls.style.fontSize = "0.8rem";
-  controls.style.display = "flex";
-  controls.style.flexWrap = "wrap";
-  controls.style.gap = "0.5rem 0.75rem";
-  controls.style.alignItems = "center";
-  controls.style.borderBottom = "1px solid rgba(255,255,255,.03)";
+  controls.className = "song-filter-controls";
 
-  const filterLabel = document.createElement("span");
-  filterLabel.textContent = "Filtrar por:";
-  controls.appendChild(filterLabel);
+  // Bloque de filtro
+  const blockFilter = document.createElement("div");
+  blockFilter.className = "block";
+  const flabel = document.createElement("span");
+  flabel.textContent = "Filtrar por:";
+  blockFilter.appendChild(flabel);
 
   const filterTypeSel = document.createElement("select");
   filterTypeSel.appendChild(new Option("Todos", "none"));
@@ -543,10 +612,10 @@ function buildSongControls(container) {
   else if (songFilterField === "Intérprete") filterTypeSel.value = "Intérprete";
   else filterTypeSel.value = "none";
 
-  controls.appendChild(filterTypeSel);
+  blockFilter.appendChild(filterTypeSel);
 
   const filterValueSel = document.createElement("select");
-  filterValueSel.style.minWidth = "140px";
+  filterValueSel.style.marginTop = "0.25rem";
 
   function populateFilterValues() {
     filterValueSel.innerHTML = "";
@@ -568,7 +637,8 @@ function buildSongControls(container) {
   }
 
   populateFilterValues();
-  controls.appendChild(filterValueSel);
+  blockFilter.appendChild(filterValueSel);
+  controls.appendChild(blockFilter);
 
   filterTypeSel.addEventListener("change", () => {
     if (filterTypeSel.value === "none") {
@@ -587,18 +657,21 @@ function buildSongControls(container) {
     renderList("canciones");
   });
 
-  const sortLabel = document.createElement("span");
-  sortLabel.textContent = "Ordenar por:";
-  sortLabel.style.marginLeft = "0.75rem";
-  controls.appendChild(sortLabel);
+  // Bloque ordenar
+  const blockSort = document.createElement("div");
+  blockSort.className = "block";
+  const slabel = document.createElement("span");
+  slabel.textContent = "Ordenar por:";
+  blockSort.appendChild(slabel);
 
   const sortSel = document.createElement("select");
   sortSel.appendChild(new Option("Original", ""));
-  sortSel.appendChild(new Option("Canción", "titulo"));
-  sortSel.appendChild(new Option("Intérprete", "Intérprete"));
-  sortSel.appendChild(new Option("Género", "Género"));
+  sortSel.appendChild(new Option("A → Z", "asc"));
+  sortSel.appendChild(new Option("Z → A", "desc"));
 
   sortSel.value = songSortField || "";
+  blockSort.appendChild(sortSel);
+  controls.appendChild(blockSort);
 
   sortSel.addEventListener("change", () => {
     const v = sortSel.value;
@@ -606,7 +679,19 @@ function buildSongControls(container) {
     renderList("canciones");
   });
 
-  controls.appendChild(sortSel);
+  // Búsqueda local de canciones
+  const searchWrapper = document.createElement("div");
+  searchWrapper.className = "song-filter-search";
+  const searchInput = document.createElement("input");
+  searchInput.type = "search";
+  searchInput.placeholder = "🔍 Buscar canción, intérprete o género…";
+  searchInput.value = songSearchTerm || "";
+  searchInput.oninput = () => {
+    songSearchTerm = normalize(searchInput.value);
+    renderList("canciones");
+  };
+  searchWrapper.appendChild(searchInput);
+  controls.appendChild(searchWrapper);
 
   container.appendChild(controls);
 }
@@ -842,7 +927,7 @@ function showItem(section, index) {
   viewer.appendChild(card);
 }
 
-// ===== BÚSQUEDA ======================================================
+// ===== BÚSQUEDA GLOBAL ===============================================
 function searchItems() {
   const query = normalize(document.getElementById("searchBox").value);
   const list = document.getElementById("list");
@@ -940,8 +1025,42 @@ function renderAdminItems() {
     itemSel.appendChild(opt);
   }
 
+  const searchInput = document.getElementById("adminItemSearch");
+  if (searchInput) searchInput.value = "";
+
   adminCurrentIndex = itemSel.options.length ? Number(itemSel.value) || 0 : 0;
   loadAdminForm();
+}
+
+function filterAdminItems() {
+  const searchInput = document.getElementById("adminItemSearch");
+  const itemSel = document.getElementById("adminItem");
+  const q = normalize(searchInput.value || "");
+
+  itemSel.innerHTML = "";
+  const arr = data[adminCurrentSection] || [];
+  let firstIndex = null;
+
+  arr.forEach((item, idx) => {
+    const t = normalize(item.title || item.header || "");
+    if (!q || t.includes(q)) {
+      const opt = new Option(item.title || item.header, idx);
+      itemSel.add(opt);
+      if (firstIndex === null) firstIndex = idx;
+    }
+  });
+
+  if (firstIndex === null) {
+    const opt = new Option("(Sin resultados)", "-1");
+    itemSel.add(opt);
+    adminCurrentIndex = -1;
+    document.getElementById("adminForm").innerHTML =
+      "<p class='empty-state'>No hay coincidencias para esa búsqueda.</p>";
+  } else {
+    adminCurrentIndex = firstIndex;
+    itemSel.value = String(firstIndex);
+    loadAdminForm();
+  }
 }
 
 function loadAdminForm() {
@@ -1135,7 +1254,10 @@ function saveAdminForm(ev) {
   sessionSaveCount += 1;
   const counterEl = document.getElementById("saveCounter");
   if (counterEl) {
-    counterEl.textContent = `${sessionSaveCount} cambio${sessionSaveCount === 1 ? "" : "s"} guardado${sessionSaveCount === 1 ? "" : "s"} en esta sesión.`;
+    counterEl.innerHTML =
+      `<span class="counter-number">${sessionSaveCount}</span> ` +
+      `cambio${sessionSaveCount === 1 ? "" : "s"} guardado` +
+      `${sessionSaveCount === 1 ? "" : "s"} en esta sesión.`;
   }
 }
 
@@ -1221,7 +1343,7 @@ function loadFromLocalStorage() {
   }
 }
 
-// Exportar JSON para GitHub (se llama desde el botón Exportar JSON)
+// Exportar JSON para GitHub
 function exportJson() {
   try {
     const json = JSON.stringify(data, null, 2);
