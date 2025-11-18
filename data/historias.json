@@ -1,0 +1,51 @@
+{
+  "canciones": [
+    {
+      "id": "canciones-0",
+      "header": "1. Bohemian Rhapsody",
+      "title": "Bohemian Rhapsody",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Bohemian Rhapsody",
+        "Intérprete": "Queen",
+        "Compositor": "Freddie Mercury",
+        "Imagen": "images/bohemian.jpg",
+        "Video": "https://youtu.be/fJ9rUzIMcZQ",
+        "Tomado de": "Documental sobre Queen (BBC, 2015)",
+        "Historia": "Bohemian Rhapsody fue lanzada en 1975 como parte del álbum 'A Night at the Opera'. Su estructura rompe con la forma tradicional de canción pop, mezclando balada, ópera y rock. Durante años, la banda se negó a explicar el significado exacto de la letra, lo que ha alimentado todo tipo de interpretaciones."
+      }
+    }
+  ],
+  "autores": [
+    {
+      "id": "autores-0",
+      "header": "A. Freddie Mercury",
+      "title": "Freddie Mercury",
+      "type": "autores",
+      "fields": {
+        "Nombre artístico": "Freddie Mercury",
+        "Nombre real": "Farrokh Bulsara",
+        "Intérprete o Compositor": "Intérprete y compositor",
+        "Foto": "images/freddie.jpg",
+        "Biografía": "Freddie Mercury (1946–1991) fue el vocalista principal de Queen y es considerado una de las voces más potentes y carismáticas de la historia del rock. Nació en Zanzíbar, creció en la India y se trasladó al Reino Unido en su juventud.",
+        "Éxitos": "Bohemian Rhapsody, Somebody to Love, We Are the Champions, Don't Stop Me Now.",
+        "Curiosidades": "Fue un apasionado del arte y los gatos. Su rango vocal y presencia escénica marcaron a generaciones enteras.",
+        "Tomado de": "Biografías oficiales y material de archivo de Queen."
+      }
+    }
+  ],
+  "curiosidades": [
+    {
+      "id": "curiosidades-0",
+      "header": "- Origen del nombre Queen",
+      "title": "Origen del nombre Queen",
+      "type": "curiosidades",
+      "fields": {
+        "Tema": "Origen del nombre Queen",
+        "Detalle": "Freddie Mercury propuso el nombre 'Queen' porque le parecía un nombre corto, fuerte, universal y con un toque teatral. Aunque tenía connotaciones controvertidas, la banda decidió adoptarlo precisamente por su fuerza y ambigüedad.",
+        "Imagen": "images/queen-logo.jpg",
+        "Tomado de": "Entrevistas a la banda y material de archivo."
+      }
+    }
+  ]
+}
