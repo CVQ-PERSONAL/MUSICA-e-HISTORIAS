@@ -144,7 +144,8 @@
     .empty-state{text-align:center;color:var(--muted);margin-top:3rem;}
 
     .admin h2{margin:0 0 .4rem;}
-    .admin-note{margin:0 0 .9rem;font-size:.85rem;color:var(--muted);}
+    .admin-note{margin:0 0 .3rem;font-size:.85rem;color:var(--muted);}
+    .admin-counter{margin:0 0 .9rem;font-size:.8rem;color:var(--muted);}
     .admin-controls{
       display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;margin-bottom:.9rem;
     }
@@ -158,6 +159,16 @@
       color:var(--text);padding:.4rem .9rem;cursor:pointer;font-size:.85rem;
     }
     button.secondary:hover{border-color:var(--accent);background:rgba(255,255,255,.04);}
+    button.primary{
+      border-radius:999px;border:none;background:linear-gradient(135deg,#ffb347,#ff7f50);
+      color:#1a1208;padding:.55rem 1.1rem;cursor:pointer;font-weight:600;font-size:.9rem;
+    }
+    button.primary:hover{filter:brightness(1.05);}
+    button.danger{
+      border-radius:999px;border:1px solid var(--danger);background:transparent;
+      color:var(--danger);padding:.45rem 1rem;cursor:pointer;font-size:.86rem;
+    }
+    button.danger:hover{background:rgba(255,92,92,.12);}
 
     .admin-form{
       display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -173,17 +184,8 @@
     .admin-field textarea{min-height:4.2rem;}
     .admin-actions{
       grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.4rem;
+      align-items:center;
     }
-    button.primary{
-      border-radius:999px;border:none;background:linear-gradient(135deg,#ffb347,#ff7f50);
-      color:#1a1208;padding:.55rem 1.1rem;cursor:pointer;font-weight:600;font-size:.9rem;
-    }
-    button.primary:hover{filter:brightness(1.05);}
-    button.danger{
-      border-radius:999px;border:1px solid var(--danger);background:transparent;
-      color:var(--danger);padding:.45rem 1rem;cursor:pointer;font-size:.86rem;
-    }
-    button.danger:hover{background:rgba(255,92,92,.12);}
 
     .field.long-text .collapsible-toggle{
       margin-left:.3rem;
@@ -268,9 +270,9 @@
       <h2>Administración</h2>
       <p class="admin-note">
         Edición local en este navegador. Los cambios se guardan en <code>localStorage</code>.
-        <br />
-        Cada vez que guardes, se descargará automáticamente un archivo <code>historias.json</code>.
-        Debes subirlo a <code>/data/historias.json</code> en GitHub para que las actualizaciones sean permanentes.
+      </p>
+      <p class="admin-counter" id="saveCounter">
+        0 cambios guardados en esta sesión.
       </p>
 
       <div class="admin-controls">
@@ -288,8 +290,7 @@
           <select id="adminItem" onchange="loadAdminForm()"></select>
         </label>
 
-        <button type="button" class="secondary" onclick="addNewItem()">Agregar nuevo ítem</button>
-        <button type="button" class="secondary" onclick="exportJson()">Exportar JSON (para GitHub)</button>
+        <button type="button" class="primary" onclick="addNewItem()">Agregar nuevo ítem</button>
       </div>
 
       <form id="adminForm" class="admin-form" onsubmit="saveAdminForm(event)"></form>
@@ -309,6 +310,9 @@ let adminUnlocked = false;
 
 // 🔐 Clave para datos locales (nueva versión)
 const LS_KEY = "historias_musica_data_v5";
+
+// Contador de guardados en la sesión
+let sessionSaveCount = 0;
 
 // ESQUEMA DE DATOS
 const SCHEMA = {
@@ -430,15 +434,12 @@ async function init() {
     data.autores = Array.isArray(jsonData.autores) ? jsonData.autores : [];
     data.curiosidades = Array.isArray(jsonData.curiosidades) ? jsonData.curiosidades : [];
 
-    // Normalizar según esquema
     ["canciones", "autores", "curiosidades"].forEach((sec) => {
       data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
     });
 
-    // Mezclar con lo que haya en localStorage
     loadFromLocalStorage();
 
-    // Normalizar de nuevo después de mezclar
     ["canciones", "autores", "curiosidades"].forEach((sec) => {
       data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
     });
@@ -458,7 +459,6 @@ function switchView(section) {
   currentSection = section;
   document.getElementById("admin").hidden = true;
 
-  // Reset de filtros al cambiar de sección
   if (section !== "canciones") {
     songFilterField = null;
     songFilterValue = null;
@@ -483,7 +483,6 @@ function switchView(section) {
 function applySongFilterAndSort(items) {
   let result = items.slice();
 
-  // Filtrar
   if (songFilterField && songFilterValue) {
     result = result.filter((item) => {
       const v = (item.fields[songFilterField] || "").trim();
@@ -491,7 +490,6 @@ function applySongFilterAndSort(items) {
     });
   }
 
-  // Ordenar
   if (songSortField) {
     result.sort((a, b) => {
       let va = "";
@@ -532,18 +530,14 @@ function buildSongControls(container) {
   controls.style.alignItems = "center";
   controls.style.borderBottom = "1px solid rgba(255,255,255,.03)";
 
-  // Filtro tipo
   const filterLabel = document.createElement("span");
   filterLabel.textContent = "Filtrar por:";
   controls.appendChild(filterLabel);
 
   const filterTypeSel = document.createElement("select");
-  const optTodos = new Option("Todos", "none");
-  const optGen = new Option("Género", "Género");
-  const optInt = new Option("Intérprete", "Intérprete");
-  filterTypeSel.appendChild(optTodos);
-  filterTypeSel.appendChild(optGen);
-  filterTypeSel.appendChild(optInt);
+  filterTypeSel.appendChild(new Option("Todos", "none"));
+  filterTypeSel.appendChild(new Option("Género", "Género"));
+  filterTypeSel.appendChild(new Option("Intérprete", "Intérprete"));
 
   if (songFilterField === "Género") filterTypeSel.value = "Género";
   else if (songFilterField === "Intérprete") filterTypeSel.value = "Intérprete";
@@ -551,29 +545,21 @@ function buildSongControls(container) {
 
   controls.appendChild(filterTypeSel);
 
-  // Filtro valor
   const filterValueSel = document.createElement("select");
   filterValueSel.style.minWidth = "140px";
 
   function populateFilterValues() {
     filterValueSel.innerHTML = "";
-    const placeholder = new Option("(todos)", "");
-    filterValueSel.appendChild(placeholder);
+    filterValueSel.appendChild(new Option("(todos)", ""));
 
     let sourceSet = null;
-    if (filterTypeSel.value === "Género") {
-      sourceSet = genres;
-    } else if (filterTypeSel.value === "Intérprete") {
-      sourceSet = artists;
-    }
+    if (filterTypeSel.value === "Género") sourceSet = genres;
+    else if (filterTypeSel.value === "Intérprete") sourceSet = artists;
 
     if (sourceSet) {
       Array.from(sourceSet)
         .sort((a, b) => a.localeCompare(b))
-        .forEach((val) => {
-          const opt = new Option(val, val);
-          filterValueSel.appendChild(opt);
-        });
+        .forEach((val) => filterValueSel.appendChild(new Option(val, val)));
     }
 
     if (songFilterValue && filterTypeSel.value === songFilterField) {
@@ -601,7 +587,6 @@ function buildSongControls(container) {
     renderList("canciones");
   });
 
-  // Orden
   const sortLabel = document.createElement("span");
   sortLabel.textContent = "Ordenar por:";
   sortLabel.style.marginLeft = "0.75rem";
@@ -613,8 +598,7 @@ function buildSongControls(container) {
   sortSel.appendChild(new Option("Intérprete", "Intérprete"));
   sortSel.appendChild(new Option("Género", "Género"));
 
-  if (songSortField) sortSel.value = songSortField;
-  else sortSel.value = "";
+  sortSel.value = songSortField || "";
 
   sortSel.addEventListener("change", () => {
     const v = sortSel.value;
@@ -638,7 +622,6 @@ function renderList(section) {
 
   let items = data[section] || [];
 
-  // Controles extra para Canciones
   if (section === "canciones") {
     buildSongControls(container);
     items = applySongFilterAndSort(items);
@@ -651,7 +634,6 @@ function renderList(section) {
     const li = document.createElement("li");
     li.className = "item";
 
-    // Necesitamos el índice real en data[section]
     const realIndex = data[section].indexOf(item);
     li.onclick = () => showItem(section, realIndex >= 0 ? realIndex : index);
 
@@ -676,14 +658,6 @@ function renderList(section) {
     container.appendChild(empty);
   } else {
     container.appendChild(ul);
-  }
-}
-
-function clearViewerIfEmpty() {
-  const viewer = document.getElementById("viewer");
-  if (!viewer.innerHTML.trim()) {
-    viewer.innerHTML =
-      "<div class='empty-state'><p>Selecciona una canción, autor o curiosidad para ver su historia.</p></div>";
   }
 }
 
@@ -784,7 +758,6 @@ function showItem(section, index) {
     card.appendChild(fieldDiv);
   });
 
-  // Imagen
   if (imageFieldName) {
     const imgSrc = (item.fields[imageFieldName] || "").trim();
     if (imgSrc && imgSrc !== "N/D") {
@@ -810,7 +783,6 @@ function showItem(section, index) {
     }
   }
 
-  // Video
   if (videoFieldName) {
     const rawVal = item.fields[videoFieldName];
     const vidSrc = (rawVal || "").trim();
@@ -878,7 +850,6 @@ function searchItems() {
 
   if (!query) {
     renderList(currentSection);
-    clearViewerIfEmpty();
     return;
   }
 
@@ -986,7 +957,7 @@ function loadAdminForm() {
     return;
   }
 
-  const item = items[adminCurrentIndex];
+  const item = items[adminCurrentSection === "canciones" ? adminCurrentIndex : adminCurrentIndex];
   const schema = SCHEMA[adminCurrentSection];
 
   schema.fields.forEach((fieldName) => {
@@ -1043,8 +1014,15 @@ function loadAdminForm() {
   const saveBtn = document.createElement("button");
   saveBtn.type = "submit";
   saveBtn.className = "primary";
-  saveBtn.textContent = "Previsualizar y guardar";
+  saveBtn.textContent = "Guardar";
   actions.appendChild(saveBtn);
+
+  const exportBtn = document.createElement("button");
+  exportBtn.type = "button";
+  exportBtn.className = "secondary";
+  exportBtn.textContent = "Exportar JSON";
+  exportBtn.onclick = () => exportJson();
+  actions.appendChild(exportBtn);
 
   const deleteBtn = document.createElement("button");
   deleteBtn.type = "button";
@@ -1107,7 +1085,7 @@ function syncSingleAuthor(name, songTitle) {
   }
 }
 
-// Guardar con PREVIEW
+// Guardar (sin previsualización, solo local)
 function saveAdminForm(ev) {
   ev.preventDefault();
 
@@ -1116,7 +1094,6 @@ function saveAdminForm(ev) {
 
   const original = items[adminCurrentIndex];
   const schema = SCHEMA[adminCurrentSection];
-
   const updated = clone(original);
 
   schema.fields.forEach((fieldName) => {
@@ -1141,31 +1118,24 @@ function saveAdminForm(ev) {
   }
 
   data[adminCurrentSection][adminCurrentIndex] = updated;
+
+  if (adminCurrentSection === "canciones") {
+    syncAuthorsFromSong(updated);
+  }
+
+  saveToLocalStorage();
+
+  ["canciones", "autores", "curiosidades"].forEach((sec) => {
+    data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
+  });
+
+  renderList(currentSection);
   showItem(adminCurrentSection, adminCurrentIndex);
 
-  const ok = confirm(
-    "Estás viendo una PREVISUALIZACIÓN.\n\n¿Quieres publicar estos cambios en este navegador y generar un nuevo historias.json?"
-  );
-
-  if (ok) {
-    // Sincronizar autores desde canción
-    if (adminCurrentSection === "canciones") {
-      syncAuthorsFromSong(updated);
-    }
-
-    saveToLocalStorage();
-    renderList(currentSection);
-
-    // Re-normalizar por si se añadieron autores
-    ["canciones", "autores", "curiosidades"].forEach((sec) => {
-      data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
-    });
-
-    // Exportar JSON automáticamente (descarga historias.json)
-    exportJson({ auto: true });
-  } else {
-    data[adminCurrentSection][adminCurrentIndex] = original;
-    showItem(adminCurrentSection, adminCurrentIndex);
+  sessionSaveCount += 1;
+  const counterEl = document.getElementById("saveCounter");
+  if (counterEl) {
+    counterEl.textContent = `${sessionSaveCount} cambio${sessionSaveCount === 1 ? "" : "s"} guardado${sessionSaveCount === 1 ? "" : "s"} en esta sesión.`;
   }
 }
 
@@ -1251,10 +1221,8 @@ function loadFromLocalStorage() {
   }
 }
 
-// Exportar JSON para GitHub
-function exportJson(options) {
-  const auto = options && options.auto;
-
+// Exportar JSON para GitHub (se llama desde el botón Exportar JSON)
+function exportJson() {
   try {
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: "application/json" });
@@ -1268,17 +1236,10 @@ function exportJson(options) {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (auto) {
-      alert(
-        "Se generó y descargó un nuevo historias.json con tus cambios.\n\n" +
-        "Súbelo al repositorio en /data/historias.json para que se actualice la web."
-      );
-    } else {
-      alert(
-        "Se descargó historias.json.\n\n" +
-        "Súbelo al repositorio en /data/historias.json para que la web use estos datos."
-      );
-    }
+    alert(
+      "Se descargó historias.json con los cambios actuales.\n\n" +
+      "Súbelo al repositorio en /data/historias.json para que la web use estos datos."
+    );
   } catch (e) {
     console.error("No se pudo exportar JSON", e);
     alert("Ocurrió un error al exportar el JSON.");
