@@ -268,7 +268,9 @@
       <h2>Administración</h2>
       <p class="admin-note">
         Edición local en este navegador. Los cambios se guardan en <code>localStorage</code>.
-        Para hacerlos permanentes, exporta el JSON y súbelo a <code>data/historias.json</code> en GitHub.
+        <br />
+        Cada vez que guardes, se descargará automáticamente un archivo <code>historias.json</code>.
+        Debes subirlo a <code>/data/historias.json</code> en GitHub para que las actualizaciones sean permanentes.
       </p>
 
       <div class="admin-controls">
@@ -305,15 +307,24 @@
 const ADMIN_PASSWORD = "historia2025";
 let adminUnlocked = false;
 
-// 🔐 Clave para datos locales
-const LS_KEY = "historias_musica_data_v4";
+// 🔐 Clave para datos locales (nueva versión)
+const LS_KEY = "historias_musica_data_v5";
 
 // ESQUEMA DE DATOS
 const SCHEMA = {
   canciones: {
     label: "Canciones",
     typeLabel: "Canción",
-    fields: ["Canción", "Intérprete", "Compositor", "Imagen", "Video", "Tomado de", "Historia"],
+    fields: [
+      "Canción",
+      "Intérprete",
+      "Compositor",
+      "Género",
+      "Imagen",
+      "Video",
+      "Tomado de",
+      "Historia"
+    ],
     longFields: ["Historia"],
     mediaFields: { image: "Imagen", video: "Video" }
   },
@@ -348,8 +359,56 @@ let currentSection = "canciones";
 let adminCurrentSection = "canciones";
 let adminCurrentIndex = 0;
 
+// Filtros/orden para Canciones
+let songFilterField = null;   // "Género" | "Intérprete" | null
+let songFilterValue = null;   // valor concreto
+let songSortField = null;     // "titulo" | "Intérprete" | "Género" | null
+
 const normalize = (s) => (s || "").toLowerCase();
 const clone = (o) => JSON.parse(JSON.stringify(o));
+
+// Normalización de ítems según SCHEMA
+function normalizeItem(item, section) {
+  const schema = SCHEMA[section];
+  if (!schema) return item;
+
+  if (!item.fields || typeof item.fields !== "object") {
+    item.fields = {};
+  }
+
+  schema.fields.forEach((f) => {
+    if (item.fields[f] === undefined || item.fields[f] === null || item.fields[f] === "") {
+      item.fields[f] = "N/D";
+    }
+  });
+
+  if (!item.type) item.type = section;
+  if (!item.id) {
+    item.id = section + "-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+  }
+
+  if (!item.title || !item.title.trim) {
+    if (section === "canciones" && item.fields["Canción"] && item.fields["Canción"] !== "N/D") {
+      item.title = item.fields["Canción"];
+    } else if (
+      section === "autores" &&
+      item.fields["Nombre artístico"] &&
+      item.fields["Nombre artístico"] !== "N/D"
+    ) {
+      item.title = item.fields["Nombre artístico"];
+    } else if (
+      section === "curiosidades" &&
+      item.fields["Tema"] &&
+      item.fields["Tema"] !== "N/D"
+    ) {
+      item.title = item.fields["Tema"];
+    } else {
+      item.title = item.header || "Sin título";
+    }
+  }
+
+  return item;
+}
 
 // INICIO
 document.addEventListener("DOMContentLoaded", () => {
@@ -371,7 +430,19 @@ async function init() {
     data.autores = Array.isArray(jsonData.autores) ? jsonData.autores : [];
     data.curiosidades = Array.isArray(jsonData.curiosidades) ? jsonData.curiosidades : [];
 
+    // Normalizar según esquema
+    ["canciones", "autores", "curiosidades"].forEach((sec) => {
+      data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
+    });
+
+    // Mezclar con lo que haya en localStorage
     loadFromLocalStorage();
+
+    // Normalizar de nuevo después de mezclar
+    ["canciones", "autores", "curiosidades"].forEach((sec) => {
+      data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
+    });
+
     switchView("canciones");
     renderAdminItems();
   } catch (e) {
@@ -386,6 +457,13 @@ async function init() {
 function switchView(section) {
   currentSection = section;
   document.getElementById("admin").hidden = true;
+
+  // Reset de filtros al cambiar de sección
+  if (section !== "canciones") {
+    songFilterField = null;
+    songFilterValue = null;
+    songSortField = null;
+  }
 
   renderList(section);
 
@@ -402,6 +480,153 @@ function switchView(section) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function applySongFilterAndSort(items) {
+  let result = items.slice();
+
+  // Filtrar
+  if (songFilterField && songFilterValue) {
+    result = result.filter((item) => {
+      const v = (item.fields[songFilterField] || "").trim();
+      return v === songFilterValue;
+    });
+  }
+
+  // Ordenar
+  if (songSortField) {
+    result.sort((a, b) => {
+      let va = "";
+      let vb = "";
+      if (songSortField === "titulo") {
+        va = (a.title || "").toLowerCase();
+        vb = (b.title || "").toLowerCase();
+      } else {
+        va = (a.fields[songSortField] || "").toLowerCase();
+        vb = (b.fields[songSortField] || "").toLowerCase();
+      }
+      if (va < vb) return -1;
+      if (va > vb) return 1;
+      return 0;
+    });
+  }
+
+  return result;
+}
+
+function buildSongControls(container) {
+  const genres = new Set();
+  const artists = new Set();
+
+  data.canciones.forEach((item) => {
+    const g = (item.fields["Género"] || "").trim();
+    const a = (item.fields["Intérprete"] || "").trim();
+    if (g && g !== "N/D") genres.add(g);
+    if (a && a !== "N/D") artists.add(a);
+  });
+
+  const controls = document.createElement("div");
+  controls.style.padding = "0.4rem 1rem";
+  controls.style.fontSize = "0.8rem";
+  controls.style.display = "flex";
+  controls.style.flexWrap = "wrap";
+  controls.style.gap = "0.5rem 0.75rem";
+  controls.style.alignItems = "center";
+  controls.style.borderBottom = "1px solid rgba(255,255,255,.03)";
+
+  // Filtro tipo
+  const filterLabel = document.createElement("span");
+  filterLabel.textContent = "Filtrar por:";
+  controls.appendChild(filterLabel);
+
+  const filterTypeSel = document.createElement("select");
+  const optTodos = new Option("Todos", "none");
+  const optGen = new Option("Género", "Género");
+  const optInt = new Option("Intérprete", "Intérprete");
+  filterTypeSel.appendChild(optTodos);
+  filterTypeSel.appendChild(optGen);
+  filterTypeSel.appendChild(optInt);
+
+  if (songFilterField === "Género") filterTypeSel.value = "Género";
+  else if (songFilterField === "Intérprete") filterTypeSel.value = "Intérprete";
+  else filterTypeSel.value = "none";
+
+  controls.appendChild(filterTypeSel);
+
+  // Filtro valor
+  const filterValueSel = document.createElement("select");
+  filterValueSel.style.minWidth = "140px";
+
+  function populateFilterValues() {
+    filterValueSel.innerHTML = "";
+    const placeholder = new Option("(todos)", "");
+    filterValueSel.appendChild(placeholder);
+
+    let sourceSet = null;
+    if (filterTypeSel.value === "Género") {
+      sourceSet = genres;
+    } else if (filterTypeSel.value === "Intérprete") {
+      sourceSet = artists;
+    }
+
+    if (sourceSet) {
+      Array.from(sourceSet)
+        .sort((a, b) => a.localeCompare(b))
+        .forEach((val) => {
+          const opt = new Option(val, val);
+          filterValueSel.appendChild(opt);
+        });
+    }
+
+    if (songFilterValue && filterTypeSel.value === songFilterField) {
+      filterValueSel.value = songFilterValue;
+    }
+  }
+
+  populateFilterValues();
+  controls.appendChild(filterValueSel);
+
+  filterTypeSel.addEventListener("change", () => {
+    if (filterTypeSel.value === "none") {
+      songFilterField = null;
+      songFilterValue = null;
+    } else {
+      songFilterField = filterTypeSel.value;
+      songFilterValue = "";
+    }
+    populateFilterValues();
+    renderList("canciones");
+  });
+
+  filterValueSel.addEventListener("change", () => {
+    songFilterValue = filterValueSel.value || null;
+    renderList("canciones");
+  });
+
+  // Orden
+  const sortLabel = document.createElement("span");
+  sortLabel.textContent = "Ordenar por:";
+  sortLabel.style.marginLeft = "0.75rem";
+  controls.appendChild(sortLabel);
+
+  const sortSel = document.createElement("select");
+  sortSel.appendChild(new Option("Original", ""));
+  sortSel.appendChild(new Option("Canción", "titulo"));
+  sortSel.appendChild(new Option("Intérprete", "Intérprete"));
+  sortSel.appendChild(new Option("Género", "Género"));
+
+  if (songSortField) sortSel.value = songSortField;
+  else sortSel.value = "";
+
+  sortSel.addEventListener("change", () => {
+    const v = sortSel.value;
+    songSortField = v || null;
+    renderList("canciones");
+  });
+
+  controls.appendChild(sortSel);
+
+  container.appendChild(controls);
+}
+
 function renderList(section) {
   const container = document.getElementById("list");
   container.innerHTML = "";
@@ -411,13 +636,24 @@ function renderList(section) {
   label.textContent = SCHEMA[section].label.toUpperCase();
   container.appendChild(label);
 
+  let items = data[section] || [];
+
+  // Controles extra para Canciones
+  if (section === "canciones") {
+    buildSongControls(container);
+    items = applySongFilterAndSort(items);
+  }
+
   const ul = document.createElement("ul");
   ul.className = "item-list";
 
-  data[section].forEach((item, index) => {
+  items.forEach((item, index) => {
     const li = document.createElement("li");
     li.className = "item";
-    li.onclick = () => showItem(section, index);
+
+    // Necesitamos el índice real en data[section]
+    const realIndex = data[section].indexOf(item);
+    li.onclick = () => showItem(section, realIndex >= 0 ? realIndex : index);
 
     const title = document.createElement("div");
     title.className = "item-title";
@@ -432,7 +668,7 @@ function renderList(section) {
     ul.appendChild(li);
   });
 
-  if (!data[section].length) {
+  if (!items.length) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
     empty.innerHTML =
@@ -490,6 +726,12 @@ function showItem(section, index) {
   const viewer = document.getElementById("viewer");
   const item = data[section][index];
   const schema = SCHEMA[section];
+
+  if (!item) {
+    viewer.innerHTML =
+      "<div class='empty-state'><p>No se encontró el elemento seleccionado.</p></div>";
+    return;
+  }
 
   const card = document.createElement("article");
   card.className = "card";
@@ -816,6 +1058,55 @@ function loadAdminForm() {
   showItem(adminCurrentSection, adminCurrentIndex);
 }
 
+// Sincronizar autores/cantantes a partir de una canción
+function syncAuthorsFromSong(songItem) {
+  if (!songItem || songItem.type !== "canciones") return;
+
+  const songTitle =
+    (songItem.fields["Canción"] && songItem.fields["Canción"] !== "N/D")
+      ? songItem.fields["Canción"]
+      : (songItem.title || "Canción sin título");
+
+  const artist = (songItem.fields["Intérprete"] || "").trim();
+  const composer = (songItem.fields["Compositor"] || "").trim();
+
+  if (artist && artist !== "N/D") {
+    syncSingleAuthor(artist, songTitle);
+  }
+  if (composer && composer !== "N/D" && composer !== artist) {
+    syncSingleAuthor(composer, songTitle);
+  }
+}
+
+function syncSingleAuthor(name, songTitle) {
+  let author = data.autores.find(
+    (a) => a.fields && a.fields["Nombre artístico"] === name
+  );
+
+  if (!author) {
+    const fields = {};
+    SCHEMA.autores.fields.forEach((f) => (fields[f] = "N/D"));
+    fields["Nombre artístico"] = name;
+    fields["Éxitos"] = songTitle || "N/D";
+
+    author = {
+      id: "autores-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+      header: "A. " + name,
+      title: name,
+      type: "autores",
+      fields
+    };
+    data.autores.push(author);
+  } else {
+    const currentHits = author.fields["Éxitos"] || "N/D";
+    if (currentHits === "N/D" || !currentHits.trim()) {
+      author.fields["Éxitos"] = songTitle;
+    } else if (songTitle && !currentHits.includes(songTitle)) {
+      author.fields["Éxitos"] = currentHits + " · " + songTitle;
+    }
+  }
+}
+
 // Guardar con PREVIEW
 function saveAdminForm(ev) {
   ev.preventDefault();
@@ -853,13 +1144,25 @@ function saveAdminForm(ev) {
   showItem(adminCurrentSection, adminCurrentIndex);
 
   const ok = confirm(
-    "Estás viendo una PREVISUALIZACIÓN.\n\n¿Quieres publicar estos cambios en este navegador?"
+    "Estás viendo una PREVISUALIZACIÓN.\n\n¿Quieres publicar estos cambios en este navegador y generar un nuevo historias.json?"
   );
 
   if (ok) {
+    // Sincronizar autores desde canción
+    if (adminCurrentSection === "canciones") {
+      syncAuthorsFromSong(updated);
+    }
+
     saveToLocalStorage();
     renderList(currentSection);
-    alert("Cambios guardados localmente. Recuerda exportar el JSON para subirlo a GitHub.");
+
+    // Re-normalizar por si se añadieron autores
+    ["canciones", "autores", "curiosidades"].forEach((sec) => {
+      data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
+    });
+
+    // Exportar JSON automáticamente (descarga historias.json)
+    exportJson({ auto: true });
   } else {
     data[adminCurrentSection][adminCurrentIndex] = original;
     showItem(adminCurrentSection, adminCurrentIndex);
@@ -937,10 +1240,9 @@ function loadFromLocalStorage() {
           (it) => it.id === savedItem.id || it.title === savedItem.title
         );
         if (idx >= 0) {
-          data[section][idx].fields = savedItem.fields;
-          data[section][idx].title = savedItem.title || data[section][idx].title;
+          data[section][idx] = normalizeItem(savedItem, section);
         } else {
-          data[section].push(savedItem);
+          data[section].push(normalizeItem(savedItem, section));
         }
       });
     });
@@ -950,7 +1252,9 @@ function loadFromLocalStorage() {
 }
 
 // Exportar JSON para GitHub
-function exportJson() {
+function exportJson(options) {
+  const auto = options && options.auto;
+
   try {
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: "application/json" });
@@ -964,11 +1268,17 @@ function exportJson() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    alert(
-      "Se descargó historias.json.\n\n" +
-      "Ahora súbelo a tu repositorio en la carpeta /data (data/historias.json) " +
-      "reemplazando el contenido anterior."
-    );
+    if (auto) {
+      alert(
+        "Se generó y descargó un nuevo historias.json con tus cambios.\n\n" +
+        "Súbelo al repositorio en /data/historias.json para que se actualice la web."
+      );
+    } else {
+      alert(
+        "Se descargó historias.json.\n\n" +
+        "Súbelo al repositorio en /data/historias.json para que la web use estos datos."
+      );
+    }
   } catch (e) {
     console.error("No se pudo exportar JSON", e);
     alert("Ocurrió un error al exportar el JSON.");
