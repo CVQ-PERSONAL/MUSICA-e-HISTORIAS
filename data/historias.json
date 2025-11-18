@@ -9,11 +9,25 @@
         "Canción": "Bohemian Rhapsody",
         "Intérprete": "Queen",
         "Compositor": "Freddie Mercury",
-        "Género": "Rock",
         "Imagen": "images/bohemian.jpg",
         "Video": "https://youtu.be/fJ9rUzIMcZQ",
         "Tomado de": "Documental sobre Queen (BBC, 2015)",
         "Historia": "Bohemian Rhapsody fue lanzada en 1975 como parte del álbum 'A Night at the Opera'. Su estructura rompe con la forma tradicional de canción pop, mezclando balada, ópera y rock. Durante años, la banda se negó a explicar el significado exacto de la letra, lo que ha alimentado todo tipo de interpretaciones."
+      }
+    },
+    {
+      "id": "canciones-1763496125305",
+      "header": "",
+      "title": "Nuestro Juramento",
+      "type": "canciones",
+      "fields": {
+        "Canción": "Nuestro Juramento",
+        "Intérprete": "Julio Jaramillo",
+        "Compositor": "Jesús de Benítez (Puerto Rico)",
+        "Imagen": "N/D",
+        "Video": "https://youtube.com/shorts/Wcy2UPhPfhY?si=CyrKrC5tgRWsgfNH",
+        "Tomado de": "N/D",
+        "Historia": "Quien te diga: \"No puedo verte triste porque me mata, tu carita de pena, mi dulce amor\", ahí es...\n\n“Nuestro Juramento” es una canción boricua que se volvió ecuatoriana, fue compuesta por Benito de Jesús, un músico y compositor puertorriqueño. Esta hermosa balada bolero vio la luz en la década de 1940 y se convirtió en un himno romántico que resonaría en el corazón de generaciones que aman de verdad. En 1950 fue grabada por el dúo Irizarry de Córdoba.\n\nBenito de Jesús, fue un talentoso músico guitarrista que vivió una vida apasionada dedicada a la música. Nació en 1912 y murió en 2010 a los 97 años. Fue integrante del Trio Vegabajeño durante 24 años. Se le atribuye haber compuesto más de 300 canciones a lo largo de su carrera.  Según relató el propio Benito de Jesús, la letra no fue originalmente suya. \n\nLa historia de esta bella canción nació cuando Benito encontró los versos en un recorte de periódico con un poema titulado “A un alma”, de autor desconocido. Cautivado por la profundidad de esas palabras, la promesa de un amor tan fuerte que ni la muerte podría romperlo, vio en esos versos la base de lo que sería un bolero que trascendería en el tiempo. Con su estilo único, compuso un bolero rítmico que transformaba el poema en una melodía inolvidable. \n\nJaramillo la transformó musicalmente haciéndola todavía más grande, en su voz fue un éxito en todo el mundo. Benito de Jesús le llegó a agradecer a Jaramillo por haber grabado sus canción ya que gracias a sus regalías se mantuvo hasta sus últimos días. \n\nEn este año Billboard la catapultó a un nuevo estatus. No es solo una canción del pasado, también es una obra de arte contemporánea y relevante. La revista analizó el impacto, la longevidad y la calidad lírica de las canciones de amor más importantes del siglo. Según el reporte, “Nuestro Juramento” fue ubicada en la segunda posición, superando a innumerables éxitos modernos...\n\nNo es una canción, es una declaración de amor tan intensa que roza lo trágico. La duda duele, por eso le pide que no dude de su amor, porque entre ellos existe un juramento casi sagrado, amarse hasta la muerte… y aún después de muertos amarse más. Es un amor absoluto, posesivo en el sentido emocional, que no concibe la vida ni la muerte sin ese vínculo. Una canción que nació en una época donde amabas hasta tu último suspiro y hoy se ama lo que tarda un suspiro..."
       }
     }
   ],
@@ -28,9 +42,9 @@
         "Nombre real": "Farrokh Bulsara",
         "Intérprete o Compositor": "Intérprete y compositor",
         "Foto": "images/freddie.jpg",
-        "Biografía": "Freddie Mercury (1946–1991) fue el vocalista principal de Queen y es considerado una de las voces más potentes y carismáticas de la historia del rock.",
-        "Éxitos": "Bohemian Rhapsody",
-        "Curiosidades": "Amante de los gatos y del arte, su rango vocal y presencia escénica marcaron a generaciones.",
+        "Biografía": "Freddie Mercury (1946–1991) fue el vocalista principal de Queen y es considerado una de las voces más potentes y carismáticas de la historia del rock. Nació en Zanzíbar, creció en la India y se trasladó al Reino Unido en su juventud.",
+        "Éxitos": "Bohemian Rhapsody, Somebody to Love, We Are the Champions, Don't Stop Me Now.",
+        "Curiosidades": "Fue un apasionado del arte y los gatos. Su rango vocal y presencia escénica marcaron a generaciones enteras.",
         "Tomado de": "Biografías oficiales y material de archivo de Queen."
       }
     }
@@ -43,7 +57,7 @@
       "type": "curiosidades",
       "fields": {
         "Tema": "Origen del nombre Queen",
-        "Detalle": "Freddie Mercury propuso el nombre 'Queen' porque le parecía corto, fuerte, universal y teatral. A pesar de sus connotaciones, la banda lo adoptó precisamente por su ambigüedad.",
+        "Detalle": "Freddie Mercury propuso el nombre 'Queen' porque le parecía un nombre corto, fuerte, universal y con un toque teatral. Aunque tenía connotaciones controvertidas, la banda decidió adoptarlo precisamente por su fuerza y ambigüedad.",
         "Imagen": "images/queen-logo.jpg",
         "Tomado de": "Entrevistas a la banda y material de archivo."
       }
