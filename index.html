@@ -777,7 +777,7 @@ function loadAdminForm() {
       const fileInput = document.createElement("input");
       fileInput.type = "file";
       fileInput.accept =
-        fieldName === schema.mediaFields.video ? "video/" : "image/";
+        fieldName === schema.mediaFields.video ? "video/*" : "image/*";
       fileInput.onchange = (ev) => {
         const file = ev.target.files[0];
         if (!file) return;
