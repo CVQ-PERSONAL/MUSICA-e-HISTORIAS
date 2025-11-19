@@ -2,1379 +2,1282 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Historias de Música</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Música e Historias</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      --bg: #050509;
-      --bg-elevated: #101018;
-      --bg-elevated-soft: rgba(255, 255, 255, 0.03);
-      --accent: #ffb347;
-      --accent-soft: rgba(255, 179, 71, 0.2);
-      --text: #f6f6f6;
-      --muted: #a6a6bf;
-      --border: #333548;
-      --danger: #ff5c5c;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-    }
-    ,::before,::after{box-sizing:border-box;}
-    html,body{
-      margin:0;padding:0;
-      background:radial-gradient(circle at top,#151527 0,#050509 55%,#020205 100%);
-      color:var(--text);
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    }
-    body{min-height:100vh;display:flex;flex-direction:column;}
-
-    .top-header{
-      padding:1.5rem 5vw 1rem;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      backdrop-filter:blur(12px);
-      background:linear-gradient(to bottom,rgba(8,8,16,.95),rgba(8,8,16,.75),transparent);
-    }
-    .title-block{text-align:center;}
-    h1{margin:0;font-size:clamp(1.8rem,3vw,2.4rem);letter-spacing:.08em;text-transform:uppercase;}
-    .subtitle{margin:.3rem 0 0;font-size:.9rem;color:var(--muted);}
-
-    .top-actions{
-      margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;
-      justify-content:center;align-items:center;
-    }
-    .search-wrapper{flex:1 1 260px;max-width:420px;}
-    #searchBox{
-      width:100%;padding:.65rem .9rem;border-radius:999px;
-      border:1px solid var(--border);background:rgba(10,10,20,.9);
-      color:var(--text);outline:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.6);
-    }
-    #searchBox::placeholder{color:rgba(180,180,210,.7);}
-    #searchBox:focus{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-soft);}
-    .contact-btn{
-      padding:.7rem 1.1rem;border-radius:999px;border:1px solid var(--accent);
-      color:var(--accent);background:transparent;text-decoration:none;
-      font-size:.9rem;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;
-    }
-    .contact-btn:hover{background:var(--accent-soft);}
-
-    .main-nav{
-      margin-top:1rem;display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;
-    }
-    .main-nav button{
-      border-radius:999px;border:1px solid var(--border);
-      background:rgba(12,12,24,.85);color:var(--text);
-      padding:.55rem 1.2rem;cursor:pointer;font-size:.9rem;
-      transition:background .15s ease,border .15s ease,transform .08s;
-    }
-    .main-nav button:hover{
-      background:rgba(40,40,72,.9);border-color:var(--accent);transform:translateY(-1px);
+      --bg: #050611;
+      --bg-alt: #101321;
+      --accent: #ff9a3c;
+      --accent-soft: #ffbd6b;
+      --accent-danger: #ff4d6a;
+      --text: #f7f7ff;
+      --text-muted: #a5a8c1;
+      --card: #181a2b;
+      --border: #30334a;
+      --radius: 14px;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.45);
     }
 
-    .layout{
-      flex:1;display:grid;grid-template-columns:minmax(240px,340px) minmax(0,1fr);
-      gap:1.5rem;padding:1.5rem 5vw 1.75rem;
+    * {
+      box-sizing: border-box;
     }
-    .sidebar{
-      background:rgba(8,8,18,.9);border-radius:var(--radius-lg);
-      box-shadow:var(--shadow-soft);border:1px solid rgba(255,255,255,.04);
-      overflow:hidden;display:flex;flex-direction:column;min-height:0;
-    }
-    .viewer{
-      background:rgba(7,7,16,.95);border-radius:var(--radius-lg);
-      box-shadow:var(--shadow-soft);border:1px solid rgba(255,255,255,.04);
-      padding:1rem 1.4rem 1.5rem;min-height:0;overflow:auto;
-    }
-    .admin{
-      grid-column:1/-1;margin-top:1.25rem;background:rgba(5,5,12,.98);
-      border-radius:var(--radius-lg);box-shadow:var(--shadow-soft);
-      border:1px solid rgba(255,255,255,.06);padding:1.25rem 1.5rem 1.4rem;
-    }
-    .admin[hidden]{display:none!important;}
 
-    .section-label{
-      padding:.75rem 1rem;font-size:.85rem;text-transform:uppercase;
-      letter-spacing:.18em;color:var(--muted);
-      border-bottom:1px solid rgba(255,255,255,.03);
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1a1d3a, #050611 55%);
+      color: var(--text);
+      min-height: 100vh;
     }
-    .item-list{list-style:none;margin:0;padding:0;overflow:auto;}
-    .item{
-      padding:.65rem .9rem;border-bottom:1px solid rgba(255,255,255,.03);
-      cursor:pointer;transition:background .12s ease;font-size:.9rem;
-    }
-    .item:hover{background:rgba(255,255,255,.03);}
-    .item-title{font-weight:600;}
-    .item-meta{font-size:.78rem;color:var(--muted);}
 
-    .card{
-      max-width:780px;margin:0 auto;background:var(--bg-elevated);
-      border-radius:var(--radius-lg);padding:1.4rem 1.5rem 1.6rem;
-      box-shadow:var(--shadow-soft);border:1px solid rgba(255,255,255,.06);
+    header {
+      padding: 1.5rem 1.5rem 0.5rem;
     }
-    .card h2{margin:0 0 .5rem;font-size:1.5rem;}
-    .card-type{
-      font-size:.78rem;text-transform:uppercase;letter-spacing:.18em;
-      color:var(--muted);margin-bottom:.3rem;
-    }
-    .field{margin:.35rem 0;font-size:.92rem;line-height:1.5;}
-    .field-label{font-weight:600;color:var(--accent);margin-right:.25rem;}
-    .field-value.nd{opacity:.6;font-style:italic;}
-    .field.long-text{margin-top:.7rem;}
 
-    .media-frame{
-      max-width:480px;margin:1.5rem auto;padding:.75rem;border-radius:12px;
-      box-shadow:0 4px 18px rgba(0,0,0,.6);text-align:center;
-      background:var(--bg-elevated-soft);
+    .title {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
     }
-    .media-frame img,.media-frame video{
-      max-width:100%;height:auto;display:block;margin:0 auto;border-radius:10px;
+
+    .subtitle {
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-size: 0.95rem;
     }
-    .media-frame iframe,
-    .media-frame .media-video {
-      width: 100%;
-      max-width: 100%;
-      display: block;
+
+    main {
+      padding: 0 1.2rem 2.5rem;
+      max-width: 1100px;
       margin: 0 auto;
-      border-radius: 10px;
-    }
-    .media-frame iframe {
-      aspect-ratio: 16 / 9;
     }
 
-    .empty-state{text-align:center;color:var(--muted);margin-top:3rem;}
-
-    .admin h2{margin:0 0 .4rem;}
-    .admin-note{margin:0 0 .3rem;font-size:.85rem;color:var(--muted);}
-    .admin-counter{margin:0 0 .9rem;font-size:.8rem;color:var(--muted);}
-    .admin-counter .counter-number{
-      color:var(--danger);
-      font-weight:600;
+    .tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin: 1rem 0 1.2rem;
+      flex-wrap: wrap;
     }
-    .admin-controls{
-      display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;margin-bottom:.9rem;
-    }
-    .admin-controls label{font-size:.86rem;}
 
-    select{
-      -webkit-appearance:none;
-      appearance:none;
-      background:#161623;
-      color:var(--text);
-      border:1px solid var(--border);
-      border-radius:var(--radius-sm);
-      padding:.2rem 1.4rem .2rem .45rem;
-      font-size:.86rem;
+    .tab-btn {
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.03);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tab-btn span.badge {
+      background: rgba(0,0,0,0.4);
+      border-radius: 999px;
+      padding: 0 0.45rem;
+      font-size: 0.7rem;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(120deg, #ff9a3c, #ff4d6a);
+      border-color: #ffb36a;
+      color: #1b0b07;
+      font-weight: 600;
+    }
+
+    .section-card {
+      background: radial-gradient(circle at top left, #262949, #121426);
+      border-radius: 22px;
+      box-shadow: var(--shadow-soft);
+      padding: 1.3rem 1.2rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.04);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin-top: 1rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .filters-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+      align-items: flex-end;
+    }
+
+    label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    select, input[type="text"], textarea {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(3,4,12,0.7);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    textarea {
+      border-radius: 12px;
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    select {
+      appearance: none;
       background-image:
-        linear-gradient(45deg, transparent 50%, #ccccdd 50%),
-        linear-gradient(135deg, #ccccdd 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+        linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
       background-position:
-        calc(100% - 10px) 50%,
-        calc(100% - 5px) 50%;
-      background-size:6px 6px;
-      background-repeat:no-repeat;
+        calc(100% - 14px) calc(50% - 2px),
+        calc(100% - 9px) calc(50% - 2px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 26px;
     }
 
-    .admin-controls select{
-      margin-left:.3rem;
+    .input-with-icon {
+      position: relative;
     }
 
-    button.secondary{
-      border-radius:999px;border:1px solid var(--border);background:#181824;
-      color:var(--text);padding:.4rem .9rem;cursor:pointer;font-size:.85rem;
-    }
-    button.secondary:hover{border-color:var(--accent);background:rgba(255,255,255,.04);}
-    button.primary{
-      border-radius:999px;border:none;background:linear-gradient(135deg,#ffb347,#ff7f50);
-      color:#1a1208;padding:.55rem 1.1rem;cursor:pointer;font-weight:600;font-size:.9rem;
-    }
-    button.primary:hover{filter:brightness(1.05);}
-    button.danger{
-      border-radius:999px;border:1px solid var(--danger);background:transparent;
-      color:var(--danger);padding:.45rem 1rem;cursor:pointer;font-size:.86rem;
-    }
-    button.danger:hover{background:rgba(255,92,92,.12);}
-
-    .admin-form{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:.7rem 1rem;margin-top:.5rem;
-    }
-    .admin-field{display:flex;flex-direction:column;gap:.25rem;font-size:.86rem;}
-    .admin-field label{font-weight:600;}
-    .admin-field input[type="text"],.admin-field textarea,.admin-field input[type="search"]{
-      border-radius:var(--radius-sm);border:1px solid var(--border);
-      background:#11111e;color:var(--text);padding:.35rem .45rem;
-      font-size:.86rem;resize:vertical;min-height:2.1rem;
-    }
-    .admin-field textarea{min-height:4.2rem;}
-    .admin-actions{
-      grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.4rem;
-      align-items:center;
+    .input-with-icon input {
+      padding-left: 2rem;
     }
 
-    .field.long-text .collapsible-toggle{
-      margin-left:.3rem;
-      font-size:.8rem;
-      border:none;
-      background:transparent;
-      color:var(--accent);
-      cursor:pointer;
-      text-decoration:underline;
-      padding:0;
+    .input-with-icon span.icon {
+      position: absolute;
+      left: 0.7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      color: var(--text-muted);
     }
 
-    #scrollTopBtn{
-      position:fixed;
-      right:1.5rem;
-      bottom:1.5rem;
-      background:rgba(0,0,0,.78);
-      color:var(--accent);
-      border:1px solid var(--accent);
-      border-radius:999px;
-      padding:.35rem .9rem;
-      font-size:.8rem;
-      cursor:pointer;
-      z-index:100;
+    .list {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.04);
+      background: rgba(3,4,12,0.6);
+      max-height: 420px;
+      overflow-y: auto;
     }
 
-    .footer{
-      padding:.9rem 5vw 1.1rem;text-align:center;font-size:.78rem;
-      color:var(--muted);border-top:1px solid rgba(255,255,255,.05);
+    .list-item {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      cursor: pointer;
     }
 
-    .song-filter-controls{
-      padding:0.4rem 1rem;
-      font-size:0.8rem;
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.5rem 0.75rem;
-      align-items:center;
-      border-bottom:1px solid rgba(255,255,255,.03);
-    }
-    .song-filter-controls .block{
-      display:flex;
-      flex-direction:column;
-      gap:0.25rem;
-      margin-right:0.5rem;
-    }
-    .song-filter-search{
-      flex:1 1 100%;
-      margin-top:0.4rem;
-    }
-    .song-filter-search input{
-      width:100%;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:#11111e;
-      color:var(--text);
-      padding:0.3rem 0.8rem;
-      font-size:0.82rem;
-    }
-    .song-filter-search input::placeholder{
-      color:rgba(180,180,210,.8);
+    .list-item:last-child {
+      border-bottom: none;
     }
 
-    @media(max-width:880px){
-      .layout{grid-template-columns:1fr;}
-      .sidebar{order:2;}
-      .viewer{order:1;}
+    .list-item:hover {
+      background: rgba(255,255,255,0.03);
     }
-    @media(max-width:540px){
-      .top-header{padding-inline:1rem;}
-      .layout{padding-inline:1rem;}
-      .admin{padding-inline:1rem;}
+
+    .list-item-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .list-item-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .song-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+      gap: 1.1rem;
+    }
+
+    @media (max-width: 820px) {
+      .song-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .song-detail {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: radial-gradient(circle at top, #262949, #151729);
+      padding: 0.9rem 1rem;
+    }
+
+    .song-meta {
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.1rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.7rem;
+      margin-right: 0.35rem;
+      margin-top: 0.15rem;
+    }
+
+    .pill.genre {
+      border-color: var(--accent-soft);
+      color: var(--accent-soft);
+    }
+
+    .history-text {
+      margin-top: 0.45rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .media-preview {
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
+    }
+
+    .media-preview a {
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    .media-preview a:hover {
+      text-decoration: underline;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+      gap: 1.1rem;
+    }
+
+    @media (max-width: 840px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .admin-box {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(3,4,12,0.7);
+      padding: 0.9rem 1rem 1rem;
+    }
+
+    .small-muted {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .save-counter {
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .save-counter span.number {
+      color: var(--accent-danger);
+      font-weight: 600;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem 0.95rem;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, #ff9a3c, #ff4d6a);
+      color: #1b0b07;
+      font-weight: 600;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .btn-danger {
+      background: rgba(255,77,106,0.14);
+      color: var(--accent-danger);
+    }
+
+    .status-message {
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .status-message.ok {
+      color: #7df5c6;
+    }
+
+    .status-message.err {
+      color: var(--accent-danger);
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .field-grid.two {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+
+    @media (max-width: 640px) {
+      .field-grid.two {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.1rem 0.55rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
     }
   </style>
 </head>
 <body>
-  <header class="top-header">
-    <div class="title-block">
-      <h1>Historias de Música</h1>
-      <p class="subtitle">Recopilado y programado por Carlos Vera Quintana</p>
+  <header>
+    <div class="title">Música e Historias</div>
+    <div class="subtitle">
+      Canciones con historia, cantantes y curiosidades de la música latina.
     </div>
-
-    <div class="top-actions">
-      <div class="search-wrapper">
-        <input
-          id="searchBox"
-          type="search"
-          placeholder="Buscar en canciones, autores y curiosidades..."
-          oninput="searchItems()"
-          aria-label="Buscar"
-        />
-      </div>
-      <a class="contact-btn" href="mailto:cveraq@gmail.com">Contacto</a>
-    </div>
-
-    <nav class="main-nav" aria-label="Secciones principales">
-      <button type="button" onclick="switchView('canciones')">Canciones</button>
-      <button type="button" onclick="switchView('autores')">Cantantes / Autores</button>
-      <button type="button" onclick="switchView('curiosidades')">Curiosidades</button>
-      <button type="button" onclick="showAdmin()">Admin</button>
-    </nav>
   </header>
 
-  <main class="layout">
-    <section id="list" class="sidebar" aria-label="Listado de ítems"></section>
+  <main>
+    <div class="tabs">
+      <button class="tab-btn active" data-section="canciones-section">
+        Canciones <span class="badge" id="badge-canciones">0</span>
+      </button>
+      <button class="tab-btn" data-section="autores-section">
+        Cantantes / Autores <span class="badge" id="badge-autores">0</span>
+      </button>
+      <button class="tab-btn" data-section="curiosidades-section">
+        Curiosidades <span class="badge" id="badge-curiosidades">0</span>
+      </button>
+      <button class="tab-btn" data-section="admin-section">
+        Admin
+      </button>
+    </div>
 
-    <section id="viewer" class="viewer" aria-label="Detalle del ítem seleccionado">
-      <div class="empty-state">
-        <p>Selecciona una canción, autor o curiosidad para ver su historia.</p>
+    <!-- CANCIONES -->
+    <section id="canciones-section" class="section-card">
+      <h2>Canciones</h2>
+      <div class="song-layout">
+        <div>
+          <div class="filters-row">
+            <div style="flex:1 1 110px; min-width: 110px;">
+              <label for="filterTipo">Filtrar por</label>
+              <select id="filterTipo">
+                <option value="todos">Todos</option>
+                <option value="genero">Género</option>
+                <option value="interprete">Intérprete</option>
+              </select>
+            </div>
+            <div style="flex:1 1 150px; min-width: 150px;">
+              <label for="filterValor">(opciones)</label>
+              <select id="filterValor">
+                <option value="todos">(todos)</option>
+              </select>
+            </div>
+            <div style="flex:1 1 130px; min-width: 130px;">
+              <label for="orderCanciones">Ordenar por</label>
+              <select id="orderCanciones">
+                <option value="asc">A → Z</option>
+                <option value="desc">Z → A</option>
+              </select>
+            </div>
+          </div>
+          <div class="filters-row">
+            <div style="flex:1 1 100%;">
+              <label for="searchCanciones">Buscar canción</label>
+              <div class="input-with-icon">
+                <span class="icon">🔍</span>
+                <input id="searchCanciones" type="text" placeholder="Escribe parte del título o del intérprete..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="list" id="listaCanciones"></div>
+        </div>
+        <div>
+          <div class="song-detail" id="detalleCancion">
+            <div class="song-meta">Selecciona una canción de la lista para ver su historia.</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="admin" class="admin" aria-label="Administración" hidden>
+    <!-- AUTORES -->
+    <section id="autores-section" class="section-card" style="display:none;">
+      <h2>Cantantes y Autores</h2>
+      <div class="song-layout">
+        <div>
+          <div class="filters-row">
+            <div style="flex:1 1 100%;">
+              <label for="searchAutores">Buscar artista</label>
+              <div class="input-with-icon">
+                <span class="icon">🔍</span>
+                <input id="searchAutores" type="text" placeholder="Nombre artístico o real..." />
+              </div>
+            </div>
+          </div>
+          <div class="list" id="listaAutores"></div>
+        </div>
+        <div>
+          <div class="song-detail" id="detalleAutor">
+            <div class="song-meta">Selecciona un cantante o autor para ver su biografía.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURIOSIDADES -->
+    <section id="curiosidades-section" class="section-card" style="display:none;">
+      <h2>Curiosidades</h2>
+      <div class="song-layout">
+        <div>
+          <div class="filters-row">
+            <div style="flex:1 1 100%;">
+              <label for="searchCuriosidades">Buscar curiosidad</label>
+              <div class="input-with-icon">
+                <span class="icon">🔍</span>
+                <input id="searchCuriosidades" type="text" placeholder="Palabras clave del tema..." />
+              </div>
+            </div>
+          </div>
+          <div class="list" id="listaCuriosidades"></div>
+        </div>
+        <div>
+          <div class="song-detail" id="detalleCuriosidad">
+            <div class="song-meta">Selecciona una curiosidad para ver el detalle.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="admin-section" class="section-card" style="display:none;">
       <h2>Administración</h2>
-      <p class="admin-note">
-        Edición local en este navegador. Los cambios se guardan en <code>localStorage</code>.
+      <p class="small-muted">
+        Edición conectada a la base de datos Supabase. Los cambios se guardan directamente en la nube.
       </p>
-      <p class="admin-counter" id="saveCounter">
-        <span class="counter-number">0</span> cambios guardados en esta sesión.
-      </p>
-
-      <div class="admin-controls">
-        <label>
-          Categoría:
-          <select id="adminCategory" onchange="renderAdminItems(); loadAdminForm();">
-            <option value="canciones">Canciones</option>
-            <option value="autores">Cantantes / Autores</option>
-            <option value="curiosidades">Curiosidades</option>
-          </select>
-        </label>
-
-        <label>
-          Ítem:
-          <select id="adminItem" onchange="loadAdminForm()"></select>
-        </label>
-
-        <label class="admin-item-search-label">
-          🔍
-          <input id="adminItemSearch" type="search" placeholder="Buscar ítem…" oninput="filterAdminItems()" />
-        </label>
-
-        <button type="button" class="primary" onclick="addNewItem()">Agregar nuevo ítem</button>
+      <div class="save-counter">
+        <span class="number" id="adminSaveCount">0</span> cambios guardados en esta sesión.
       </div>
 
-      <form id="adminForm" class="admin-form" onsubmit="saveAdminForm(event)"></form>
+      <div class="admin-layout" style="margin-top:0.9rem;">
+        <div class="admin-box">
+          <div class="field-grid">
+            <div>
+              <label for="adminCategory">Categoría</label>
+              <select id="adminCategory">
+                <option value="canciones">Canciones</option>
+                <option value="autores">Cantantes / Autores</option>
+                <option value="curiosidades">Curiosidades</option>
+              </select>
+            </div>
+            <div>
+              <label for="adminSearch">Buscar ítem</label>
+              <div class="input-with-icon">
+                <span class="icon">🔍</span>
+                <input id="adminSearch" type="text" placeholder="Escribe parte del título o nombre..." />
+              </div>
+            </div>
+            <div>
+              <label for="adminItem">Ítem</label>
+              <select id="adminItem"></select>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top:0.9rem;">
+            <button class="btn btn-primary" id="btnNuevoItem">Agregar nuevo ítem</button>
+          </div>
+
+          <div class="status-message" id="adminInfo">
+            Selecciona o crea un ítem para editarlo.
+          </div>
+        </div>
+
+        <div class="admin-box">
+          <form id="adminForm">
+            <!-- Campos dinámicos según categoría -->
+          </form>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary" id="btnGuardar">
+              💾 Guardar
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnRefrescar">
+              🔄 Recargar datos
+            </button>
+            <button type="button" class="btn btn-danger" id="btnEliminar">
+              🗑 Eliminar ítem
+            </button>
+          </div>
+          <div class="status-message" id="adminStatus"></div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <small>Proyecto estático — Funciona en GitHub Pages o cualquier servidor web simple.</small>
-  </footer>
+  <!-- SCRIPT PRINCIPAL: Supabase + lógica -->
+  <script type="module">
+    // 👉 1. IMPORTAR SUPABASE
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  <button id="scrollTopBtn" type="button" onclick="scrollToTop()">▲ Arriba</button>
+    // 👉 2. RELLENA ESTOS DOS VALORES CON LOS TUYOS
+    const SUPABASE_URL = "https://ughnwwuputxmzzombrbg.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_pFU7leFyEi_01fTmji3pDw_NQdsOgVW";
 
-<script>
-// 🔐 CONFIGURACIÓN DE ADMIN
-const ADMIN_PASSWORD = "historia2025";
-let adminUnlocked = false;
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// 🔐 Clave para datos locales (nueva versión)
-const LS_KEY = "historias_musica_data_v5";
+    // Estado en memoria
+    let canciones = [];
+    let autores = [];
+    let curiosidades = [];
 
-// Contador de guardados en la sesión
-let sessionSaveCount = 0;
+    let adminCurrentCategory = "canciones";
+    let adminCurrentId = null;
+    let adminSaveCount = 0;
 
-// ESQUEMA DE DATOS
-const SCHEMA = {
-  canciones: {
-    label: "Canciones",
-    typeLabel: "Canción",
-    fields: [
-      "Canción",
-      "Intérprete",
-      "Compositor",
-      "Género",
-      "Imagen",
-      "Video",
-      "Tomado de",
-      "Historia"
-    ],
-    longFields: ["Historia"],
-    mediaFields: { image: "Imagen", video: "Video" }
-  },
-  autores: {
-    label: "Cantantes / Autores",
-    typeLabel: "Cantante / Autor",
-    fields: [
-      "Nombre artístico",
-      "Nombre real",
-      "Intérprete o Compositor",
-      "Foto",
-      "Biografía",
-      "Éxitos",
-      "Curiosidades",
-      "Tomado de"
-    ],
-    longFields: ["Biografía", "Éxitos", "Curiosidades"],
-    mediaFields: { image: "Foto", video: null }
-  },
-  curiosidades: {
-    label: "Curiosidades",
-    typeLabel: "Curiosidad",
-    fields: ["Tema", "Detalle", "Imagen", "Tomado de"],
-    longFields: ["Detalle"],
-    mediaFields: { image: "Imagen", video: null }
-  }
-};
-
-// ESTADO GLOBAL
-let data = { canciones: [], autores: [], curiosidades: [] };
-let currentSection = "canciones";
-let adminCurrentSection = "canciones";
-let adminCurrentIndex = 0;
-
-// Filtros/orden para Canciones
-let songFilterField = null;   // "Género" | "Intérprete" | null
-let songFilterValue = null;   // valor concreto
-let songSortField = null;     // "asc" | "desc" | null
-let songSearchTerm = "";      // búsqueda local en la lista de canciones
-
-const normalize = (s) => (s || "").toLowerCase();
-const clone = (o) => JSON.parse(JSON.stringify(o));
-
-// Normalización de ítems según SCHEMA
-function normalizeItem(item, section) {
-  const schema = SCHEMA[section];
-  if (!schema) return item;
-
-  if (!item.fields || typeof item.fields !== "object") {
-    item.fields = {};
-  }
-
-  schema.fields.forEach((f) => {
-    if (item.fields[f] === undefined || item.fields[f] === null || item.fields[f] === "") {
-      item.fields[f] = "N/D";
-    }
-  });
-
-  if (!item.type) item.type = section;
-  if (!item.id) {
-    item.id = section + "-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-  }
-
-  if (!item.title || !item.title.trim) {
-    if (section === "canciones" && item.fields["Canción"] && item.fields["Canción"] !== "N/D") {
-      item.title = item.fields["Canción"];
-    } else if (
-      section === "autores" &&
-      item.fields["Nombre artístico"] &&
-      item.fields["Nombre artístico"] !== "N/D"
-    ) {
-      item.title = item.fields["Nombre artístico"];
-    } else if (
-      section === "curiosidades" &&
-      item.fields["Tema"] &&
-      item.fields["Tema"] !== "N/D"
-    ) {
-      item.title = item.fields["Tema"];
-    } else {
-      item.title = item.header || "Sin título";
-    }
-  }
-
-  return item;
-}
-
-// INICIO
-document.addEventListener("DOMContentLoaded", () => {
-  init();
-});
-
-async function init() {
-  try {
-    const resp = await fetch("data/historias.json");
-    if (!resp.ok) {
-      throw new Error("No se pudo cargar data/historias.json");
-    }
-    const jsonData = await resp.json();
-    if (!jsonData || typeof jsonData !== "object") {
-      throw new Error("Formato inválido en historias.json");
+    // Utilidad para crear elementos
+    function el(tag, attrs = {}, children = []) {
+      const node = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === "class") node.className = v;
+        else if (k === "html") node.innerHTML = v;
+        else node.setAttribute(k, v);
+      });
+      (Array.isArray(children) ? children : [children]).forEach(ch => {
+        if (typeof ch === "string") node.appendChild(document.createTextNode(ch));
+        else if (ch) node.appendChild(ch);
+      });
+      return node;
     }
 
-    data.canciones = Array.isArray(jsonData.canciones) ? jsonData.canciones : [];
-    data.autores = Array.isArray(jsonData.autores) ? jsonData.autores : [];
-    data.curiosidades = Array.isArray(jsonData.curiosidades) ? jsonData.curiosidades : [];
-
-    ["canciones", "autores", "curiosidades"].forEach((sec) => {
-      data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
-    });
-
-    loadFromLocalStorage();
-
-    ["canciones", "autores", "curiosidades"].forEach((sec) => {
-      data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
-    });
-
-    switchView("canciones");
-    renderAdminItems();
-  } catch (e) {
-    console.error(e);
-    document.getElementById("viewer").innerHTML =
-      "<div class='empty-state'><p>No se pudo cargar <code>data/historias.json</code>. " +
-      "Crea el archivo con la estructura correcta en la carpeta <code>/data</code>.</p></div>";
-  }
-}
-
-// ===== VISTA PRINCIPAL ===============================================
-function switchView(section) {
-  currentSection = section;
-  document.getElementById("admin").hidden = true;
-
-  if (section !== "canciones") {
-    songFilterField = null;
-    songFilterValue = null;
-    songSortField = null;
-    songSearchTerm = "";
-  }
-
-  renderList(section);
-
-  const viewer = document.getElementById("viewer");
-  if (data[section] && data[section].length > 0) {
-    showItem(section, 0);
-  } else {
-    viewer.innerHTML =
-      "<div class='empty-state'><p>Selecciona una " +
-      SCHEMA[section].typeLabel.toLowerCase() +
-      " para ver su historia.</p></div>";
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function applySongFilterAndSort(items) {
-  let result = items.slice();
-
-  // búsqueda local
-  if (songSearchTerm) {
-    result = result.filter((item) => {
-      const t = normalize(item.title);
-      const a = normalize(item.fields["Intérprete"]);
-      const g = normalize(item.fields["Género"]);
-      return (
-        t.includes(songSearchTerm) ||
-        a.includes(songSearchTerm) ||
-        g.includes(songSearchTerm)
-      );
-    });
-  }
-
-  // Filtrar por género / intérprete
-  if (songFilterField && songFilterValue) {
-    result = result.filter((item) => {
-      const v = (item.fields[songFilterField] || "").trim();
-      return v === songFilterValue;
-    });
-  }
-
-  // Ordenar por título A→Z o Z→A
-  if (songSortField === "asc" || songSortField === "desc") {
-    result.sort((a, b) => {
-      const va = (a.title || "").toLowerCase();
-      const vb = (b.title || "").toLowerCase();
-      if (va < vb) return songSortField === "asc" ? -1 : 1;
-      if (va > vb) return songSortField === "asc" ? 1 : -1;
-      return 0;
-    });
-  }
-
-  return result;
-}
-
-function buildSongControls(container) {
-  const genres = new Set();
-  const artists = new Set();
-
-  data.canciones.forEach((item) => {
-    const g = (item.fields["Género"] || "").trim();
-    const a = (item.fields["Intérprete"] || "").trim();
-    if (g && g !== "N/D") genres.add(g);
-    if (a && a !== "N/D") artists.add(a);
-  });
-
-  const controls = document.createElement("div");
-  controls.className = "song-filter-controls";
-
-  // Bloque de filtro
-  const blockFilter = document.createElement("div");
-  blockFilter.className = "block";
-  const flabel = document.createElement("span");
-  flabel.textContent = "Filtrar por:";
-  blockFilter.appendChild(flabel);
-
-  const filterTypeSel = document.createElement("select");
-  filterTypeSel.appendChild(new Option("Todos", "none"));
-  filterTypeSel.appendChild(new Option("Género", "Género"));
-  filterTypeSel.appendChild(new Option("Intérprete", "Intérprete"));
-
-  if (songFilterField === "Género") filterTypeSel.value = "Género";
-  else if (songFilterField === "Intérprete") filterTypeSel.value = "Intérprete";
-  else filterTypeSel.value = "none";
-
-  blockFilter.appendChild(filterTypeSel);
-
-  const filterValueSel = document.createElement("select");
-  filterValueSel.style.marginTop = "0.25rem";
-
-  function populateFilterValues() {
-    filterValueSel.innerHTML = "";
-    filterValueSel.appendChild(new Option("(todos)", ""));
-
-    let sourceSet = null;
-    if (filterTypeSel.value === "Género") sourceSet = genres;
-    else if (filterTypeSel.value === "Intérprete") sourceSet = artists;
-
-    if (sourceSet) {
-      Array.from(sourceSet)
-        .sort((a, b) => a.localeCompare(b))
-        .forEach((val) => filterValueSel.appendChild(new Option(val, val)));
+    function setAdminStatus(msg, ok = null) {
+      const s = document.getElementById("adminStatus");
+      s.textContent = msg || "";
+      s.classList.remove("ok", "err");
+      if (ok === true) s.classList.add("ok");
+      else if (ok === false) s.classList.add("err");
     }
 
-    if (songFilterValue && filterTypeSel.value === songFilterField) {
-      filterValueSel.value = songFilterValue;
-    }
-  }
-
-  populateFilterValues();
-  blockFilter.appendChild(filterValueSel);
-  controls.appendChild(blockFilter);
-
-  filterTypeSel.addEventListener("change", () => {
-    if (filterTypeSel.value === "none") {
-      songFilterField = null;
-      songFilterValue = null;
-    } else {
-      songFilterField = filterTypeSel.value;
-      songFilterValue = "";
-    }
-    populateFilterValues();
-    renderList("canciones");
-  });
-
-  filterValueSel.addEventListener("change", () => {
-    songFilterValue = filterValueSel.value || null;
-    renderList("canciones");
-  });
-
-  // Bloque ordenar
-  const blockSort = document.createElement("div");
-  blockSort.className = "block";
-  const slabel = document.createElement("span");
-  slabel.textContent = "Ordenar por:";
-  blockSort.appendChild(slabel);
-
-  const sortSel = document.createElement("select");
-  sortSel.appendChild(new Option("Original", ""));
-  sortSel.appendChild(new Option("A → Z", "asc"));
-  sortSel.appendChild(new Option("Z → A", "desc"));
-
-  sortSel.value = songSortField || "";
-  blockSort.appendChild(sortSel);
-  controls.appendChild(blockSort);
-
-  sortSel.addEventListener("change", () => {
-    const v = sortSel.value;
-    songSortField = v || null;
-    renderList("canciones");
-  });
-
-  // Búsqueda local de canciones
-  const searchWrapper = document.createElement("div");
-  searchWrapper.className = "song-filter-search";
-  const searchInput = document.createElement("input");
-  searchInput.type = "search";
-  searchInput.placeholder = "🔍 Buscar canción, intérprete o género…";
-  searchInput.value = songSearchTerm || "";
-  searchInput.oninput = () => {
-    songSearchTerm = normalize(searchInput.value);
-    renderList("canciones");
-  };
-  searchWrapper.appendChild(searchInput);
-  controls.appendChild(searchWrapper);
-
-  container.appendChild(controls);
-}
-
-function renderList(section) {
-  const container = document.getElementById("list");
-  container.innerHTML = "";
-
-  const label = document.createElement("div");
-  label.className = "section-label";
-  label.textContent = SCHEMA[section].label.toUpperCase();
-  container.appendChild(label);
-
-  let items = data[section] || [];
-
-  if (section === "canciones") {
-    buildSongControls(container);
-    items = applySongFilterAndSort(items);
-  }
-
-  const ul = document.createElement("ul");
-  ul.className = "item-list";
-
-  items.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.className = "item";
-
-    const realIndex = data[section].indexOf(item);
-    li.onclick = () => showItem(section, realIndex >= 0 ? realIndex : index);
-
-    const title = document.createElement("div");
-    title.className = "item-title";
-    title.textContent = item.title || item.header;
-
-    const meta = document.createElement("div");
-    meta.className = "item-meta";
-    meta.textContent = SCHEMA[section].typeLabel;
-
-    li.appendChild(title);
-    li.appendChild(meta);
-    ul.appendChild(li);
-  });
-
-  if (!items.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty-state";
-    empty.innerHTML =
-      "<p>No se encontraron elementos en esta categoría. Revisa <code>data/historias.json</code>.</p>";
-    container.appendChild(empty);
-  } else {
-    container.appendChild(ul);
-  }
-}
-
-// Texto largo colapsable
-function applyCollapsibleText(container, fullText) {
-  const MAX_CHARS = 280;
-  if (!fullText || fullText.length <= MAX_CHARS) {
-    container.innerText = fullText;
-    return;
-  }
-
-  const shortText = fullText.slice(0, MAX_CHARS) + "…";
-
-  const textSpan = document.createElement("span");
-  const toggleBtn = document.createElement("button");
-  toggleBtn.type = "button";
-  toggleBtn.className = "collapsible-toggle";
-
-  let expanded = false;
-
-  function update() {
-    textSpan.textContent = expanded ? fullText : shortText;
-    toggleBtn.textContent = expanded ? "ver menos" : "ver más";
-  }
-
-  update();
-
-  toggleBtn.addEventListener("click", () => {
-    expanded = !expanded;
-    update();
-  });
-
-  container.innerHTML = "";
-  container.appendChild(textSpan);
-  container.appendChild(document.createTextNode(" "));
-  container.appendChild(toggleBtn);
-}
-
-function showItem(section, index) {
-  const viewer = document.getElementById("viewer");
-  const item = data[section][index];
-  const schema = SCHEMA[section];
-
-  if (!item) {
-    viewer.innerHTML =
-      "<div class='empty-state'><p>No se encontró el elemento seleccionado.</p></div>";
-    return;
-  }
-
-  const card = document.createElement("article");
-  card.className = "card";
-
-  const typeSpan = document.createElement("div");
-  typeSpan.className = "card-type";
-  typeSpan.textContent = schema.typeLabel.toUpperCase();
-  card.appendChild(typeSpan);
-
-  const title = document.createElement("h2");
-  title.textContent = item.title || item.header;
-  card.appendChild(title);
-
-  const imageFieldName = schema.mediaFields.image;
-  const videoFieldName = schema.mediaFields.video;
-
-  schema.fields.forEach((fieldName) => {
-    if (fieldName === imageFieldName || fieldName === videoFieldName) return;
-    const value = item.fields[fieldName] ?? "N/D";
-
-    const fieldDiv = document.createElement("div");
-    fieldDiv.className = "field";
-    if (schema.longFields.includes(fieldName)) fieldDiv.classList.add("long-text");
-
-    const labelSpan = document.createElement("span");
-    labelSpan.className = "field-label";
-    labelSpan.textContent = fieldName + ":";
-
-    const valueSpan = document.createElement("span");
-    valueSpan.className = "field-value";
-
-    if (!value || value === "N/D") {
-      valueSpan.textContent = "N/D";
-      valueSpan.classList.add("nd");
-    } else if (fieldName === "Tomado de" && /^https?:\/\//i.test(value)) {
-      const link = document.createElement("a");
-      link.href = value;
-      link.target = "_blank";
-      link.rel = "noreferrer";
-      link.textContent = value;
-      valueSpan.appendChild(link);
-    } else if (schema.longFields.includes(fieldName)) {
-      applyCollapsibleText(valueSpan, value);
-    } else {
-      valueSpan.innerText = value;
+    function incrementSaveCounter() {
+      adminSaveCount += 1;
+      document.getElementById("adminSaveCount").textContent = adminSaveCount;
     }
 
-    fieldDiv.appendChild(labelSpan);
-    fieldDiv.appendChild(valueSpan);
-    card.appendChild(fieldDiv);
-  });
+    // ===========================================
+    // CARGA INICIAL DESDE SUPABASE
+    // ===========================================
+    async function loadData() {
+      setAdminStatus("Cargando datos desde Supabase...");
+      try {
+        const [{ data: c, error: errC }, { data: a, error: errA }, { data: u, error: errU }] =
+          await Promise.all([
+            supabase.from("canciones").select("*").order("titulo", { ascending: true }),
+            supabase.from("autores").select("*").order("nombre_artistico", { ascending: true }),
+            supabase.from("curiosidades").select("*").order("tema", { ascending: true })
+          ]);
 
-  if (imageFieldName) {
-    const imgSrc = (item.fields[imageFieldName] || "").trim();
-    if (imgSrc && imgSrc !== "N/D") {
-      const fig = document.createElement("figure");
-      fig.className = "media-frame";
-      const img = document.createElement("img");
-      img.src = imgSrc;
-      img.alt = item.title || schema.typeLabel;
-      fig.appendChild(img);
-      card.appendChild(fig);
-    } else {
-      const fieldDiv = document.createElement("div");
-      fieldDiv.className = "field";
-      const labelSpan = document.createElement("span");
-      labelSpan.className = "field-label";
-      labelSpan.textContent = imageFieldName + ":";
-      const valueSpan = document.createElement("span");
-      valueSpan.className = "field-value nd";
-      valueSpan.textContent = "N/D";
-      fieldDiv.appendChild(labelSpan);
-      fieldDiv.appendChild(valueSpan);
-      card.appendChild(fieldDiv);
-    }
-  }
-
-  if (videoFieldName) {
-    const rawVal = item.fields[videoFieldName];
-    const vidSrc = (rawVal || "").trim();
-
-    if (!vidSrc || vidSrc === "N/D") {
-      const fieldDiv = document.createElement("div");
-      fieldDiv.className = "field";
-      const labelSpan = document.createElement("span");
-      labelSpan.className = "field-label";
-      labelSpan.textContent = videoFieldName + ":";
-      const valueSpan = document.createElement("span");
-      valueSpan.className = "field-value nd";
-      valueSpan.textContent = "N/D";
-      fieldDiv.appendChild(labelSpan);
-      fieldDiv.appendChild(valueSpan);
-      card.appendChild(fieldDiv);
-    } else {
-      const fig = document.createElement("figure");
-      fig.className = "media-frame";
-
-      if (/^https?:\/\//i.test(vidSrc)) {
-        let embedUrl = vidSrc;
-        const ytWatch = vidSrc.match(/youtube\.com\/watch\?v=([^&]+)/i);
-        const ytShort = vidSrc.match(/youtu\.be\/([^?]+)/i);
-
-        if (ytWatch && ytWatch[1]) {
-          embedUrl = "https://www.youtube.com/embed/" + ytWatch[1];
-        } else if (ytShort && ytShort[1]) {
-          embedUrl = "https://www.youtube.com/embed/" + ytShort[1];
+        if (errC || errA || errU) {
+          console.error(errC || errA || errU);
+          setAdminStatus("Error al cargar datos desde Supabase.", false);
+          return;
         }
 
-        const iframe = document.createElement("iframe");
-        iframe.src = embedUrl;
-        iframe.className = "media-iframe";
-        iframe.setAttribute("frameborder", "0");
-        iframe.setAttribute(
-          "allow",
-          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        );
-        iframe.allowFullscreen = true;
-        iframe.title = item.title || "Video";
+        canciones = c || [];
+        autores = a || [];
+        curiosidades = u || [];
 
-        fig.appendChild(iframe);
-      } else {
-        const vid = document.createElement("video");
-        vid.controls = true;
-        vid.src = vidSrc;
-        vid.className = "media-video";
-        fig.appendChild(vid);
+        document.getElementById("badge-canciones").textContent = canciones.length;
+        document.getElementById("badge-autores").textContent = autores.length;
+        document.getElementById("badge-curiosidades").textContent = curiosidades.length;
+
+        renderCancionesList();
+        renderAutoresList();
+        renderCuriosidadesList();
+        initAdminSelectors();
+
+        setAdminStatus("Datos cargados correctamente desde Supabase.", true);
+      } catch (e) {
+        console.error(e);
+        setAdminStatus("Error inesperado al cargar datos.", false);
+      }
+    }
+
+    // ===========================================
+    // RENDER CANCIONES
+    // ===========================================
+    function getCancionesFiltradasOrdenadas() {
+      const tipo = document.getElementById("filterTipo").value;
+      const valor = document.getElementById("filterValor").value;
+      const orden = document.getElementById("orderCanciones").value;
+      const busq = document.getElementById("searchCanciones").value.trim().toLowerCase();
+
+      let lista = [...canciones];
+
+      if (tipo === "genero" && valor !== "todos") {
+        lista = lista.filter(c => (c.genero || "").toLowerCase() === valor.toLowerCase());
+      } else if (tipo === "interprete" && valor !== "todos") {
+        lista = lista.filter(c => (c.interprete || "").toLowerCase() === valor.toLowerCase());
       }
 
-      card.appendChild(fig);
-    }
-  }
-
-  viewer.innerHTML = "";
-  viewer.appendChild(card);
-}
-
-// ===== BÚSQUEDA GLOBAL ===============================================
-function searchItems() {
-  const query = normalize(document.getElementById("searchBox").value);
-  const list = document.getElementById("list");
-  const viewer = document.getElementById("viewer");
-
-  if (!query) {
-    renderList(currentSection);
-    return;
-  }
-
-  list.innerHTML = "";
-  viewer.innerHTML =
-    "<div class='empty-state'><p>Selecciona un resultado para ver el detalle.</p></div>";
-
-  const label = document.createElement("div");
-  label.className = "section-label";
-  label.textContent = "Resultados de búsqueda";
-  list.appendChild(label);
-
-  const ul = document.createElement("ul");
-  ul.className = "item-list";
-
-  ["canciones", "autores", "curiosidades"].forEach((section) => {
-    data[section].forEach((item, index) => {
-      const hay =
-        normalize(item.title).includes(query) ||
-        normalize(item.header).includes(query) ||
-        Object.values(item.fields).some((v) => normalize(v).includes(query));
-
-      if (!hay) return;
-
-      const li = document.createElement("li");
-      li.className = "item";
-      li.onclick = () => {
-        currentSection = section;
-        showItem(section, index);
-      };
-
-      const title = document.createElement("div");
-      title.className = "item-title";
-      title.textContent = item.title || item.header;
-
-      const meta = document.createElement("div");
-      meta.className = "item-meta";
-      meta.textContent = SCHEMA[section].typeLabel;
-
-      li.appendChild(title);
-      li.appendChild(meta);
-      ul.appendChild(li);
-    });
-  });
-
-  if (!ul.children.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty-state";
-    empty.innerHTML = "<p>No se encontraron coincidencias.</p>";
-    list.appendChild(empty);
-  } else {
-    list.appendChild(ul);
-  }
-}
-
-// ===== ADMIN =========================================================
-function showAdmin() {
-  if (!adminUnlocked) {
-    const pwd = prompt("Contraseña de administración:");
-    if (pwd !== ADMIN_PASSWORD) {
-      alert("Contraseña incorrecta.");
-      return;
-    }
-    adminUnlocked = true;
-  }
-  document.getElementById("admin").hidden = false;
-  renderAdminItems();
-  loadAdminForm();
-}
-
-function renderAdminItems() {
-  const catSel = document.getElementById("adminCategory");
-  const itemSel = document.getElementById("adminItem");
-  adminCurrentSection = catSel.value;
-
-  itemSel.innerHTML = "";
-  data[adminCurrentSection].forEach((item, idx) => {
-    const opt = document.createElement("option");
-    opt.value = String(idx);
-    opt.textContent = item.title || item.header;
-    itemSel.appendChild(opt);
-  });
-
-  if (!data[adminCurrentSection].length) {
-    const opt = document.createElement("option");
-    opt.value = "-1";
-    opt.textContent = "(No hay ítems)";
-    itemSel.appendChild(opt);
-  }
-
-  const searchInput = document.getElementById("adminItemSearch");
-  if (searchInput) searchInput.value = "";
-
-  adminCurrentIndex = itemSel.options.length ? Number(itemSel.value) || 0 : 0;
-  loadAdminForm();
-}
-
-function filterAdminItems() {
-  const searchInput = document.getElementById("adminItemSearch");
-  const itemSel = document.getElementById("adminItem");
-  const q = normalize(searchInput.value || "");
-
-  itemSel.innerHTML = "";
-  const arr = data[adminCurrentSection] || [];
-  let firstIndex = null;
-
-  arr.forEach((item, idx) => {
-    const t = normalize(item.title || item.header || "");
-    if (!q || t.includes(q)) {
-      const opt = new Option(item.title || item.header, idx);
-      itemSel.add(opt);
-      if (firstIndex === null) firstIndex = idx;
-    }
-  });
-
-  if (firstIndex === null) {
-    const opt = new Option("(Sin resultados)", "-1");
-    itemSel.add(opt);
-    adminCurrentIndex = -1;
-    document.getElementById("adminForm").innerHTML =
-      "<p class='empty-state'>No hay coincidencias para esa búsqueda.</p>";
-  } else {
-    adminCurrentIndex = firstIndex;
-    itemSel.value = String(firstIndex);
-    loadAdminForm();
-  }
-}
-
-function loadAdminForm() {
-  const form = document.getElementById("adminForm");
-  const itemSel = document.getElementById("adminItem");
-  adminCurrentIndex = Number(itemSel.value) || 0;
-
-  form.innerHTML = "";
-  const items = data[adminCurrentSection];
-  if (!items.length || adminCurrentIndex < 0 || adminCurrentIndex >= items.length) {
-    form.innerHTML =
-      "<p class='empty-state'>No hay ítems en esta categoría. Usa “Agregar nuevo ítem”.</p>";
-    return;
-  }
-
-  const item = items[adminCurrentSection === "canciones" ? adminCurrentIndex : adminCurrentIndex];
-  const schema = SCHEMA[adminCurrentSection];
-
-  schema.fields.forEach((fieldName) => {
-    const fieldDiv = document.createElement("div");
-    fieldDiv.className = "admin-field";
-
-    const label = document.createElement("label");
-    label.textContent = fieldName + ":";
-    label.htmlFor = "field-" + fieldName;
-    fieldDiv.appendChild(label);
-
-    const isLong = schema.longFields.includes(fieldName);
-    const isMedia =
-      fieldName === schema.mediaFields.image || fieldName === schema.mediaFields.video;
-
-    let input;
-    if (isLong) {
-      input = document.createElement("textarea");
-    } else {
-      input = document.createElement("input");
-      input.type = "text";
-    }
-    input.id = "field-" + fieldName;
-    input.name = fieldName;
-    input.value = item.fields[fieldName] === "N/D" ? "" : item.fields[fieldName];
-
-    fieldDiv.appendChild(input);
-
-    if (isMedia) {
-      const fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.accept =
-        fieldName === schema.mediaFields.video ? "video/*" : "image/*";
-      fileInput.onchange = (ev) => {
-        const file = ev.target.files[0];
-        if (!file) return;
-        const folder = fieldName === schema.mediaFields.video ? "videos" : "images";
-        input.value = folder + "/" + file.name;
-        alert(
-          "Recuerda copiar el archivo " +
-            file.name +
-            " dentro de la carpeta /" + folder + " del proyecto."
+      if (busq) {
+        lista = lista.filter(c =>
+          (c.titulo || "").toLowerCase().includes(busq) ||
+          (c.interprete || "").toLowerCase().includes(busq)
         );
-      };
-      fieldDiv.appendChild(fileInput);
-    }
+      }
 
-    form.appendChild(fieldDiv);
-  });
-
-  const actions = document.createElement("div");
-  actions.className = "admin-actions";
-
-  const saveBtn = document.createElement("button");
-  saveBtn.type = "submit";
-  saveBtn.className = "primary";
-  saveBtn.textContent = "Guardar";
-  actions.appendChild(saveBtn);
-
-  const exportBtn = document.createElement("button");
-  exportBtn.type = "button";
-  exportBtn.className = "secondary";
-  exportBtn.textContent = "Exportar JSON";
-  exportBtn.onclick = () => exportJson();
-  actions.appendChild(exportBtn);
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.type = "button";
-  deleteBtn.className = "danger";
-  deleteBtn.textContent = "Eliminar ítem";
-  deleteBtn.onclick = deleteCurrentItem;
-  actions.appendChild(deleteBtn);
-
-  form.appendChild(actions);
-
-  showItem(adminCurrentSection, adminCurrentIndex);
-}
-
-// Sincronizar autores/cantantes a partir de una canción
-function syncAuthorsFromSong(songItem) {
-  if (!songItem || songItem.type !== "canciones") return;
-
-  const songTitle =
-    (songItem.fields["Canción"] && songItem.fields["Canción"] !== "N/D")
-      ? songItem.fields["Canción"]
-      : (songItem.title || "Canción sin título");
-
-  const artist = (songItem.fields["Intérprete"] || "").trim();
-  const composer = (songItem.fields["Compositor"] || "").trim();
-
-  if (artist && artist !== "N/D") {
-    syncSingleAuthor(artist, songTitle);
-  }
-  if (composer && composer !== "N/D" && composer !== artist) {
-    syncSingleAuthor(composer, songTitle);
-  }
-}
-
-function syncSingleAuthor(name, songTitle) {
-  let author = data.autores.find(
-    (a) => a.fields && a.fields["Nombre artístico"] === name
-  );
-
-  if (!author) {
-    const fields = {};
-    SCHEMA.autores.fields.forEach((f) => (fields[f] = "N/D"));
-    fields["Nombre artístico"] = name;
-    fields["Éxitos"] = songTitle || "N/D";
-
-    author = {
-      id: "autores-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
-      header: "A. " + name,
-      title: name,
-      type: "autores",
-      fields
-    };
-    data.autores.push(author);
-  } else {
-    const currentHits = author.fields["Éxitos"] || "N/D";
-    if (currentHits === "N/D" || !currentHits.trim()) {
-      author.fields["Éxitos"] = songTitle;
-    } else if (songTitle && !currentHits.includes(songTitle)) {
-      author.fields["Éxitos"] = currentHits + " · " + songTitle;
-    }
-  }
-}
-
-// Guardar (sin previsualización, solo local)
-function saveAdminForm(ev) {
-  ev.preventDefault();
-
-  const items = data[adminCurrentSection];
-  if (!items.length) return;
-
-  const original = items[adminCurrentIndex];
-  const schema = SCHEMA[adminCurrentSection];
-  const updated = clone(original);
-
-  schema.fields.forEach((fieldName) => {
-    const el = document.getElementById("field-" + fieldName);
-    if (!el) return;
-    const val = el.value.trim();
-    updated.fields[fieldName] = val || "N/D";
-  });
-
-  if (adminCurrentSection === "canciones" && updated.fields["Canción"] !== "N/D") {
-    updated.title = updated.fields["Canción"];
-  } else if (
-    adminCurrentSection === "autores" &&
-    updated.fields["Nombre artístico"] !== "N/D"
-  ) {
-    updated.title = updated.fields["Nombre artístico"];
-  } else if (
-    adminCurrentSection === "curiosidades" &&
-    updated.fields["Tema"] !== "N/D"
-  ) {
-    updated.title = updated.fields["Tema"];
-  }
-
-  data[adminCurrentSection][adminCurrentIndex] = updated;
-
-  if (adminCurrentSection === "canciones") {
-    syncAuthorsFromSong(updated);
-  }
-
-  saveToLocalStorage();
-
-  ["canciones", "autores", "curiosidades"].forEach((sec) => {
-    data[sec] = (data[sec] || []).map((item) => normalizeItem(item, sec));
-  });
-
-  renderList(currentSection);
-  showItem(adminCurrentSection, adminCurrentIndex);
-
-  sessionSaveCount += 1;
-  const counterEl = document.getElementById("saveCounter");
-  if (counterEl) {
-    counterEl.innerHTML =
-      `<span class="counter-number">${sessionSaveCount}</span> ` +
-      `cambio${sessionSaveCount === 1 ? "" : "s"} guardado` +
-      `${sessionSaveCount === 1 ? "" : "s"} en esta sesión.`;
-  }
-}
-
-function deleteCurrentItem() {
-  if (
-    !confirm(
-      "¿Seguro que quieres eliminar este ítem? Esta acción solo afecta a los datos locales (y al JSON si luego lo exportas)."
-    )
-  )
-    return;
-  const arr = data[adminCurrentSection];
-  if (!arr.length) return;
-  arr.splice(adminCurrentIndex, 1);
-  saveToLocalStorage();
-  renderAdminItems();
-  loadAdminForm();
-  renderList(currentSection);
-}
-
-// Crear nuevo ítem
-function addNewItem() {
-  const section = adminCurrentSection;
-  const schema = SCHEMA[section];
-  const fields = {};
-  schema.fields.forEach((f) => (fields[f] = "N/D"));
-
-  let title = "Nuevo ítem";
-  if (section === "canciones") title = "Nueva canción";
-  if (section === "autores") title = "Nuevo autor";
-  if (section === "curiosidades") title = "Nueva curiosidad";
-
-  const item = {
-    id: section + "-" + Date.now(),
-    header: "",
-    title,
-    type: section,
-    fields
-  };
-
-  data[section].push(item);
-  saveToLocalStorage();
-  renderAdminItems();
-
-  const itemSel = document.getElementById("adminItem");
-  itemSel.value = String(data[section].length - 1);
-  loadAdminForm();
-  renderList(section);
-  currentSection = section;
-}
-
-// LOCALSTORAGE
-function saveToLocalStorage() {
-  try {
-    localStorage.setItem(LS_KEY, JSON.stringify(clone(data)));
-  } catch (e) {
-    console.warn("No se pudo guardar en localStorage", e);
-  }
-}
-
-function loadFromLocalStorage() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return;
-    const stored = JSON.parse(raw);
-    if (!stored || typeof stored !== "object") return;
-
-    ["canciones", "autores", "curiosidades"].forEach((section) => {
-      if (!Array.isArray(stored[section])) return;
-
-      stored[section].forEach((savedItem) => {
-        const idx = data[section].findIndex(
-          (it) => it.id === savedItem.id || it.title === savedItem.title
-        );
-        if (idx >= 0) {
-          data[section][idx] = normalizeItem(savedItem, section);
-        } else {
-          data[section].push(normalizeItem(savedItem, section));
-        }
+      lista.sort((a, b) => {
+        const ta = (a.titulo || "").toLowerCase();
+        const tb = (b.titulo || "").toLowerCase();
+        if (orden === "asc") return ta.localeCompare(tb);
+        return tb.localeCompare(ta);
       });
+
+      return lista;
+    }
+
+    function updateFilterOptions() {
+      const tipo = document.getElementById("filterTipo").value;
+      const selectValor = document.getElementById("filterValor");
+      selectValor.innerHTML = "";
+      selectValor.appendChild(el("option", { value: "todos" }, "(todos)"));
+
+      if (tipo === "genero") {
+        const setG = new Set(
+          canciones
+            .map(c => c.genero || "")
+            .filter(g => g.trim() !== "")
+        );
+        Array.from(setG)
+          .sort((a, b) => a.localeCompare(b))
+          .forEach(g => selectValor.appendChild(el("option", { value: g }, g)));
+      } else if (tipo === "interprete") {
+        const setI = new Set(
+          canciones
+            .map(c => c.interprete || "")
+            .filter(i => i.trim() !== "")
+        );
+        Array.from(setI)
+          .sort((a, b) => a.localeCompare(b))
+          .forEach(i => selectValor.appendChild(el("option", { value: i }, i)));
+      }
+    }
+
+    function renderCancionesList() {
+      updateFilterOptions();
+      const cont = document.getElementById("listaCanciones");
+      cont.innerHTML = "";
+      const lista = getCancionesFiltradasOrdenadas();
+      if (!lista.length) {
+        cont.appendChild(el("div", { class: "list-item" }, "No hay canciones aún."));
+        return;
+      }
+      lista.forEach(c => {
+        const item = el("div", { class: "list-item", "data-id": c.id }, [
+          el("div", { class: "list-item-title" }, c.titulo || "(sin título)"),
+          el("div", { class: "list-item-subtitle" }, `${c.interprete || "Intérprete desconocido"} · ${c.genero || "Género N/D"}`)
+        ]);
+        item.addEventListener("click", () => showCancionDetalle(c.id));
+        cont.appendChild(item);
+      });
+    }
+
+    function showCancionDetalle(id) {
+      const c = canciones.find(x => x.id === id);
+      const box = document.getElementById("detalleCancion");
+      if (!c) {
+        box.innerHTML = "<div class='song-meta'>Canción no encontrada.</div>";
+        return;
+      }
+
+      box.innerHTML = "";
+      box.appendChild(el("div", { class: "song-meta" }, [
+        el("strong", {}, c.titulo || "(sin título)")
+      ]));
+
+      const chips = el("div", { class: "chips" });
+      if (c.interprete) chips.appendChild(el("span", { class: "chip" }, `Intérprete: ${c.interprete}`));
+      if (c.compositor) chips.appendChild(el("span", { class: "chip" }, `Compositor: ${c.compositor}`));
+      if (c.genero) chips.appendChild(el("span", { class: "chip" }, `Género: ${c.genero}`));
+      box.appendChild(chips);
+
+      if (c.historia) {
+        box.appendChild(el("div", { class: "history-text" }, c.historia));
+      }
+
+      if (c.tomado_de) {
+        box.appendChild(el("div", { class: "song-meta" }, `Tomado de: ${c.tomado_de}`));
+      }
+
+      const media = el("div", { class: "media-preview" });
+      if (c.imagen) {
+        media.appendChild(el("div", {}, `Imagen: ${c.imagen}`));
+      }
+      if (c.video) {
+        const link = el("a", { href: c.video, target: "_blank" }, "Ver video");
+        media.appendChild(link);
+      }
+      if (media.childNodes.length > 0) {
+        box.appendChild(media);
+      }
+    }
+
+    // ===========================================
+    // RENDER AUTORES
+    // ===========================================
+    function renderAutoresList() {
+      const cont = document.getElementById("listaAutores");
+      const busq = document.getElementById("searchAutores").value.trim().toLowerCase();
+      cont.innerHTML = "";
+
+      let lista = [...autores];
+      if (busq) {
+        lista = lista.filter(a =>
+          (a.nombre_artistico || "").toLowerCase().includes(busq) ||
+          (a.nombre_real || "").toLowerCase().includes(busq)
+        );
+      }
+
+      if (!lista.length) {
+        cont.appendChild(el("div", { class: "list-item" }, "No hay autores aún."));
+        return;
+      }
+
+      lista.forEach(a => {
+        const item = el("div", { class: "list-item", "data-id": a.id }, [
+          el("div", { class: "list-item-title" }, a.nombre_artistico || "(sin nombre artístico)"),
+          el("div", { class: "list-item-subtitle" }, a.nombre_real || "Nombre real N/D")
+        ]);
+        item.addEventListener("click", () => showAutorDetalle(a.id));
+        cont.appendChild(item);
+      });
+    }
+
+    function showAutorDetalle(id) {
+      const a = autores.find(x => x.id === id);
+      const box = document.getElementById("detalleAutor");
+      if (!a) {
+        box.innerHTML = "<div class='song-meta'>Autor no encontrado.</div>";
+        return;
+      }
+
+      box.innerHTML = "";
+      box.appendChild(el("div", { class: "song-meta" }, [
+        el("strong", {}, a.nombre_artistico || "(sin nombre artístico)")
+      ]));
+
+      const chips = el("div", { class: "chips" });
+      if (a.nombre_real) chips.appendChild(el("span", { class: "chip" }, `Nombre real: ${a.nombre_real}`));
+      if (a.rol) chips.appendChild(el("span", { class: "chip" }, `Rol: ${a.rol}`));
+      box.appendChild(chips);
+
+      if (a.biografia) {
+        box.appendChild(el("div", { class: "history-text" }, a.biografia));
+      }
+      if (a.exitos) {
+        box.appendChild(el("div", { class: "song-meta" }, `Éxitos: ${a.exitos}`));
+      }
+      if (a.curiosidades) {
+        box.appendChild(el("div", { class: "song-meta" }, `Curiosidades: ${a.curiosidades}`));
+      }
+      if (a.tomado_de) {
+        box.appendChild(el("div", { class: "song-meta" }, `Tomado de: ${a.tomado_de}`));
+      }
+    }
+
+    // ===========================================
+    // RENDER CURIOSIDADES
+    // ===========================================
+    function renderCuriosidadesList() {
+      const cont = document.getElementById("listaCuriosidades");
+      const busq = document.getElementById("searchCuriosidades").value.trim().toLowerCase();
+      cont.innerHTML = "";
+
+      let lista = [...curiosidades];
+      if (busq) {
+        lista = lista.filter(c =>
+          (c.tema || "").toLowerCase().includes(busq) ||
+          (c.detalle || "").toLowerCase().includes(busq)
+        );
+      }
+
+      if (!lista.length) {
+        cont.appendChild(el("div", { class: "list-item" }, "No hay curiosidades aún."));
+        return;
+      }
+
+      lista.forEach(c => {
+        const item = el("div", { class: "list-item", "data-id": c.id }, [
+          el("div", { class: "list-item-title" }, c.tema || "(sin tema)"),
+          el("div", { class: "list-item-subtitle" }, (c.tomado_de || "").slice(0, 60))
+        ]);
+        item.addEventListener("click", () => showCuriosidadDetalle(c.id));
+        cont.appendChild(item);
+      });
+    }
+
+    function showCuriosidadDetalle(id) {
+      const c = curiosidades.find(x => x.id === id);
+      const box = document.getElementById("detalleCuriosidad");
+      if (!c) {
+        box.innerHTML = "<div class='song-meta'>Curiosidad no encontrada.</div>";
+        return;
+      }
+
+      box.innerHTML = "";
+      box.appendChild(el("div", { class: "song-meta" }, [
+        el("strong", {}, c.tema || "(sin tema)")
+      ]));
+
+      if (c.detalle) {
+        box.appendChild(el("div", { class: "history-text" }, c.detalle));
+      }
+      if (c.tomado_de) {
+        box.appendChild(el("div", { class: "song-meta" }, `Tomado de: ${c.tomado_de}`));
+      }
+      if (c.imagen) {
+        box.appendChild(el("div", { class: "media-preview" }, `Imagen: ${c.imagen}`));
+      }
+    }
+
+    // ===========================================
+    // ADMIN: SELECTORES Y FORMULARIO
+    // ===========================================
+    function initAdminSelectors() {
+      document.getElementById("adminCategory").value = adminCurrentCategory;
+      renderAdminItems();
+    }
+
+    function getAdminListForCategory() {
+      if (adminCurrentCategory === "canciones") return canciones;
+      if (adminCurrentCategory === "autores") return autores;
+      return curiosidades;
+    }
+
+    function renderAdminItems() {
+      const select = document.getElementById("adminItem");
+      const search = document.getElementById("adminSearch").value.trim().toLowerCase();
+      const list = getAdminListForCategory();
+
+      select.innerHTML = "";
+
+      list
+        .filter(item => {
+          if (!search) return true;
+          if (adminCurrentCategory === "canciones") {
+            return (item.titulo || "").toLowerCase().includes(search) ||
+              (item.interprete || "").toLowerCase().includes(search);
+          } else if (adminCurrentCategory === "autores") {
+            return (item.nombre_artistico || "").toLowerCase().includes(search) ||
+              (item.nombre_real || "").toLowerCase().includes(search);
+          } else {
+            return (item.tema || "").toLowerCase().includes(search) ||
+              (item.detalle || "").toLowerCase().includes(search);
+          }
+        })
+        .forEach(item => {
+          const label =
+            adminCurrentCategory === "canciones"
+              ? (item.titulo || "(sin título)")
+              : adminCurrentCategory === "autores"
+              ? (item.nombre_artistico || "(sin nombre artístico)")
+              : (item.tema || "(sin tema)");
+          select.appendChild(el("option", { value: item.id }, label));
+        });
+
+      if (select.options.length > 0) {
+        select.selectedIndex = 0;
+        adminCurrentId = select.value;
+        renderAdminForm();
+      } else {
+        adminCurrentId = null;
+        renderAdminForm(); // vacío
+      }
+    }
+
+    function renderAdminForm() {
+      const form = document.getElementById("adminForm");
+      form.innerHTML = "";
+
+      let item = null;
+      if (adminCurrentId) {
+        const list = getAdminListForCategory();
+        item = list.find(x => x.id === adminCurrentId) || null;
+      }
+
+      if (adminCurrentCategory === "canciones") {
+        form.appendChild(
+          el("div", { class: "field-grid two" }, [
+            el("div", {}, [
+              el("label", { for: "fTitulo" }, "Canción"),
+              el("input", { id: "fTitulo", type: "text", value: item?.titulo || "" })
+            ]),
+            el("div", {}, [
+              el("label", { for: "fGenero" }, "Género"),
+              el("input", { id: "fGenero", type: "text", value: item?.genero || "" })
+            ])
+          ])
+        );
+        form.appendChild(
+          el("div", { class: "field-grid two" }, [
+            el("div", {}, [
+              el("label", { for: "fInterprete" }, "Intérprete"),
+              el("input", { id: "fInterprete", type: "text", value: item?.interprete || "" })
+            ]),
+            el("div", {}, [
+              el("label", { for: "fCompositor" }, "Compositor"),
+              el("input", { id: "fCompositor", type: "text", value: item?.compositor || "" })
+            ])
+          ])
+        );
+        form.appendChild(
+          el("div", { class: "field-grid two" }, [
+            el("div", {}, [
+              el("label", { for: "fImagen" }, "Imagen (URL o ruta)"),
+              el("input", { id: "fImagen", type: "text", value: item?.imagen || "" })
+            ]),
+            el("div", {}, [
+              el("label", { for: "fVideo" }, "Video (URL)"),
+              el("input", { id: "fVideo", type: "text", value: item?.video || "" })
+            ])
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fTomadoDe" }, "Tomado de"),
+            el("input", { id: "fTomadoDe", type: "text", value: item?.tomado_de || "" })
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fHistoria" }, "Historia"),
+            el("textarea", { id: "fHistoria" }, item?.historia || "")
+          ])
+        );
+      } else if (adminCurrentCategory === "autores") {
+        form.appendChild(
+          el("div", { class: "field-grid two" }, [
+            el("div", {}, [
+              el("label", { for: "fNombreArtistico" }, "Nombre artístico"),
+              el("input", { id: "fNombreArtistico", type: "text", value: item?.nombre_artistico || "" })
+            ]),
+            el("div", {}, [
+              el("label", { for: "fNombreReal" }, "Nombre real"),
+              el("input", { id: "fNombreReal", type: "text", value: item?.nombre_real || "" })
+            ])
+          ])
+        );
+        form.appendChild(
+          el("div", { class: "field-grid two" }, [
+            el("div", {}, [
+              el("label", { for: "fRol" }, "Rol"),
+              el("input", { id: "fRol", type: "text", value: item?.rol || "" })
+            ]),
+            el("div", {}, [
+              el("label", { for: "fFoto" }, "Foto (URL o ruta)"),
+              el("input", { id: "fFoto", type: "text", value: item?.foto || "" })
+            ])
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fBiografia" }, "Biografía"),
+            el("textarea", { id: "fBiografia" }, item?.biografia || "")
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fExitos" }, "Éxitos"),
+            el("input", { id: "fExitos", type: "text", value: item?.exitos || "" })
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fCuriosidades" }, "Curiosidades"),
+            el("input", { id: "fCuriosidades", type: "text", value: item?.curiosidades || "" })
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fTomadoDe" }, "Tomado de"),
+            el("input", { id: "fTomadoDe", type: "text", value: item?.tomado_de || "" })
+          ])
+        );
+      } else {
+        // curiosidades
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fTema" }, "Tema"),
+            el("input", { id: "fTema", type: "text", value: item?.tema || "" })
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fDetalle" }, "Detalle"),
+            el("textarea", { id: "fDetalle" }, item?.detalle || "")
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fImagenCurio" }, "Imagen (URL o ruta)"),
+            el("input", { id: "fImagenCurio", type: "text", value: item?.imagen || "" })
+          ])
+        );
+        form.appendChild(
+          el("div", {}, [
+            el("label", { for: "fTomadoDe" }, "Tomado de"),
+            el("input", { id: "fTomadoDe", type: "text", value: item?.tomado_de || "" })
+          ])
+        );
+      }
+    }
+
+    // ===========================================
+    // ADMIN: GUARDAR / ELIMINAR / NUEVO
+    // ===========================================
+    async function guardarAdmin() {
+      setAdminStatus("Guardando en Supabase...");
+      try {
+        if (adminCurrentCategory === "canciones") {
+          const titulo = document.getElementById("fTitulo").value.trim();
+          const genero = document.getElementById("fGenero").value.trim();
+          const interprete = document.getElementById("fInterprete").value.trim();
+          const compositor = document.getElementById("fCompositor").value.trim();
+          const imagen = document.getElementById("fImagen").value.trim();
+          const video = document.getElementById("fVideo").value.trim();
+          const tomado_de = document.getElementById("fTomadoDe").value.trim();
+          const historia = document.getElementById("fHistoria").value.trim();
+
+          const payload = { titulo, genero, interprete, compositor, imagen, video, tomado_de, historia };
+
+          if (adminCurrentId) {
+            const { error } = await supabase
+              .from("canciones")
+              .update(payload)
+              .eq("id", adminCurrentId);
+            if (error) throw error;
+          } else {
+            const id = crypto.randomUUID ? crypto.randomUUID() : undefined;
+            if (id) payload.id = id;
+            const { error } = await supabase.from("canciones").insert(payload);
+            if (error) throw error;
+          }
+        } else if (adminCurrentCategory === "autores") {
+          const nombre_artistico = document.getElementById("fNombreArtistico").value.trim();
+          const nombre_real = document.getElementById("fNombreReal").value.trim();
+          const rol = document.getElementById("fRol").value.trim();
+          const foto = document.getElementById("fFoto").value.trim();
+          const biografia = document.getElementById("fBiografia").value.trim();
+          const exitos = document.getElementById("fExitos").value.trim();
+          const curiosidadesA = document.getElementById("fCuriosidades").value.trim();
+          const tomado_de = document.getElementById("fTomadoDe").value.trim();
+
+          const payload = { nombre_artistico, nombre_real, rol, foto, biografia, exitos, curiosidades: curiosidadesA, tomado_de };
+
+          if (adminCurrentId) {
+            const { error } = await supabase
+              .from("autores")
+              .update(payload)
+              .eq("id", adminCurrentId);
+            if (error) throw error;
+          } else {
+            const id = crypto.randomUUID ? crypto.randomUUID() : undefined;
+            if (id) payload.id = id;
+            const { error } = await supabase.from("autores").insert(payload);
+            if (error) throw error;
+          }
+        } else {
+          // curiosidades
+          const tema = document.getElementById("fTema").value.trim();
+          const detalle = document.getElementById("fDetalle").value.trim();
+          const imagen = document.getElementById("fImagenCurio").value.trim();
+          const tomado_de = document.getElementById("fTomadoDe").value.trim();
+
+          const payload = { tema, detalle, imagen, tomado_de };
+
+          if (adminCurrentId) {
+            const { error } = await supabase
+              .from("curiosidades")
+              .update(payload)
+              .eq("id", adminCurrentId);
+            if (error) throw error;
+          } else {
+            const id = crypto.randomUUID ? crypto.randomUUID() : undefined;
+            if (id) payload.id = id;
+            const { error } = await supabase.from("curiosidades").insert(payload);
+            if (error) throw error;
+          }
+        }
+
+        incrementSaveCounter();
+        setAdminStatus("Guardado correctamente en Supabase.", true);
+
+        // recargar datos para ver la actualización
+        await loadData();
+      } catch (e) {
+        console.error(e);
+        setAdminStatus("Error al guardar en Supabase.", false);
+      }
+    }
+
+    async function eliminarAdmin() {
+      if (!adminCurrentId) {
+        setAdminStatus("No hay ítem seleccionado para eliminar.", false);
+        return;
+      }
+      const confirmar = confirm("¿Seguro que deseas eliminar este ítem?");
+      if (!confirmar) return;
+
+      setAdminStatus("Eliminando ítem...");
+      try {
+        if (adminCurrentCategory === "canciones") {
+          const { error } = await supabase
+            .from("canciones")
+            .delete()
+            .eq("id", adminCurrentId);
+          if (error) throw error;
+        } else if (adminCurrentCategory === "autores") {
+          const { error } = await supabase
+            .from("autores")
+            .delete()
+            .eq("id", adminCurrentId);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from("curiosidades")
+            .delete()
+            .eq("id", adminCurrentId);
+          if (error) throw error;
+        }
+
+        setAdminStatus("Ítem eliminado.", true);
+        adminCurrentId = null;
+        await loadData();
+      } catch (e) {
+        console.error(e);
+        setAdminStatus("Error al eliminar en Supabase.", false);
+      }
+    }
+
+    function nuevoAdminItem() {
+      adminCurrentId = null;
+      renderAdminForm();
+      setAdminStatus("Nuevo ítem listo para editar. Recuerda presionar Guardar.");
+    }
+
+    // ===========================================
+    // TABS & EVENTOS
+    // ===========================================
+    function initTabs() {
+      const tabs = document.querySelectorAll(".tab-btn");
+      const sections = {
+        "canciones-section": document.getElementById("canciones-section"),
+        "autores-section": document.getElementById("autores-section"),
+        "curiosidades-section": document.getElementById("curiosidades-section"),
+        "admin-section": document.getElementById("admin-section")
+      };
+
+      tabs.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabs.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const target = btn.getAttribute("data-section");
+          Object.entries(sections).forEach(([id, sec]) => {
+            sec.style.display = id === target ? "block" : "none";
+          });
+        });
+      });
+    }
+
+    function initEvents() {
+      // Filtros canciones
+      document.getElementById("filterTipo").addEventListener("change", () => renderCancionesList());
+      document.getElementById("filterValor").addEventListener("change", () => renderCancionesList());
+      document.getElementById("orderCanciones").addEventListener("change", () => renderCancionesList());
+      document.getElementById("searchCanciones").addEventListener("input", () => renderCancionesList());
+
+      // Buscar autores / curiosidades
+      document.getElementById("searchAutores").addEventListener("input", () => renderAutoresList());
+      document.getElementById("searchCuriosidades").addEventListener("input", () => renderCuriosidadesList());
+
+      // Admin
+      document.getElementById("adminCategory").addEventListener("change", e => {
+        adminCurrentCategory = e.target.value;
+        adminCurrentId = null;
+        renderAdminItems();
+      });
+
+      document.getElementById("adminSearch").addEventListener("input", () => renderAdminItems());
+      document.getElementById("adminItem").addEventListener("change", e => {
+        adminCurrentId = e.target.value || null;
+        renderAdminForm();
+      });
+
+      document.getElementById("btnNuevoItem").addEventListener("click", nuevoAdminItem);
+      document.getElementById("btnGuardar").addEventListener("click", guardarAdmin);
+      document.getElementById("btnEliminar").addEventListener("click", eliminarAdmin);
+      document.getElementById("btnRefrescar").addEventListener("click", loadData);
+    }
+
+    // ===========================================
+    // INICIO
+    // ===========================================
+    document.addEventListener("DOMContentLoaded", async () => {
+      initTabs();
+      initEvents();
+      await loadData();
     });
-  } catch (e) {
-    console.warn("No se pudo leer localStorage", e);
-  }
-}
-
-// Exportar JSON para GitHub
-function exportJson() {
-  try {
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "historias.json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    alert(
-      "Se descargó historias.json con los cambios actuales.\n\n" +
-      "Súbelo al repositorio en /data/historias.json para que la web use estos datos."
-    );
-  } catch (e) {
-    console.error("No se pudo exportar JSON", e);
-    alert("Ocurrió un error al exportar el JSON.");
-  }
-}
-
-// Botón subir arriba
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  const viewer = document.getElementById("viewer");
-  if (viewer) viewer.scrollTop = 0;
-}
-</script>
-
+  </script>
 </body>
 </html>
