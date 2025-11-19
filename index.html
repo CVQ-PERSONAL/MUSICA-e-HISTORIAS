@@ -8,10 +8,10 @@
     :root {
       --bg-gradient: radial-gradient(circle at top, #4f46e5 0, #020617 45%, #000 100%);
       --card-bg: rgba(15, 23, 42, 0.96);
-      --card-soft: rgba(15, 23, 42, 0.88);
+      --card-soft: rgba(15, 23, 42, 0.9);
       --accent: #fb923c;
       --accent-soft: #fed7aa;
-      --pill-bg: #0f172a;
+      --pill-bg: #020617;
       --pill-active: linear-gradient(135deg,#fb923c,#f97316);
       --pill-text: #f9fafb;
       --text-main: #e5e7eb;
@@ -29,11 +29,7 @@
       --transition-med: 0.22s ease-out;
       --font-main: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
@@ -43,31 +39,16 @@
       background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
     }
-
-    .page {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 24px 16px 40px;
-    }
-
-    header {
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2.2rem, 3vw, 2.8rem);
-      letter-spacing: 0.03em;
-    }
-
+    .page { max-width: 980px; margin: 0 auto; padding: 24px 16px 40px; }
+    header { margin-bottom: 18px; }
+    h1 { margin: 0; font-size: clamp(2.2rem, 3vw, 2.8rem); letter-spacing: 0.03em; }
     .subtitle {
       margin-top: 6px;
       font-size: 0.95rem;
       color: var(--text-muted);
-      max-width: 620px;
+      max-width: 640px;
     }
 
-    /* Tabs */
     .tabs {
       display: flex;
       gap: 10px;
@@ -75,7 +56,6 @@
       margin-bottom: 18px;
       flex-wrap: wrap;
     }
-
     .tab {
       border-radius: var(--radius-pill);
       padding: 8px 18px;
@@ -87,16 +67,16 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      transition: background var(--transition-med), color var(--transition-med), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      transition: background var(--transition-med), color var(--transition-med),
+                  transform var(--transition-fast), box-shadow var(--transition-fast),
+                  border-color var(--transition-fast);
     }
-
     .tab span.count {
       font-size: 0.75rem;
       padding: 2px 9px;
       border-radius: 999px;
       background: rgba(15, 23, 42, 0.9);
     }
-
     .tab.active {
       background: var(--pill-active);
       color: var(--pill-text);
@@ -104,12 +84,8 @@
       border-color: rgba(248, 250, 252, 0.18);
       transform: translateY(-1px);
     }
+    .tab.active span.count { background: rgba(15,23,42,0.9); }
 
-    .tab.active span.count {
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    /* Card layout */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
@@ -117,57 +93,38 @@
       box-shadow: var(--shadow-soft);
       border: 1px solid rgba(148, 163, 184, 0.18);
     }
-
     .card-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
+    .card-title { font-size: 1.2rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .card-subtitle { font-size: 0.8rem; color: var(--text-muted); }
 
-    .card-title {
-      font-size: 1.2rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #e5e7eb;
-    }
-
-    .card-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* Layout for song section */
     .song-layout {
       display: grid;
       grid-template-columns: minmax(0, 42%) minmax(0, 58%);
       gap: 16px;
     }
-
     @media (max-width: 768px) {
-      .song-layout {
-        grid-template-columns: minmax(0,1fr);
-      }
+      .song-layout { grid-template-columns: minmax(0,1fr); }
     }
 
-    /* Controls */
-    .field-group {
-      margin-bottom: 10px;
-    }
-
+    .field-group { margin-bottom: 10px; }
     label {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--text-muted);
       display: block;
       margin-bottom: 4px;
     }
-
     select,
     input[type="text"],
-    textarea {
+    textarea,
+    input[type="password"] {
       width: 100%;
       border-radius: 999px;
       border: 1px solid var(--input-border);
@@ -176,33 +133,26 @@
       padding: 9px 12px;
       font-size: 0.9rem;
       outline: none;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+                  background var(--transition-fast), color var(--transition-fast);
     }
-
     textarea {
       border-radius: 12px;
       resize: vertical;
       min-height: 80px;
       font-size: 0.92rem;
-      line-height: 1.35;
+      line-height: 1.38;
     }
-
     select:focus,
     input[type="text"]:focus,
+    input[type="password"]:focus,
     textarea:focus {
       border-color: #f97316;
       box-shadow: 0 0 0 1px rgba(248, 113, 22, 0.35);
     }
 
-    .search-input {
-      padding-left: 34px;
-      position: relative;
-    }
-
-    .search-wrapper {
-      position: relative;
-    }
-
+    .search-input { padding-left: 34px; }
+    .search-wrapper { position: relative; }
     .search-icon {
       position: absolute;
       left: 10px;
@@ -213,74 +163,51 @@
       opacity: 0.9;
     }
 
-    /* List items */
     .list {
       margin-top: 8px;
       border-radius: var(--radius-md);
       overflow: hidden;
       border: 1px solid rgba(31, 41, 55, 0.9);
-      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.35), rgba(15, 23, 42, 0.96));
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.35),
+        rgba(15, 23, 42, 0.96));
       max-height: 420px;
       overflow-y: auto;
     }
-
     .list-item {
       padding: 10px 12px;
       border-bottom: 1px solid rgba(15, 23, 42, 0.9);
       cursor: pointer;
       transition: background var(--transition-fast), transform var(--transition-fast);
     }
+    .list-item:last-child { border-bottom: none; }
+    .list-item:hover { background: rgba(30,64,175,0.45); transform: translateY(-1px); }
+    .list-item.active { background: rgba(248,113,22,0.22); }
+    .list-item-title { font-weight: 600; }
+    .list-item-meta { font-size: 0.8rem; color: var(--text-muted); }
 
-    .list-item:last-child {
-      border-bottom: none;
-    }
-
-    .list-item:hover {
-      background: rgba(30, 64, 175, 0.45);
-      transform: translateY(-1px);
-    }
-
-    .list-item.active {
-      background: rgba(248, 113, 22, 0.22);
-    }
-
-    .list-item-title {
-      font-weight: 600;
-    }
-
-    .list-item-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* Detail panel */
     .detail-card {
       background: var(--card-soft);
       border-radius: var(--radius-md);
       padding: 14px 14px 12px;
       border: 1px solid rgba(55, 65, 81, 0.7);
-      min-height: 180px;
+      min-height: 200px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-
-    .detail-row {
+    .detail-heading {
       display: flex;
-      gap: 6px;
-      font-size: 0.88rem;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 4px;
     }
-
-    .detail-label {
-      min-width: 90px;
+    .detail-title {
+      font-size: 1.05rem;
       font-weight: 600;
-      color: var(--text-muted);
     }
-
-    .detail-value {
-      flex: 1;
-    }
-
+    .detail-row { display: flex; gap: 6px; font-size: 0.88rem; }
+    .detail-label { min-width: 90px; font-weight: 600; color: var(--text-muted); }
+    .detail-value { flex: 1; }
     .pill-genre {
       display: inline-flex;
       align-items: center;
@@ -289,14 +216,12 @@
       font-size: 0.75rem;
       background: rgba(30, 64, 175, 0.55);
     }
-
     .history-text {
       font-size: 0.9rem;
       line-height: 1.4;
       color: #e5e7eb;
       margin-top: 4px;
     }
-
     .btn-link {
       border: none;
       background: none;
@@ -306,136 +231,108 @@
       cursor: pointer;
       text-decoration: underline;
     }
-
-    .btn-link:hover {
-      color: #fed7aa;
-    }
-
+    .btn-link:hover { color: #fed7aa; }
     .video-link {
       color: #93c5fd;
       font-size: 0.85rem;
       text-decoration: underline;
     }
+    .video-link:hover { color: #bfdbfe; }
 
-    .video-link:hover {
-      color: #bfdbfe;
-    }
-
-    /* Buttons */
     .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 8px;
     }
-
     .btn {
       border-radius: var(--radius-pill);
       border: none;
       padding: 8px 16px;
       font-size: 0.86rem;
       cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      transition: background var(--transition-fast), transform var(--transition-fast),
+                  box-shadow var(--transition-fast);
       display: inline-flex;
       align-items: center;
       gap: 6px;
       white-space: nowrap;
     }
-
     .btn-primary {
       background: linear-gradient(135deg,#fb923c,#f97316);
       color: #111827;
       box-shadow: 0 12px 25px rgba(248, 113, 22, 0.4);
     }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(248, 113, 22, 0.6);
-    }
-
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 16px 32px rgba(248,113,22,0.6); }
     .btn-secondary {
       background: #0f172a;
       color: #e5e7eb;
       border: 1px solid rgba(148, 163, 184, 0.6);
     }
-
-    .btn-secondary:hover {
-      background: #111827;
-      transform: translateY(-1px);
-    }
-
+    .btn-secondary:hover { background: #111827; transform: translateY(-1px); }
     .btn-danger {
       background: #7f1d1d;
       color: #fecaca;
       border: 1px solid #b91c1c;
     }
+    .btn-danger:hover { background: #991b1b; }
 
-    .btn-danger:hover {
-      background: #991b1b;
-    }
+    .status-message { margin-top: 8px; font-size: 0.8rem; }
+    .status-ok { color: var(--success); }
+    .status-error { color: var(--danger); }
+    .status-muted { color: var(--text-muted); }
 
-    .status-message {
-      margin-top: 8px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .status-ok {
-      color: var(--success);
-    }
-
-    .status-error {
-      color: var(--danger);
-    }
-
-    /* Admin */
     .admin-grid {
       display: grid;
-      grid-template-columns: minmax(0, 38%) minmax(0, 62%);
+      grid-template-columns: minmax(0, 40%) minmax(0, 60%);
       gap: 16px;
     }
-
     @media (max-width: 768px) {
-      .admin-grid {
-        grid-template-columns: minmax(0,1fr);
-      }
+      .admin-grid { grid-template-columns: minmax(0,1fr); }
     }
-
     .admin-fieldset {
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.96);
       border-radius: var(--radius-md);
       padding: 12px 12px 10px;
       border: 1px solid rgba(55, 65, 81, 0.7);
     }
+    .admin-small { font-size: 0.78rem; color: var(--text-muted); }
+    .input-inline { display: flex; gap: 8px; align-items: center; }
+    .input-inline input[type="text"] { flex: 1; }
 
-    .admin-small {
-      font-size: 0.78rem;
+    /* Overlay login admin */
+    .admin-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+    .admin-dialog {
+      background: #020617;
+      border-radius: 18px;
+      padding: 18px 16px 16px;
+      max-width: 360px;
+      width: 92%;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: var(--shadow-soft);
+    }
+    .admin-dialog h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .admin-dialog p {
+      margin: 0 0 12px;
+      font-size: 0.85rem;
       color: var(--text-muted);
     }
 
-    .admin-count {
-      font-weight: 600;
-      color: #fecaca;
-    }
-
-    .input-inline {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .input-inline input[type="text"] {
-      flex: 1;
-    }
-
-    .badge-counter {
-      font-size: 0.78rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(148,163,184,0.5);
-      color: #e5e7eb;
-    }
+    .author-name { font-weight: 600; }
+    .curio-title { font-weight: 600; }
 
   </style>
 </head>
@@ -444,7 +341,7 @@
     <header>
       <h1>Música e Historias</h1>
       <p class="subtitle">
-        Canciones con historia, cantantes y curiosidades de la música latina. Ahora los datos viven en Supabase y la edición se hace desde la web.
+        Canciones con historia, cantantes y curiosidades de la música latina.
       </p>
 
       <div class="tabs">
@@ -463,7 +360,7 @@
       </div>
     </header>
 
-    <!-- Canciones -->
+    <!-- CANCIONES -->
     <section id="tab-canciones" class="card">
       <div class="card-header">
         <div>
@@ -473,7 +370,7 @@
       </div>
 
       <div class="song-layout">
-        <!-- Panel de filtros + lista -->
+        <!-- LADO IZQUIERDO: filtros + lista -->
         <div>
           <div class="field-group">
             <label for="songFilterType">Filtrar por</label>
@@ -503,19 +400,19 @@
             <label for="songSearch">Buscar canción</label>
             <div class="search-wrapper">
               <span class="search-icon">🔍</span>
-              <input type="text" id="songSearch" class="search-input" placeholder="Escribe parte del título o del intérprete" />
+              <input type="text" id="songSearch" class="search-input"
+                     placeholder="Escribe parte del título o del intérprete" />
             </div>
           </div>
 
           <div id="songList" class="list"></div>
         </div>
 
-        <!-- Panel de detalle -->
+        <!-- LADO DERECHO: detalle protagonista -->
         <div>
           <div class="detail-card" id="songDetail">
-            <div class="detail-row">
-              <div class="detail-label">Canción</div>
-              <div class="detail-value" id="detailTitulo">Selecciona una canción en la lista</div>
+            <div class="detail-heading">
+              <div class="detail-title" id="detailTitulo">Selecciona una canción en la lista</div>
             </div>
             <div class="detail-row">
               <div class="detail-label">Intérprete</div>
@@ -549,12 +446,12 @@
       </div>
     </section>
 
-    <!-- Autores -->
+    <!-- AUTORES -->
     <section id="tab-autores" class="card" style="display:none;">
       <div class="card-header">
         <div>
           <div class="card-title">Cantantes / Autores</div>
-          <div class="card-subtitle">Listado de intérpretes y compositores con sus datos básicos.</div>
+          <div class="card-subtitle">Intérpretes y compositores con sus datos básicos.</div>
         </div>
       </div>
 
@@ -562,26 +459,27 @@
         <label for="authorSearch">Buscar autor</label>
         <div class="search-wrapper">
           <span class="search-icon">🔍</span>
-          <input type="text" id="authorSearch" class="search-input" placeholder="Escribe parte del nombre artístico o real" />
+          <input type="text" id="authorSearch" class="search-input"
+                 placeholder="Escribe parte del nombre artístico o real" />
         </div>
       </div>
 
       <div id="authorList" class="list"></div>
     </section>
 
-    <!-- Curiosidades -->
+    <!-- CURIOSIDADES -->
     <section id="tab-curiosidades" class="card" style="display:none;">
       <div class="card-header">
         <div>
           <div class="card-title">Curiosidades</div>
-          <div class="card-subtitle">Pequeñas historias, datos y anécdotas sobre la música latina.</div>
+          <div class="card-subtitle">Historias cortas y datos curiosos de la música.</div>
         </div>
       </div>
 
       <div id="curiosidadesList" class="list"></div>
     </section>
 
-    <!-- Admin -->
+    <!-- ADMIN -->
     <section id="tab-admin" class="card" style="display:none;">
       <div class="card-header">
         <div>
@@ -590,14 +488,13 @@
             Edición en línea. Los cambios se guardan directamente en Supabase.
           </div>
         </div>
-        <div class="admin-small">
-          Cambios guardados en esta sesión:
-          <span id="adminSaveCounter" class="badge-counter">0</span>
+        <div style="font-size:0.8rem;color:var(--text-muted);">
+          Estado: <span id="adminState">Conectando…</span>
         </div>
       </div>
 
       <div class="admin-grid">
-        <!-- Selección de ítem -->
+        <!-- Lado izquierdo: selección y acciones -->
         <div class="admin-fieldset">
           <div class="field-group">
             <label for="adminCategory">Categoría</label>
@@ -609,31 +506,36 @@
           </div>
 
           <div class="field-group">
-            <label>Ítem</label>
-            <div class="input-inline">
-              <input type="text" id="adminSearchItem" placeholder="Buscar ítem por nombre" />
-            </div>
+            <label for="adminSearchItem">Buscar ítem</label>
+            <input type="text" id="adminSearchItem" placeholder="Escribe parte del título o nombre" />
           </div>
 
           <div class="field-group">
+            <label for="adminItemSelect">Ítem</label>
             <select id="adminItemSelect"></select>
           </div>
 
+          <div class="btn-row" style="margin-top:10px;">
+            <button class="btn btn-primary" id="btnGuardar">Guardar cambios</button>
+            <button class="btn btn-secondary" id="btnNuevoItem">➕ Agregar ítem</button>
+          </div>
+
           <div class="btn-row" style="margin-top:6px;">
-            <button class="btn btn-primary" id="btnNuevoItem">Agregar nuevo ítem</button>
-            <button class="btn btn-secondary" id="btnImportCsv">📂 Importar CSV</button>
+            <button class="btn btn-secondary" id="btnImportCsv">📁 Importar CSV</button>
+            <button class="btn btn-secondary" id="btnRefrescar">🔄 Refrescar</button>
+            <button class="btn btn-danger" id="btnEliminar">🗑️ Eliminar</button>
           </div>
 
           <input type="file" id="csvFileInput" accept=".csv" style="display:none;" />
 
-          <div class="status-message admin-small" id="adminInfo">
+          <div class="status-message status-muted" id="adminInfo">
             Selecciona o crea un ítem para editarlo.
           </div>
         </div>
 
-        <!-- Formulario dinámico -->
+        <!-- Lado derecho: formularios por categoría -->
         <div class="admin-fieldset">
-          <!-- Bloque Canciones -->
+          <!-- CANCIONES -->
           <div id="adminFormCanciones">
             <div class="field-group">
               <label for="adminSongTitulo">Canción</label>
@@ -651,10 +553,19 @@
               <label for="adminSongGenero">Género</label>
               <input type="text" id="adminSongGenero" />
             </div>
+
             <div class="field-group">
               <label for="adminSongImagen">Imagen (URL)</label>
               <input type="text" id="adminSongImagen" />
+              <div class="input-inline" style="margin-top:4px;">
+                <input type="file" id="adminSongImageFile" accept="image/*" />
+                <button class="btn btn-secondary" id="btnUploadImage">📤 Subir imagen</button>
+              </div>
+              <small class="admin-small">
+                La imagen se sube a Supabase Storage y se rellena el URL automáticamente.
+              </small>
             </div>
+
             <div class="field-group">
               <label for="adminSongVideo">Video (URL)</label>
               <input type="text" id="adminSongVideo" />
@@ -669,7 +580,7 @@
             </div>
           </div>
 
-          <!-- Bloque Autores -->
+          <!-- AUTORES -->
           <div id="adminFormAutores" style="display:none;">
             <div class="field-group">
               <label for="adminAutorNombreArtistico">Nombre artístico</label>
@@ -705,7 +616,7 @@
             </div>
           </div>
 
-          <!-- Bloque Curiosidades -->
+          <!-- CURIOSIDADES -->
           <div id="adminFormCuriosidades" style="display:none;">
             <div class="field-group">
               <label for="adminCurioTema">Tema</label>
@@ -725,29 +636,42 @@
             </div>
           </div>
 
-          <div class="btn-row" style="margin-top:10px;">
-            <button class="btn btn-primary" id="btnGuardar">Guardar</button>
-            <button class="btn btn-secondary" id="btnRefrescar">Refrescar desde Supabase</button>
-            <button class="btn btn-danger" id="btnEliminar">Eliminar</button>
-          </div>
-
           <div class="status-message" id="adminStatus"></div>
         </div>
       </div>
     </section>
   </div>
 
+  <!-- Overlay de login para Admin (se muestra solo cuando hace falta) -->
+  <div id="adminOverlay" class="admin-overlay" style="display:none;">
+    <div class="admin-dialog">
+      <h2>ADMIN</h2>
+      <p>Ingresa la contraseña de administración para editar el contenido.</p>
+      <div class="field-group">
+        <label for="adminPasswordInput">Contraseña</label>
+        <input type="password" id="adminPasswordInput" />
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnAdminLogin">Ingresar</button>
+        <button class="btn btn-secondary" id="btnAdminCancel">Cancelar</button>
+      </div>
+      <div class="status-message status-error" id="adminLoginError" style="display:none;">
+        Contraseña incorrecta.
+      </div>
+    </div>
+  </div>
+
   <script type="module">
-    // 👉 1. IMPORTAR SUPABASE
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // 👉 2. RELLENA ESTOS DOS VALORES CON LOS TUYOS
+    // 👉 CONFIGURA ESTO CON TUS DATOS
     const SUPABASE_URL = "https://ughnwwuputxmzzombrbg.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_pFU7leFyEi_01fTmji3pDw_NQdsOgVW";
+    const STORAGE_BUCKET = "imagenes";   // nombre de tu bucket en Supabase Storage
+    const ADMIN_PASSWORD = "historia2025";  // cámbialo por la contraseña que quieras
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Estado global
     let canciones = [];
     let autores = [];
     let curiosidades = [];
@@ -756,92 +680,88 @@
     let fullHistoryText = "";
     let historyExpanded = false;
 
-    // Filtros canciones
     let songFilterType = "todos";
     let songFilterValue = "todos";
     let songSort = "az";
     let songSearch = "";
 
-    // Admin
     let adminCurrentCategory = "canciones";
     let adminSelectedId = null;
-    let adminSaveCounter = 0;
 
-    const el = (id) => document.getElementById(id);
+    let adminUnlocked = localStorage.getItem("musica_admin_unlocked") === "1";
 
-    function setAdminStatus(msg, ok = null) {
-      const node = el("adminStatus");
-      node.textContent = msg;
-      node.classList.remove("status-ok", "status-error");
-      if (ok === true) node.classList.add("status-ok");
-      if (ok === false) node.classList.add("status-error");
+    const $ = (id) => document.getElementById(id);
+
+    function setAdminStatus(msg, type = null) {
+      const node = $("adminStatus");
+      node.textContent = msg || "";
+      node.className = "status-message";
+      if (type === "ok") node.classList.add("status-ok");
+      else if (type === "error") node.classList.add("status-error");
+      else if (type === "muted") node.classList.add("status-muted");
     }
 
-    function incrementSaveCounter() {
-      adminSaveCounter += 1;
-      el("adminSaveCounter").textContent = adminSaveCounter;
+    function setAdminState(msg) {
+      $("adminState").textContent = msg;
     }
 
-    // ---- Carga inicial desde Supabase ----
+    // --- CARGA DE DATOS DESDE SUPABASE ---
     async function loadData() {
       try {
+        setAdminState("Conectando…");
         const { data: d1, error: e1 } = await supabase
-          .from("canciones")
-          .select("*")
-          .order("titulo", { ascending: true });
+          .from("canciones").select("*").order("titulo",{ascending:true});
         if (e1) throw e1;
         canciones = d1 || [];
 
         const { data: d2, error: e2 } = await supabase
-          .from("autores")
-          .select("*")
-          .order("nombre_artistico", { ascending: true });
+          .from("autores").select("*").order("nombre_artistico",{ascending:true});
         if (e2) throw e2;
         autores = d2 || [];
 
         const { data: d3, error: e3 } = await supabase
-          .from("curiosidades")
-          .select("*")
-          .order("tema", { ascending: true });
+          .from("curiosidades").select("*").order("tema",{ascending:true});
         if (e3) throw e3;
         curiosidades = d3 || [];
 
-        el("countCanciones").textContent = canciones.length;
-        el("countAutores").textContent = autores.length;
-        el("countCuriosidades").textContent = curiosidades.length;
+        $("countCanciones").textContent = canciones.length;
+        $("countAutores").textContent = autores.length;
+        $("countCuriosidades").textContent = curiosidades.length;
 
         renderSongFilters();
-        renderSongList();
+        renderSongList(true);
         renderAuthors();
         renderCuriosidades();
         renderAdminItems();
-      } catch (error) {
-        console.error(error);
-        setAdminStatus("Error al cargar datos desde Supabase.", false);
+        setAdminState("Conectado");
+        setAdminStatus("", "muted");
+      } catch (err) {
+        console.error(err);
+        setAdminState("Error");
+        setAdminStatus("Error al cargar datos desde Supabase.", "error");
       }
     }
 
-    // ---------- Canciones (filtros + lista + detalle) ----------
+    // --- UTILIDADES ---
+    function safe(v) {
+      const s = (v || "").toString().trim();
+      return s.length ? s : "ND";
+    }
+
+    // --- CANCIONES: FILTROS + LISTA ---
     function renderSongFilters() {
-      const typeSelect = el("songFilterType");
-      const valueSelect = el("songFilterValue");
+      const typeSelect = $("songFilterType");
+      const valueSelect = $("songFilterValue");
 
       typeSelect.value = songFilterType;
 
-      // Construye opciones según tipo
-      let optionsSet = new Set();
+      let values = new Set();
       if (songFilterType === "genero") {
-        canciones.forEach((c) => {
-          if (c.genero && c.genero.trim()) optionsSet.add(c.genero.trim());
-        });
+        canciones.forEach(c => c.genero && values.add(c.genero.trim()));
       } else if (songFilterType === "interprete") {
-        canciones.forEach((c) => {
-          if (c.interprete && c.interprete.trim())
-            optionsSet.add(c.interprete.trim());
-        });
+        canciones.forEach(c => c.interprete && values.add(c.interprete.trim()));
       }
 
-      // Siempre incluir "(todos)"
       valueSelect.innerHTML = "";
       const optAll = document.createElement("option");
       optAll.value = "todos";
@@ -849,18 +769,15 @@
       valueSelect.appendChild(optAll);
 
       if (songFilterType !== "todos") {
-        Array.from(optionsSet)
-          .sort((a, b) => a.localeCompare(b, "es"))
-          .forEach((val) => {
-            const opt = document.createElement("option");
-            opt.value = val;
-            opt.textContent = val;
-            valueSelect.appendChild(opt);
-          });
+        Array.from(values).sort((a,b)=>a.localeCompare(b,"es")).forEach(v=>{
+          const op = document.createElement("option");
+          op.value = v;
+          op.textContent = v;
+          valueSelect.appendChild(op);
+        });
       }
 
-      // Aseguramos que el select muestre el valor elegido
-      if (songFilterValue && [...valueSelect.options].some(o => o.value === songFilterValue)) {
+      if ([...valueSelect.options].some(o=>o.value===songFilterValue)) {
         valueSelect.value = songFilterValue;
       } else {
         songFilterValue = "todos";
@@ -871,50 +788,59 @@
     function applySongFilters() {
       let list = [...canciones];
 
-      // Filtro tipo/valor
       if (songFilterType === "genero" && songFilterValue !== "todos") {
-        list = list.filter((c) => (c.genero || "").trim() === songFilterValue);
+        list = list.filter(c => (c.genero || "").trim() === songFilterValue);
       } else if (songFilterType === "interprete" && songFilterValue !== "todos") {
-        list = list.filter(
-          (c) => (c.interprete || "").trim() === songFilterValue
-        );
+        list = list.filter(c => (c.interprete || "").trim() === songFilterValue);
       }
 
-      // Búsqueda
       if (songSearch.trim()) {
         const q = songSearch.toLowerCase();
-        list = list.filter((c) => {
+        list = list.filter(c => {
           const t = (c.titulo || "").toLowerCase();
           const i = (c.interprete || "").toLowerCase();
           return t.includes(q) || i.includes(q);
         });
       }
 
-      // Orden
-      list.sort((a, b) => {
+      list.sort((a,b)=>{
         const da = (a.titulo || "").toLowerCase();
         const db = (b.titulo || "").toLowerCase();
-        if (songSort === "az") return da.localeCompare(db, "es");
-        return db.localeCompare(da, "es");
+        return songSort === "az" ? da.localeCompare(db,"es") : db.localeCompare(da,"es");
       });
 
       return list;
     }
 
-    function renderSongList() {
-      const listNode = el("songList");
-      listNode.innerHTML = "";
+    function renderSongList(resetSelection = false) {
+      const node = $("songList");
+      node.innerHTML = "";
+      const list = applySongFilters();
 
-      const filtered = applySongFilters();
-      if (!filtered.length) {
+      if (!list.length) {
         const empty = document.createElement("div");
         empty.className = "list-item";
         empty.textContent = "No se encontraron canciones.";
-        listNode.appendChild(empty);
+        node.appendChild(empty);
+        $("detailTitulo").textContent = "Selecciona una canción en la lista";
+        $("detailInterprete").textContent = "ND";
+        $("detailCompositor").textContent = "ND";
+        $("detailGenero").innerHTML = '<span class="pill-genre">ND</span>';
+        $("detailTomadoDe").textContent = "ND";
+        $("detailVideo").textContent = "ND";
+        $("detailHistoria").textContent = "ND";
+        $("btnHistoriaToggle").style.display = "none";
+        selectedSongId = null;
         return;
       }
 
-      filtered.forEach((c) => {
+      if (resetSelection) {
+        selectedSongId = list[0].id;
+      } else if (!selectedSongId || !list.some(c=>c.id===selectedSongId)) {
+        selectedSongId = list[0].id;
+      }
+
+      list.forEach(c => {
         const item = document.createElement("div");
         item.className = "list-item";
         if (c.id === selectedSongId) item.classList.add("active");
@@ -934,35 +860,46 @@
         item.addEventListener("click", () => {
           selectedSongId = c.id;
           showSongDetail(c);
-          renderSongList(); // para destacar item activo
+          renderSongList(false);
         });
 
-        listNode.appendChild(item);
+        node.appendChild(item);
       });
 
-      // Si no hay canción seleccionada, seleccionamos la primera
-      if (!selectedSongId && filtered[0]) {
-        selectedSongId = filtered[0].id;
-        showSongDetail(filtered[0]);
-        renderSongList();
+      const current = list.find(c=>c.id===selectedSongId) || list[0];
+      showSongDetail(current);
+    }
+
+    function updateHistoryDisplay() {
+      const node = $("detailHistoria");
+      const btn = $("btnHistoriaToggle");
+      const limit = 260;
+
+      if (!fullHistoryText) {
+        node.textContent = "ND";
+        btn.style.display = "none";
+        return;
+      }
+
+      btn.style.display = "inline-block";
+      if (historyExpanded || fullHistoryText.length <= limit) {
+        node.textContent = fullHistoryText;
+        btn.textContent = "Ver menos";
+      } else {
+        node.textContent = fullHistoryText.slice(0,limit) + "…";
+        btn.textContent = "Ver más";
       }
     }
 
-    function safeValue(value) {
-      const v = (value || "").toString().trim();
-      return v.length ? v : "ND";
-    }
-
     function showSongDetail(song) {
-      el("detailTitulo").textContent = safeValue(song.titulo);
-      el("detailInterprete").textContent = safeValue(song.interprete);
-      el("detailCompositor").textContent = safeValue(song.compositor);
-      const genero = safeValue(song.genero);
-      el("detailGenero").innerHTML = `<span class="pill-genre">${genero}</span>`;
-      el("detailTomadoDe").textContent = safeValue(song.tomado_de);
+      $("detailTitulo").textContent = safe(song.titulo);
+      $("detailInterprete").textContent = safe(song.interprete);
+      $("detailCompositor").textContent = safe(song.compositor);
+      $("detailGenero").innerHTML = `<span class="pill-genre">${safe(song.genero)}</span>`;
+      $("detailTomadoDe").textContent = safe(song.tomado_de);
 
-      const videoNode = el("detailVideo");
       const video = (song.video || "").trim();
+      const videoNode = $("detailVideo");
       if (video) {
         videoNode.innerHTML = `<a href="${video}" target="_blank" rel="noopener" class="video-link">Ver en YouTube</a>`;
       } else {
@@ -970,63 +907,38 @@
       }
 
       fullHistoryText = (song.historia || "").trim();
-      const histNode = el("detailHistoria");
-      const toggleBtn = el("btnHistoriaToggle");
-
-      if (!fullHistoryText) {
-        histNode.textContent = "ND";
-        toggleBtn.style.display = "none";
-      } else {
-        historyExpanded = false;
-        updateHistoryDisplay();
-        toggleBtn.style.display = "inline-block";
-      }
+      historyExpanded = false;
+      updateHistoryDisplay();
     }
 
-    function updateHistoryDisplay() {
-      const histNode = el("detailHistoria");
-      const toggleBtn = el("btnHistoriaToggle");
-      const limit = 260;
-      if (!fullHistoryText) {
-        histNode.textContent = "ND";
-        toggleBtn.style.display = "none";
-        return;
-      }
-      if (historyExpanded || fullHistoryText.length <= limit) {
-        histNode.textContent = fullHistoryText;
-        toggleBtn.textContent = "Ver menos";
-      } else {
-        histNode.textContent = fullHistoryText.slice(0, limit) + "…";
-        toggleBtn.textContent = "Ver más";
-      }
-    }
-
-    // ---------- Autores ----------
+    // --- AUTORES ---
     function renderAuthors() {
-      const list = el("authorList");
-      list.innerHTML = "";
-      const q = (el("authorSearch").value || "").toLowerCase().trim();
+      const listNode = $("authorList");
+      listNode.innerHTML = "";
+      const q = ($("authorSearch").value || "").toLowerCase().trim();
 
       let arr = [...autores];
       if (q) {
-        arr = arr.filter((a) => {
+        arr = arr.filter(a => {
           const na = (a.nombre_artistico || "").toLowerCase();
           const nr = (a.nombre_real || "").toLowerCase();
           return na.includes(q) || nr.includes(q);
         });
       }
+
       if (!arr.length) {
         const item = document.createElement("div");
         item.className = "list-item";
         item.textContent = "No se encontraron autores.";
-        list.appendChild(item);
+        listNode.appendChild(item);
         return;
       }
-      arr.forEach((a) => {
+
+      arr.forEach(a => {
         const item = document.createElement("div");
         item.className = "list-item";
         const title = document.createElement("div");
-        title.className = "list-item-title";
+        title.className = "list-item-title author-name";
         title.textContent = a.nombre_artistico || "ND";
         const meta = document.createElement("div");
         meta.className = "list-item-meta";
@@ -1035,74 +947,91 @@
         meta.textContent = `${rol}${real}`;
         item.appendChild(title);
         item.appendChild(meta);
-        list.appendChild(item);
+        listNode.appendChild(item);
       });
     }
 
-    // ---------- Curiosidades ----------
+    // --- CURIOSIDADES ---
     function renderCuriosidades() {
-      const list = el("curiosidadesList");
-      list.innerHTML = "";
+      const listNode = $("curiosidadesList");
+      listNode.innerHTML = "";
       if (!curiosidades.length) {
         const item = document.createElement("div");
         item.className = "list-item";
         item.textContent = "No hay curiosidades registradas.";
-        list.appendChild(item);
+        listNode.appendChild(item);
         return;
       }
-      curiosidades.forEach((c) => {
+      curiosidades.forEach(c => {
         const item = document.createElement("div");
         item.className = "list-item";
         const title = document.createElement("div");
-        title.className = "list-item-title";
+        title.className = "list-item-title curio-title";
         title.textContent = c.tema || "Sin tema";
         const meta = document.createElement("div");
         meta.className = "list-item-meta";
         meta.textContent = (c.detalle || "").trim() || "ND";
         item.appendChild(title);
         item.appendChild(meta);
-        list.appendChild(item);
+        listNode.appendChild(item);
       });
     }
 
-    // ---------- Admin: carga de items ----------
+    // --- ADMIN: LISTA DE ÍTEMS ---
+    function clearAdminForm() {
+      $("adminSongTitulo").value = "";
+      $("adminSongInterprete").value = "";
+      $("adminSongCompositor").value = "";
+      $("adminSongGenero").value = "";
+      $("adminSongImagen").value = "";
+      $("adminSongVideo").value = "";
+      $("adminSongTomadoDe").value = "";
+      $("adminSongHistoria").value = "";
+
+      $("adminAutorNombreArtistico").value = "";
+      $("adminAutorNombreReal").value = "";
+      $("adminAutorRol").value = "";
+      $("adminAutorFoto").value = "";
+      $("adminAutorBiografia").value = "";
+      $("adminAutorExitos").value = "";
+      $("adminAutorCuriosidades").value = "";
+      $("adminAutorTomadoDe").value = "";
+
+      $("adminCurioTema").value = "";
+      $("adminCurioDetalle").value = "";
+      $("adminCurioImagen").value = "";
+      $("adminCurioTomadoDe").value = "";
+    }
+
     function renderAdminItems() {
-      const sel = el("adminItemSelect");
+      const sel = $("adminItemSelect");
       sel.innerHTML = "";
-      const searchQ = (el("adminSearchItem").value || "").toLowerCase().trim();
+      const q = ($("adminSearchItem").value || "").toLowerCase().trim();
 
       let arr = [];
       if (adminCurrentCategory === "canciones") arr = canciones;
       else if (adminCurrentCategory === "autores") arr = autores;
       else arr = curiosidades;
 
-      arr = arr.filter((it) => {
+      arr = arr.filter(it => {
         let label = "";
-        if (adminCurrentCategory === "canciones") {
-          label = it.titulo || "";
-        } else if (adminCurrentCategory === "autores") {
-          label = it.nombre_artistico || "";
-        } else {
-          label = it.tema || "";
-        }
-        return label.toLowerCase().includes(searchQ);
+        if (adminCurrentCategory === "canciones") label = it.titulo || "";
+        else if (adminCurrentCategory === "autores") label = it.nombre_artistico || "";
+        else label = it.tema || "";
+        return label.toLowerCase().includes(q);
       });
 
-      arr.forEach((it) => {
+      arr.forEach(it => {
         const opt = document.createElement("option");
         opt.value = it.id;
-        if (adminCurrentCategory === "canciones") {
-          opt.textContent = it.titulo || "Sin título";
-        } else if (adminCurrentCategory === "autores") {
-          opt.textContent = it.nombre_artistico || "Sin nombre artístico";
-        } else {
-          opt.textContent = it.tema || "Sin tema";
-        }
+        if (adminCurrentCategory === "canciones") opt.textContent = it.titulo || "Sin título";
+        else if (adminCurrentCategory === "autores") opt.textContent = it.nombre_artistico || "Sin nombre artístico";
+        else opt.textContent = it.tema || "Sin tema";
         sel.appendChild(opt);
       });
 
       if (arr.length) {
-        if (!adminSelectedId || !arr.some((x) => x.id === adminSelectedId)) {
+        if (!adminSelectedId || !arr.some(x=>x.id===adminSelectedId)) {
           adminSelectedId = arr[0].id;
         }
         sel.value = adminSelectedId;
@@ -1110,197 +1039,180 @@
       } else {
         adminSelectedId = null;
         clearAdminForm();
+        setAdminInfo("No hay ítems en esta categoría.");
       }
     }
 
-    function clearAdminForm() {
-      // Canciones
-      el("adminSongTitulo").value = "";
-      el("adminSongInterprete").value = "";
-      el("adminSongCompositor").value = "";
-      el("adminSongGenero").value = "";
-      el("adminSongImagen").value = "";
-      el("adminSongVideo").value = "";
-      el("adminSongTomadoDe").value = "";
-      el("adminSongHistoria").value = "";
-
-      // Autores
-      el("adminAutorNombreArtistico").value = "";
-      el("adminAutorNombreReal").value = "";
-      el("adminAutorRol").value = "";
-      el("adminAutorFoto").value = "";
-      el("adminAutorBiografia").value = "";
-      el("adminAutorExitos").value = "";
-      el("adminAutorCuriosidades").value = "";
-      el("adminAutorTomadoDe").value = "";
-
-      // Curiosidades
-      el("adminCurioTema").value = "";
-      el("adminCurioDetalle").value = "";
-      el("adminCurioImagen").value = "";
-      el("adminCurioTomadoDe").value = "";
+    function setAdminInfo(msg) {
+      $("adminInfo").textContent = msg;
     }
 
     function loadAdminForm() {
       if (!adminSelectedId) {
         clearAdminForm();
+        setAdminInfo("Selecciona o crea un ítem para editarlo.");
         return;
       }
       let item = null;
       if (adminCurrentCategory === "canciones") {
-        item = canciones.find((c) => c.id === adminSelectedId);
+        item = canciones.find(c=>c.id===adminSelectedId);
       } else if (adminCurrentCategory === "autores") {
-        item = autores.find((a) => a.id === adminSelectedId);
+        item = autores.find(a=>a.id===adminSelectedId);
       } else {
-        item = curiosidades.find((c) => c.id === adminSelectedId);
+        item = curiosidades.find(c=>c.id===adminSelectedId);
       }
       if (!item) {
         clearAdminForm();
+        setAdminInfo("No se encontró el ítem seleccionado.");
         return;
       }
 
+      setAdminInfo("Editando ítem existente.");
+
       if (adminCurrentCategory === "canciones") {
-        el("adminSongTitulo").value = item.titulo || "";
-        el("adminSongInterprete").value = item.interprete || "";
-        el("adminSongCompositor").value = item.compositor || "";
-        el("adminSongGenero").value = item.genero || "";
-        el("adminSongImagen").value = item.imagen || "";
-        el("adminSongVideo").value = item.video || "";
-        el("adminSongTomadoDe").value = item.tomado_de || "";
-        el("adminSongHistoria").value = item.historia || "";
+        $("adminSongTitulo").value = item.titulo || "";
+        $("adminSongInterprete").value = item.interprete || "";
+        $("adminSongCompositor").value = item.compositor || "";
+        $("adminSongGenero").value = item.genero || "";
+        $("adminSongImagen").value = item.imagen || "";
+        $("adminSongVideo").value = item.video || "";
+        $("adminSongTomadoDe").value = item.tomado_de || "";
+        $("adminSongHistoria").value = item.historia || "";
       } else if (adminCurrentCategory === "autores") {
-        el("adminAutorNombreArtistico").value =
-          item.nombre_artistico || "";
-        el("adminAutorNombreReal").value = item.nombre_real || "";
-        el("adminAutorRol").value = item.rol || "";
-        el("adminAutorFoto").value = item.foto || "";
-        el("adminAutorBiografia").value = item.biografia || "";
-        el("adminAutorExitos").value = item.exitos || "";
-        el("adminAutorCuriosidades").value = item.curiosidades || "";
-        el("adminAutorTomadoDe").value = item.tomado_de || "";
+        $("adminAutorNombreArtistico").value = item.nombre_artistico || "";
+        $("adminAutorNombreReal").value = item.nombre_real || "";
+        $("adminAutorRol").value = item.rol || "";
+        $("adminAutorFoto").value = item.foto || "";
+        $("adminAutorBiografia").value = item.biografia || "";
+        $("adminAutorExitos").value = item.exitos || "";
+        $("adminAutorCuriosidades").value = item.curiosidades || "";
+        $("adminAutorTomadoDe").value = item.tomado_de || "";
       } else {
-        el("adminCurioTema").value = item.tema || "";
-        el("adminCurioDetalle").value = item.detalle || "";
-        el("adminCurioImagen").value = item.imagen || "";
-        el("adminCurioTomadoDe").value = item.tomado_de || "";
+        $("adminCurioTema").value = item.tema || "";
+        $("adminCurioDetalle").value = item.detalle || "";
+        $("adminCurioImagen").value = item.imagen || "";
+        $("adminCurioTomadoDe").value = item.tomado_de || "";
       }
     }
 
     function nuevoAdminItem() {
-      clearAdminForm();
       adminSelectedId = null;
-      el("adminItemSelect").value = "";
-      setAdminStatus("Nuevo ítem listo para ser guardado.", null);
+      $("adminItemSelect").value = "";
+      clearAdminForm();
+      setAdminInfo("Nuevo ítem listo para guardar.");
+      setAdminStatus("", "muted");
     }
 
     async function guardarAdmin() {
-      let payload = {};
       let table = "";
+      let payload = {};
+
       if (adminCurrentCategory === "canciones") {
         table = "canciones";
         payload = {
-          titulo: el("adminSongTitulo").value.trim(),
-          interprete: el("adminSongInterprete").value.trim(),
-          compositor: el("adminSongCompositor").value.trim(),
-          genero: el("adminSongGenero").value.trim(),
-          imagen: el("adminSongImagen").value.trim(),
-          video: el("adminSongVideo").value.trim(),
-          tomado_de: el("adminSongTomadoDe").value.trim(),
-          historia: el("adminSongHistoria").value.trim(),
+          titulo: $("adminSongTitulo").value.trim(),
+          interprete: $("adminSongInterprete").value.trim(),
+          compositor: $("adminSongCompositor").value.trim(),
+          genero: $("adminSongGenero").value.trim(),
+          imagen: $("adminSongImagen").value.trim(),
+          video: $("adminSongVideo").value.trim(),
+          tomado_de: $("adminSongTomadoDe").value.trim(),
+          historia: $("adminSongHistoria").value.trim(),
         };
       } else if (adminCurrentCategory === "autores") {
         table = "autores";
         payload = {
-          nombre_artistico: el("adminAutorNombreArtistico").value.trim(),
-          nombre_real: el("adminAutorNombreReal").value.trim(),
-          rol: el("adminAutorRol").value.trim(),
-          foto: el("adminAutorFoto").value.trim(),
-          biografia: el("adminAutorBiografia").value.trim(),
-          exitos: el("adminAutorExitos").value.trim(),
-          curiosidades: el("adminAutorCuriosidades").value.trim(),
-          tomado_de: el("adminAutorTomadoDe").value.trim(),
+          nombre_artistico: $("adminAutorNombreArtistico").value.trim(),
+          nombre_real: $("adminAutorNombreReal").value.trim(),
+          rol: $("adminAutorRol").value.trim(),
+          foto: $("adminAutorFoto").value.trim(),
+          biografia: $("adminAutorBiografia").value.trim(),
+          exitos: $("adminAutorExitos").value.trim(),
+          curiosidades: $("adminAutorCuriosidades").value.trim(),
+          tomado_de: $("adminAutorTomadoDe").value.trim(),
         };
       } else {
         table = "curiosidades";
         payload = {
-          tema: el("adminCurioTema").value.trim(),
-          detalle: el("adminCurioDetalle").value.trim(),
-          imagen: el("adminCurioImagen").value.trim(),
-          tomado_de: el("adminCurioTomadoDe").value.trim(),
+          tema: $("adminCurioTema").value.trim(),
+          detalle: $("adminCurioDetalle").value.trim(),
+          imagen: $("adminCurioImagen").value.trim(),
+          tomado_de: $("adminCurioTomadoDe").value.trim(),
         };
       }
 
       try {
         if (adminSelectedId) {
-          const { error } = await supabase
-            .from(table)
-            .update(payload)
-            .eq("id", adminSelectedId);
+          const { error } = await supabase.from(table)
+            .update(payload).eq("id", adminSelectedId);
           if (error) throw error;
         } else {
-          const { data, error } = await supabase
-            .from(table)
-            .insert(payload)
-            .select()
-            .single();
+          const { data, error } = await supabase.from(table)
+            .insert(payload).select().single();
           if (error) throw error;
           adminSelectedId = data.id;
         }
-
-        incrementSaveCounter();
-        setAdminStatus("Cambios guardados correctamente.", true);
+        setAdminStatus("Cambios guardados correctamente.", "ok");
         await loadData();
-      } catch (error) {
-        console.error(error);
-        setAdminStatus("Error al guardar el ítem.", false);
+      } catch (e) {
+        console.error(e);
+        setAdminStatus("Error al guardar el ítem.", "error");
       }
     }
 
     async function eliminarAdmin() {
       if (!adminSelectedId) {
-        setAdminStatus("No hay ítem seleccionado para eliminar.", false);
+        setAdminStatus("No hay ítem seleccionado para eliminar.", "error");
         return;
       }
       if (!confirm("¿Eliminar este ítem?")) return;
 
-      let table = "";
-      if (adminCurrentCategory === "canciones") table = "canciones";
-      else if (adminCurrentCategory === "autores") table = "autores";
-      else table = "curiosidades";
+      let table = adminCurrentCategory === "canciones"
+        ? "canciones"
+        : adminCurrentCategory === "autores"
+          ? "autores"
+          : "curiosidades";
 
       try {
-        const { error } = await supabase
-          .from(table)
-          .delete()
-          .eq("id", adminSelectedId);
+        const { error } = await supabase.from(table)
+          .delete().eq("id", adminSelectedId);
         if (error) throw error;
 
-        incrementSaveCounter();
-        setAdminStatus("Ítem eliminado correctamente.", true);
         adminSelectedId = null;
+        setAdminStatus("Ítem eliminado correctamente.", "ok");
         await loadData();
-      } catch (error) {
-        console.error(error);
-        setAdminStatus("Error al eliminar el ítem.", false);
+      } catch (e) {
+        console.error(e);
+        setAdminStatus("Error al eliminar el ítem.", "error");
       }
     }
 
-    // ---------- Importar CSV desde Admin ----------
+    // --- IMPORTAR CSV DESDE ADMIN ---
     function parseCsv(text) {
-      const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
+      const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
       if (!lines.length) return [];
-
-      const headers = lines[0].split(",").map((h) => h.trim());
+      const headers = lines[0].split(",").map(h=>h.trim());
       const rows = [];
-
-      for (let i = 1; i < lines.length; i++) {
+      for (let i=1;i<lines.length;i++) {
         const line = lines[i];
         if (!line.trim()) continue;
-        const values = line.split(",");
+        const parts = [];
+        let current = "";
+        let inQuotes = false;
+        for (let j=0;j<line.length;j++) {
+          const ch = line[j];
+          if (ch === '"' ) {
+            inQuotes = !inQuotes;
+          } else if (ch === "," && !inQuotes) {
+            parts.push(current);
+            current = "";
+          } else {
+            current += ch;
+          }
+        }
+        parts.push(current);
         const obj = {};
-        headers.forEach((h, idx) => {
-          obj[h] = (values[idx] || "").trim();
-        });
+        headers.forEach((h,idx)=>{ obj[h] = (parts[idx] || "").trim().replace(/^"|"$/g,""); });
         rows.push(obj);
       }
       return rows;
@@ -1309,191 +1221,244 @@
     async function importarCsvParaCategoria(file) {
       if (!file) return;
       const cat = adminCurrentCategory;
-      setAdminStatus(`Leyendo CSV para la categoría ${cat}...`);
+      setAdminStatus(`Leyendo CSV para la categoría ${cat}…`,"muted");
 
       try {
         const text = await file.text();
         let rows = parseCsv(text);
         if (!rows.length) {
-          setAdminStatus("El CSV no contiene filas.", false);
+          setAdminStatus("El CSV no contiene filas.", "error");
           return;
         }
-
         let table = "";
         if (cat === "canciones") {
           table = "canciones";
-          rows = rows.map((r) => ({
-            titulo: r.titulo || r.Canción || "",
-            interprete: r.interprete || r.interprete || "",
+          rows = rows.map(r => ({
+            titulo: r.titulo || r.Cancion || r.Canción || "",
+            interprete: r.interprete || r.Interprete || r.Intérprete || "",
             compositor: r.compositor || r.Compositor || "",
-            genero: r.genero || r.Género || "",
-            imagen: r.imagen || "",
-            video: r.video || r.video_url || "",
-            tomado_de: r.tomado_de || "",
-            historia: r.historia || "",
+            genero: r.genero || r.Genero || r.Género || "",
+            imagen: r.imagen || r.Imagen || "",
+            video: r.video || r.Video || r.video_url || "",
+            tomado_de: r.tomado_de || r["Tomado de"] || "",
+            historia: r.historia || r.Historia || "",
           }));
         } else if (cat === "autores") {
           table = "autores";
-          rows = rows.map((r) => ({
-            nombre_artistico:
-              r.nombre_artistico || r["Nombre artístico"] || "",
+          rows = rows.map(r => ({
+            nombre_artistico: r.nombre_artistico || r["Nombre artístico"] || "",
             nombre_real: r.nombre_real || r["Nombre real"] || "",
-            rol: r.rol || "",
-            foto: r.foto || "",
-            biografia: r.biografia || "",
-            exitos: r.exitos || "",
-            curiosidades: r.curiosidades || "",
-            tomado_de: r.tomado_de || "",
+            rol: r.rol || r.Rol || "",
+            foto: r.foto || r.Foto || "",
+            biografia: r.biografia || r.Biografia || r.Biografía || "",
+            exitos: r.exitos || r.Exitos || r.Éxitos || "",
+            curiosidades: r.curiosidades || r.Curiosidades || "",
+            tomado_de: r.tomado_de || r["Tomado de"] || "",
           }));
         } else {
           table = "curiosidades";
-          rows = rows.map((r) => ({
+          rows = rows.map(r => ({
             tema: r.tema || r.Tema || "",
             detalle: r.detalle || r.Detalle || "",
-            imagen: r.imagen || "",
-            tomado_de: r.tomado_de || "",
+            imagen: r.imagen || r.Imagen || "",
+            tomado_de: r.tomado_de || r["Tomado de"] || "",
           }));
         }
-
-        rows = rows.filter((r) =>
-          Object.values(r).some((v) => (v || "").trim() !== "")
+        rows = rows.filter(r =>
+          Object.values(r).some(v => (v || "").trim() !== "")
         );
         if (!rows.length) {
-          setAdminStatus("No se encontraron filas válidas en el CSV.", false);
+          setAdminStatus("No se encontraron filas válidas en el CSV.", "error");
           return;
         }
-
-        setAdminStatus(
-          `Importando ${rows.length} registros en la tabla ${table}...`
-        );
-
+        setAdminStatus(`Importando ${rows.length} registros en ${table}…`,"muted");
         const chunkSize = 50;
-        for (let i = 0; i < rows.length; i += chunkSize) {
-          const chunk = rows.slice(i, i + chunkSize);
+        for (let i=0;i<rows.length;i+=chunkSize) {
+          const chunk = rows.slice(i,i+chunkSize);
           const { error } = await supabase.from(table).insert(chunk);
           if (error) {
             console.error(error);
-            setAdminStatus("Error al importar algunos registros.", false);
+            setAdminStatus("Error al importar algunos registros.", "error");
             return;
           }
         }
-
-        incrementSaveCounter();
-        setAdminStatus(
-          `Importación completada: ${rows.length} registros agregados.`,
-          true
-        );
+        setAdminStatus(`Importación completada: ${rows.length} registros.`, "ok");
         await loadData();
       } catch (e) {
         console.error(e);
-        setAdminStatus("Error al procesar el CSV.", false);
+        setAdminStatus("Error al procesar el CSV.", "error");
       }
     }
 
-    // ---------- Tabs y eventos ----------
+    // --- SUBIR IMAGEN A SUPABASE STORAGE ---
+    async function uploadImageFile() {
+      const input = $("adminSongImageFile");
+      const file = input.files && input.files[0];
+      if (!file) {
+        setAdminStatus("Selecciona un archivo de imagen primero.", "error");
+        return;
+      }
+      try {
+        const ext = file.name.split(".").pop();
+        const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+        const path = `canciones/${fileName}`;
+        const { error } = await supabase.storage
+          .from(STORAGE_BUCKET)
+          .upload(path, file);
+        if (error) throw error;
+
+        const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+        const url = data.publicUrl;
+        $("adminSongImagen").value = url;
+        setAdminStatus("Imagen subida correctamente.", "ok");
+      } catch (e) {
+        console.error(e);
+        setAdminStatus("Error al subir la imagen. Revisa el bucket en Supabase.", "error");
+      }
+    }
+
+    // --- LOGIN ADMIN ---
+    function showAdminOverlay(show) {
+      $("adminOverlay").style.display = show ? "flex" : "none";
+      $("adminLoginError").style.display = "none";
+      $("adminPasswordInput").value = "";
+    }
+
+    function requireAdminPassword() {
+      if (adminUnlocked) return true;
+      showAdminOverlay(true);
+      return false;
+    }
+
+    function handleAdminLogin() {
+      const pwd = $("adminPasswordInput").value;
+      if (pwd === ADMIN_PASSWORD) {
+        adminUnlocked = true;
+        localStorage.setItem("musica_admin_unlocked","1");
+        showAdminOverlay(false);
+        return true;
+      }
+      $("adminLoginError").style.display = "block";
+      return false;
+    }
+
+    // --- TABS ---
     function initTabs() {
       const tabs = document.querySelectorAll(".tab");
-      tabs.forEach((t) => {
+      tabs.forEach(t => {
         t.addEventListener("click", () => {
-          const tabId = t.dataset.tab;
-          tabs.forEach((x) => x.classList.remove("active"));
+          const id = t.dataset.tab;
+
+          if (id === "admin") {
+            if (!adminUnlocked) {
+              if (!requireAdminPassword()) return;
+            }
+          }
+
+          tabs.forEach(x => x.classList.remove("active"));
           t.classList.add("active");
 
-          ["canciones", "autores", "curiosidades", "admin"].forEach((id) => {
-            el("tab-" + id).style.display = id === tabId ? "block" : "none";
+          ["canciones","autores","curiosidades","admin"].forEach(tabId=>{
+            $("tab-"+tabId).style.display = tabId === id ? "block" : "none";
           });
 
-          // Limpia búsqueda cuando cambias de pestaña
-          if (tabId === "canciones") {
+          if (id === "canciones") {
             songSearch = "";
-            el("songSearch").value = "";
-            renderSongList();
-          } else if (tabId === "autores") {
-            el("authorSearch").value = "";
+            $("songSearch").value = "";
+            renderSongFilters();
+            renderSongList(true);
+          } else if (id === "autores") {
+            $("authorSearch").value = "";
             renderAuthors();
           }
         });
       });
     }
 
+    // --- EVENTOS ---
     function initEvents() {
-      // Canciones
-      el("songFilterType").addEventListener("change", (e) => {
+      $("songFilterType").addEventListener("change", e => {
         songFilterType = e.target.value;
         songFilterValue = "todos";
         songSearch = "";
-        el("songSearch").value = "";
+        $("songSearch").value = "";
         renderSongFilters();
-        renderSongList();
+        renderSongList(true);
       });
-
-      el("songFilterValue").addEventListener("change", (e) => {
+      $("songFilterValue").addEventListener("change", e => {
         songFilterValue = e.target.value;
-        renderSongList();
+        renderSongList(true);
       });
-
-      el("songSort").addEventListener("change", (e) => {
+      $("songSort").addEventListener("change", e => {
         songSort = e.target.value;
-        renderSongList();
+        renderSongList(true);
       });
-
-      el("songSearch").addEventListener("input", (e) => {
+      $("songSearch").addEventListener("input", e => {
         songSearch = e.target.value;
-        renderSongList();
+        renderSongList(false);
       });
-
-      el("btnHistoriaToggle").addEventListener("click", () => {
+      $("btnHistoriaToggle").addEventListener("click", () => {
         historyExpanded = !historyExpanded;
         updateHistoryDisplay();
       });
 
-      // Autores
-      el("authorSearch").addEventListener("input", renderAuthors);
+      $("authorSearch").addEventListener("input", renderAuthors);
 
-      // Admin
-      el("adminCategory").addEventListener("change", (e) => {
+      $("adminCategory").addEventListener("change", e => {
         adminCurrentCategory = e.target.value;
         adminSelectedId = null;
-        // Cambiar formulario visible
-        el("adminFormCanciones").style.display =
+        $("adminFormCanciones").style.display =
           adminCurrentCategory === "canciones" ? "block" : "none";
-        el("adminFormAutores").style.display =
+        $("adminFormAutores").style.display =
           adminCurrentCategory === "autores" ? "block" : "none";
-        el("adminFormCuriosidades").style.display =
+        $("adminFormCuriosidades").style.display =
           adminCurrentCategory === "curiosidades" ? "block" : "none";
-
-        el("adminSearchItem").value = "";
+        $("adminSearchItem").value = "";
+        clearAdminForm();
         renderAdminItems();
+        setAdminStatus("", "muted");
       });
 
-      el("adminItemSelect").addEventListener("change", (e) => {
+      $("adminSearchItem").addEventListener("input", renderAdminItems);
+      $("adminItemSelect").addEventListener("change", e => {
         adminSelectedId = e.target.value || null;
         loadAdminForm();
       });
 
-      el("adminSearchItem").addEventListener("input", () => {
-        renderAdminItems();
-      });
+      $("btnNuevoItem").addEventListener("click", nuevoAdminItem);
+      $("btnGuardar").addEventListener("click", guardarAdmin);
+      $("btnEliminar").addEventListener("click", eliminarAdmin);
+      $("btnRefrescar").addEventListener("click", loadData);
 
-      el("btnNuevoItem").addEventListener("click", nuevoAdminItem);
-      el("btnGuardar").addEventListener("click", guardarAdmin);
-      el("btnEliminar").addEventListener("click", eliminarAdmin);
-      el("btnRefrescar").addEventListener("click", loadData);
-
-      el("btnImportCsv").addEventListener("click", () => {
-        const input = el("csvFileInput");
+      $("btnImportCsv").addEventListener("click", () => {
+        const input = $("csvFileInput");
         input.value = "";
         input.click();
       });
-
-      el("csvFileInput").addEventListener("change", (e) => {
+      $("csvFileInput").addEventListener("change", e => {
         const file = e.target.files && e.target.files[0];
         if (!file) return;
         importarCsvParaCategoria(file);
       });
+
+      $("btnUploadImage").addEventListener("click", uploadImageFile);
+
+      $("btnAdminLogin").addEventListener("click", handleAdminLogin);
+      $("btnAdminCancel").addEventListener("click", () => {
+        showAdminOverlay(false);
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach(t => t.classList.remove("active"));
+        document.querySelector('.tab[data-tab="canciones"]').classList.add("active");
+        ["canciones","autores","curiosidades","admin"].forEach(tabId=>{
+          $("tab-"+tabId).style.display = tabId === "canciones" ? "block" : "none";
+        });
+      });
+      $("adminPasswordInput").addEventListener("keydown", e => {
+        if (e.key === "Enter") handleAdminLogin();
+      });
     }
 
-    // Init
+    // --- INICIO ---
     initTabs();
     initEvents();
     loadData();
